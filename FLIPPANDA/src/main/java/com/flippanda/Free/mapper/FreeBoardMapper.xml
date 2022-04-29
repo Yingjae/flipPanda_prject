@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ict.mapper.FreeBoardMapper">
+<sql id ="search">
+
+		<if test="searchType != null">
+					<if test="searchType == 't'.toString()">
+						(freeBoardTitle like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'c'.toString()">
+						(freeBoardContent like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'w'.toString()">
+						(userNum like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'tc'.toString()">
+						((freeBoardTitle like '%'||#{keyword}||'%')
+							OR
+						 (freeBoardContent like '%'||#{keyword}||'%')) AND
+					</if>
+					<if test="searchType == 'cw'.toString()">
+						((freeBoardContent like '%'||#{keyword}||'%')
+							OR
+						 (userNum like '%'||#{keyword}||'%')) AND
+					</if>
+					<if test="searchType == 'tcw'.toString()">
+						((freeBoardTitle like '%'||#{keyword}||'%')
+							OR
+						 (freeboardContent like '%'||#{keyword}||'%')
+						 	OR
+						 (userNum like '%'||#{keyword}||'%')) AND
+					</if>
+				</if>
+</sql>
+	
+	
+	<select id ="getList" resultType="com.ict.domain.FreeBoardVO">
+
+		<![CDATA[
+			SELECT * FROM 
+				(SELECT /*+ INDEX_DESC(board_tbl pk_board) */
+				rownum rn, freeboard_tbl.* from freeboard_tbl WHERE	
+		]]>	
+	
+				<include refid="search"></include>
+				
+		<![CDATA[	
+				rownum <= #{pageEnd})
+					WHERE rn > #{pageStart}
+		]]>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO freeboard_tbl (freeboard_num, freeboard_title, freeboard_content, user_num)
+			VALUES
+		(freeboard_num.nextval, #{freeboard_title}, #{freeboard_content}, #{user_num})
+	
+	</insert>
+	
+	<select id="select" resultType="com.ict.domain.FreeboardVO">
+		SELECT * FROM freeboard_tbl WHERE freeboard_num=#{freeboard_num}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM freeboard_tbl WHERE freeboard_num=#{freeboard_num}
+	</delete>
+	
+	<update id="update">
+		UPDATE freeboard_tbl
+			SET
+		freeboard_title=#{freeboard_title}, freeboard_content=#{freeboard_content}, freeboard_updatedate=SYSDATE
+			WHERE
+		freeboard_num=#{freeboard_num}
+	</update>
+	<update id="update2">
+		UPDATE freeboard_tbl
+			SET
+		freeboard_title=#{freeboard_title}, freeboard_content=#{freeboard_content}, freeboard_updatedate=SYSDATE
+			WHERE
+		freeboard_num=#{freeboard_num}
+	</update>
+	
+	<select id="countPageNum" resultType="int">
+		<![CDATA[
+		SELECT COUNT(*) FROM board_tbl WHERE
+		]]>
+		
+				<include refid="search"></include>
+		<![CDATA[		
+		freeboard_num > 0
+		]]>
+	</select>
+
+
+</mapper>
