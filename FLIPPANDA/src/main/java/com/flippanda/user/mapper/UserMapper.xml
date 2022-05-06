@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flippanda.user.mapper.UserMapper">
+
+	<resultMap type="com.flippanda.vo.UserVO" id="userRM">
+		<result property="userNum" column="user_num"/>
+		<result property="userName" column="user_name"/>
+		<result property="userPoint" column="user_point"/>
+		<result property="userAddress" column="user_address"/>
+		<result property="userId" column="user_id"/>
+		<result property="userPw" column="user_pw"/>
+		<result property="userNick" column="user_nick"/>
+	</resultMap>
+	<!-- 회원가입  -->
+	<insert id="userInsert">
+		INSERT INTO user_tbl (user_num, user_name, user_address, user_id, user_pw, user_nick)
+			values
+		(user_num.nextval, #{userName}, #{userAddress}, #{userId}, #{userPw}, #{userNick})	
+	</insert>
+	
+	<!-- 회원정보 받아오기 -->
+	<select id="getUserData" resultType="com.flippanda.vo.UserVO" resultMap="userRM">
+		SELECT * FROM user_tbl WHERE user_num = #{userNum}
+	</select>	
+	
+	<!-- 회원정보 받아오기 -->
+	<select id="getUserAllData" resultType="com.flippanda.vo.UserVO" resultMap="userRM">
+		SELECT * FROM user_tbl
+	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="userDelete">
+		DELETE FROM user_tbl WHERE user_num = #{userNum}
+	</delete>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="userUpdate">
+		UPDATE user_tbl SET 
+			user_name = #{userName}, user_point = #{userPoint}, user_address = #{userAddress}, user_pw = #{userPw}, user_nick = #{userNick}
+		WHERE user_num = #{userNum}
+	</update>
+</mapper>
