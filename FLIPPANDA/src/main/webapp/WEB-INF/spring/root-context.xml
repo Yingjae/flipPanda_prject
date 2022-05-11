@@ -31,13 +31,15 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>	
+	<tx:annotation-driven/>
+	<mybatis-spring:scan base-package="com.flippanda.user.mapper"/>
 	
 	<tx:annotation-driven/>
-	
-	<mybatis-spring:scan base-package="com.flippanda.user.mapper" />
-	<mybatis-spring:scan base-package="com.flippanda.collection.mapper" />
-	
+
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="com.flippanda.user.service"></context:component-scan>
 	<context:component-scan base-package="com.flippanda.user.mapper"></context:component-scan>
+	<mybatis-spring:scan base-package="com.flippanda.user.mapper" />
+	<mybatis-spring:scan base-package="com.flippanda.collection.mapper" />
+	
 </beans>
