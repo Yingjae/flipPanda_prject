@@ -22,7 +22,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.flippanda.controller" />
-	
+	<context:component-scan base-package="com.flippanda.collection.controller" />
 	
 	
 </beans:beans>
