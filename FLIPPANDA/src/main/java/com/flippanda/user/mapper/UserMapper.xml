@@ -5,6 +5,7 @@
 <mapper namespace="com.flippanda.user.mapper.UserMapper">
 
 	<resultMap type="com.flippanda.vo.UserVO" id="userRM">
+		<id property="userid" column="userid"/>
 		<result property="userNum" column="user_num"/>
 		<result property="userName" column="user_name"/>
 		<result property="userPoint" column="user_point"/>
@@ -12,6 +13,12 @@
 		<result property="userId" column="user_id"/>
 		<result property="userPw" column="user_pw"/>
 		<result property="userNick" column="user_nick"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap type="com.flippanda.vo.UserAuthority" id="authMap">
+		<result property="userId" column="user_id"/>
+		<result property="auth" column="authority"/>
 	</resultMap>
 	<!-- 회원가입  -->
 	<insert id="userInsert">
@@ -19,14 +26,27 @@
 			values
 		(user_num.nextval, #{userName}, #{userAddress}, #{userId}, #{userPw}, #{userNick})	
 	</insert>
+		
+	<!-- 계정 생성시 자동으로 user권한 부여 -->
+	<insert id="autoSetUserAuth">
+		INSERT INTO user_authority (user_id, authority) values (#{userId}, 'ROLE_USER')
+		
+	</insert>
 	
 	<!-- 회원정보 받아오기 -->
 	<select id="getUserData" resultType="com.flippanda.vo.UserVO" resultMap="userRM">
-		SELECT * FROM user_tbl WHERE user_num = #{userNum}
+<!-- 		SELECT * FROM user_tbl WHERE user_num = #{userNum} -->
+		SELECT 
+			*
+		FROM user_tbl WHERE user_num = #{userNum} 
+
 	</select>	
+	<select id="getUserAuth" resultType="com.flippanda.vo.UserVO" resultMap="userRM">
+		SELECT u.user_num, a.authority FROM user_tbl u LEFT OUTER JOIN user_authority a on u.user_num = a.user_num WHERE u.user_num = #{userNum} 
+	</select>
 	
 	<!-- 회원정보 받아오기 -->
-	<select id="getUserAllData" resultType="com.flippanda.vo.UserVO" resultMap="userRM">
+	<select id="getUserAllData" resultMap="userRM">
 		SELECT * FROM user_tbl
 	</select>
 	
@@ -41,4 +61,13 @@
 			user_name = #{userName}, user_point = #{userPoint}, user_address = #{userAddress}, user_pw = #{userPw}, user_nick = #{userNick}
 		WHERE user_num = #{userNum}
 	</update>
+	
+	<select id="read" resultMap="userRM">
+		SELECT
+        	*
+		FROM
+		user_tbl u LEFT OUTER JOIN user_authority a on a.user_id = u.user_id WHERE u.user_id = #{userId};
+	</select>
+	
+	
 </mapper>
