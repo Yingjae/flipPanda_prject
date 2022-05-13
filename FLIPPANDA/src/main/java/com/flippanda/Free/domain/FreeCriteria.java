@@ -3,7 +3,7 @@ package com.flippanda.Free.domain;
 import lombok.Data;
 
 @Data
-public class Criteria {
+public class FreeCriteria {
 
 	private int pageNum=1;
 	private int number=10;

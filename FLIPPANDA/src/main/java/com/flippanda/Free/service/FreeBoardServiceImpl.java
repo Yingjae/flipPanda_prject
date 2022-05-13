@@ -5,48 +5,60 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.flippanda.Free.domain.Criteria;
-import com.flippanda.Free.domain.SearchCriteria;
+import com.flippanda.Free.domain.FreeCriteria;
 import com.flippanda.Free.mapper.FreeBoardMapper;
 import com.flippanda.vo.FreeBoardVO;
 
 @Service
 public class FreeBoardServiceImpl implements FreeBoardService {
+	
 	@Autowired
-	private FreeBoardMapper FreeBoardMapper;
-	
-	//리턴자료형이 없는 insert, delete, update구문은 사용자 행동 기준으로 메서드를 나눕니다 
+	private FreeBoardMapper freeBoardMapper;
+
 	@Override
-	public List<FreeBoardVO> getList(SearchCriteria cri){
-		return FreeBoardMapper.getList(cri);
+	public List<FreeBoardVO> getList(FreeCriteria freecri) {
+		return freeBoardMapper.getList(freecri);
+	}
+
+	@Override
+	public int countPageNum() {
+		return freeBoardMapper.countPageNum();
 	}
 	
 	@Override
-	public int countPageNum(SearchCriteria cri) {
-		return FreeBoardMapper.countPageNum(cri);
+	public FreeBoardVO select(long freeBoard_num) {
+		return freeBoardMapper.select(freeBoard_num);
 	}
-	
-	@Override
-	public FreeBoardVO select(long freeboard_num) {
-		return FreeBoardMapper.select(freeboard_num);
-	}
-	
+
 	@Override
 	public void insert(FreeBoardVO vo) {
-		FreeBoardMapper.insert(vo);
-		
+		freeBoardMapper.insert(vo);
 	}
+
 	@Override
-	public void delete(long freeboard_num) {
-		// mapper를 이용해 구현
-		FreeBoardMapper.delete(freeboard_num);
+	public void delete(long freeBoard_num) {
+		freeBoardMapper.delete(freeBoard_num);
 		
 	}
-	
+
 	@Override
 	public void update(FreeBoardVO vo) {
-		FreeBoardMapper.update(vo);
-		
+		freeBoardMapper.update(vo);
 		
 	}
+
+	@Override
+	public FreeBoardVO getNick(String freeBoardNick) {
+		return freeBoardMapper.getNick(freeBoardNick);
+		
+	}
+
+	@Override
+	public List<FreeBoardVO> usersGetList(long userNum) {
+		return freeBoardMapper.usersGetList(userNum);
+	}
+
+
+	
+	
 }
