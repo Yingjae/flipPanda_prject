@@ -34,14 +34,14 @@
 	</insert>
 	
 	<!-- 회원정보 받아오기 -->
-	<select id="getUserData" resultType="com.flippanda.vo.UserVO" resultMap="userRM">
+	<select id="getUserData"  resultMap="userRM">
 <!-- 		SELECT * FROM user_tbl WHERE user_num = #{userNum} -->
 		SELECT 
 			*
 		FROM user_tbl WHERE user_num = #{userNum} 
 
 	</select>	
-	<select id="getUserAuth" resultType="com.flippanda.vo.UserVO" resultMap="userRM">
+	<select id="getUserAuth"  resultMap="userRM">
 		SELECT u.user_num, a.authority FROM user_tbl u LEFT OUTER JOIN user_authority a on u.user_num = a.user_num WHERE u.user_num = #{userNum} 
 	</select>
 	
@@ -66,7 +66,7 @@
 		SELECT
         	*
 		FROM
-		user_tbl u LEFT OUTER JOIN user_authority a on a.user_id = u.user_id WHERE u.user_id = #{userId};
+		user_tbl u LEFT OUTER JOIN user_authority a on a.user_id = u.user_id WHERE u.user_id = #{userId}
 	</select>
 	
 	
