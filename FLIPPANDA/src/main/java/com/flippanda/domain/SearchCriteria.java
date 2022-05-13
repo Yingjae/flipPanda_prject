@@ -1,4 +1,5 @@
-package com.flippanda.Free.domain;
+/*
+package com.flippanda.domain;
 
 import lombok.Data;
 
@@ -8,3 +9,5 @@ public class SearchCriteria extends Criteria {
 	private String searchType;
 	private String keyword;
 }
+
+*/

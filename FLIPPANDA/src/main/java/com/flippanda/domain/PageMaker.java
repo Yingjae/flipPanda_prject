@@ -1,4 +1,5 @@
-package com.flippanda.Free.domain;
+/*
+package com.flippanda.domain;
 
 import lombok.Data;
 
@@ -40,3 +41,5 @@ public class PageMaker {
 		}
 
 }
+
+*/
