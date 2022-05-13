@@ -8,18 +8,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-#footer {
-		position: fixed;
-		background-color: black; <!-- 색상변경 -->
-		left: 0;
-		right: 0;
-		bottom: 0;
-		height: 6rem;
-}
-
-#contents {
-		bottom: 6rem;
-}
 </style>
 </head>
 <body>
@@ -45,7 +33,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="collection" items="${allCollectionList }">
+			<c:forEach var="collection" items="${allCollectionList }">				
 				<tr>
 					<td><a href="/usersCollectionList/${collection.userNum}">${collection.collectionNick }</a></td>
 					<td>${collection.collectionTitle }</td>
