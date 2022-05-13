@@ -54,4 +54,8 @@
 		base-package="com.flippanda.admin.mapper"></context:component-scan>
 
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+	<context:annotation-config></context:annotation-config>
+	<mybatis-spring:scan base-package="com.flippanda.collection.mapper" />
+	
 </beans>
