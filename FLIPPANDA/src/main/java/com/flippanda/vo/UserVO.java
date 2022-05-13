@@ -1,5 +1,7 @@
 package com.flippanda.vo;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,4 +17,5 @@ public class UserVO {
 	private String userId;
 	private String userPw;
 	private String userNick;
+	private List<UserAuthority> authList;
 }

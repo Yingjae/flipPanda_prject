@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.flippanda.user.mapper.UserMapper;
+import com.flippanda.vo.UserAuthority;
 import com.flippanda.vo.UserVO;
 
 @Service
@@ -19,7 +20,9 @@ public class UserServiceImpl implements UserService {
 	};
 	@Override
 	public UserVO getUserData(int userNum){
-		return mapper.getUserData(userNum);
+		UserVO userData = mapper.getUserData(userNum);		
+		return userData;
+				
 	};
 	@Override
 	public void userDelete(int userNum){
@@ -32,6 +35,15 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<UserVO> getUserAllData() {
-		return mapper.getUserAllData();
+		List<UserVO> list = mapper.getUserAllData();
+		return list;
+	}
+	@Override
+	public List<UserAuthority> getUserAuth(int userNum) {
+		return mapper.getUserAuth(userNum);
+	}
+	@Override
+	public void autoSetUserAuth(UserVO userData) {
+		mapper.autoSetUserAuth(userData);
 	};
 }
