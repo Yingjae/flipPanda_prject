@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flippanda.collection.mapper.CollectionMapper">
+	
+	<resultMap type="com.flippanda.vo.MyCollectionVO" id="myCollectionRM">
+		<result property="collectionNum" column="collection_num" />
+		<result property="userNum" column="user_num" />
+		<result property="collectionNick" column="user_nick" />
+		<result property="collectionTitle" column="collection_title" />
+		<result property="collectionContent" column="collection_content" />
+		<result property="collectionDate" column="collection_date" />
+		<result property="collectionUpdateDate" column="collection_updatedate" />
+		<result property="collectionLike" column="collection_like" />
+	</resultMap> 
+	
+	<!-- 글 가져오기 -->
+	<select id="getAllCollectionList" resultType="com.flippanda.vo.MyCollectionVO" resultMap="myCollectionRM">
+		<![CDATA[
+			SELECT a.*
+				 , b.user_nick
+			  FROM my_collection_tbl a
+			  	 , user_tbl b
+			 WHERE a.user_num = b.user_num
+		  ORDER BY collection_num DESC
+		]]>
+	<!-- 쿼리문 해석
+		 a.* 와 b.user_nick 얻어오기
+		 my_collection_tbl 을 a
+		 user_tbl을 b로 선언
+		 a.user_num과 b.user_num이 같다면
+		 a.* 와 b.user_nick 얻어오기-->
+	</select>
+	
+	<!-- 특정 회원의 글 목록 조회하기 -->
+	<select id="usersCollectionList" resultType="com.flippanda.vo.MyCollectionVO" resultMap="myCollectionRM">
+		SELECT a.*
+		  	 , b.user_nick
+		  FROM my_collection_tbl a
+		  JOIN user_tbl b
+		    ON a.user_num = b.user_num
+		 WHERE a.user_num = #{userNum}
+	<!-- 쿼리문해석
+		a.*와 b.user_nick 얻어오기
+		my_collection_tbl 을 a
+		user_tbl을 b로 선언후 JOIN
+		a.user_num과 b.user_num이 같으면
+		#{userNum } 에 입력된 값과 같은 a.user_num의 닉네임을 얻어온다 -->		
+	</select>
+		
+	<!-- 글 추가하기 -->
+	<insert id="insertMyCollection">
+		INSERT INTO my_collection_tbl 
+			   (collection_num, user_num, collection_title, collection_content)
+	    VALUES	
+			   (collection_num.nextval, #{userNum}, #{collectionTitle}, #{collectionContent})
+	</insert>
+	
+	<!-- 글 삭제하기 -->
+	<delete id="deleteMyCollection">
+		DELETE FROM my_collection_tbl 
+		 WHERE collection_num=#{collectionNum}
+	</delete>
+	
+	<!-- 글 수정을 위한 collectionNum번 글과 collectionNick을 조회하는 구문 -->
+	<select id="selectMyCollection" resultType="com.flippanda.vo.MyCollectionVO" resultMap="myCollectionRM">
+	    SELECT a.*
+		  	 , b.user_nick
+		  FROM my_collection_tbl a
+		  JOIN user_tbl b
+		    ON a.user_num = b.user_num
+		 WHERE a.collection_num=#{collectionNum} 		  
+	</select>
+	
+	<!-- 글 수정하기 -->
+	<update id="updateMyCollection">
+		UPDATE my_collection_tbl
+		   SET collection_title=#{collectionTitle}
+		     , collection_content=#{collectionContent}
+		     , collection_updatedate=SYSDATE
+		 WHERE collection_num=#{collectionNum}	 	
+	</update>
+</mapper>	
