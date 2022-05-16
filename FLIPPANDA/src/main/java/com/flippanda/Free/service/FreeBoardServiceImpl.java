@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.flippanda.Free.domain.FreeCriteria;
+import com.flippanda.Free.domain.FreeSearchCriteria;
 import com.flippanda.Free.mapper.FreeBoardMapper;
 import com.flippanda.vo.FreeBoardVO;
 
@@ -16,13 +17,13 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	private FreeBoardMapper freeBoardMapper;
 
 	@Override
-	public List<FreeBoardVO> getList(FreeCriteria freecri) {
+	public List<FreeBoardVO> getList(FreeSearchCriteria freecri) {
 		return freeBoardMapper.getList(freecri);
 	}
 
 	@Override
-	public int countPageNum() {
-		return freeBoardMapper.countPageNum();
+	public int countPageNum(FreeSearchCriteria freecri) {
+		return freeBoardMapper.countPageNum(freecri);
 	}
 	
 	@Override

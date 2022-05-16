@@ -25,7 +25,7 @@
 				<c:forEach var="freeBoard" items="${freeBoardList }">
 					<tr>
 					  	<td><a href="/freeBoard/usersFreeBoardList/${freeBoard.userNum}">${freeBoard.freeBoardNick }</td>  	
-						<td><a href="/freeBoard/freeBoardDetail/${freeBoard.freeBoardNum }?searchType=${freePageMaker.freecri.searchType }&keyword=${freePageMaker.freecri.keyword}">${freeBoard.freeBoardTitle }</a></td>
+						<td><a href="/freeBoard/freeBoardDetail/${freeBoard.freeBoardNum }?pageNum=${freePageMaker.freecri.pageNum}&searchType=${freePageMaker.freecri.searchType }&keyword=${freePageMaker.freecri.keyword}">${freeBoard.freeBoardTitle }</a></td>
 						<td>${freeBoard.regDate }</td>
 						<td>${freeBoard.updateDate }</td>
 						<td>${freeBoard.freeBoardViews }</td>
