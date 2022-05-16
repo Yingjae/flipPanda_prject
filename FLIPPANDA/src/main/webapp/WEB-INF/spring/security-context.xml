@@ -15,6 +15,9 @@
 	
 		<security:intercept-url pattern="/secu/authTest" access="hasRole('ROLE_USER')"/>
 		
+		<security:intercept-url pattern="/freeBoard/freeBoardUpdateForm" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/freeBoard/freeBoardDelete" access="hasRole('ROLE_USER')"/>
+		
 		<security:form-login login-page="/customLogin" authentication-success-handler-ref="CustomLoginSuccess"/>
 		<security:access-denied-handler ref="CustomAccessDenied"/>
 		<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me,JSESSIONID"/>

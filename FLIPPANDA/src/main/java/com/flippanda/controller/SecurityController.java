@@ -42,4 +42,18 @@ public class SecurityController {
 	public void authTest() {
 		log.info("권한 테스트 페이지 접속");
 	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@GetMapping("freeBoard/freeBoardUpdateForm")
+	public void freeBoardUpdateForm() {
+		log.info("자유게시판 수정 창 접속");
+	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@GetMapping("/freeBoard/freeBoardDelete")
+	public void freeBoardDelete() {
+		log.info("글 삭제 ");
+	}
+	
+	
 }

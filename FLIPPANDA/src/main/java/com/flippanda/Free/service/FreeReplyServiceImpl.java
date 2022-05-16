@@ -1,3 +1,4 @@
+/*
 package com.flippanda.Free.service;
 
 import java.util.List;
@@ -47,3 +48,4 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 		//FreeBoardMapper.updateReplyCount(FreeBoardNum, -1); // 댓글이 추가되면 갯수 감소 
 	}
 }
+*/

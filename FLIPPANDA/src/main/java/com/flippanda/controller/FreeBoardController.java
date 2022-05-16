@@ -38,7 +38,7 @@ public class FreeBoardController {
 		
 		FreePageMaker freePageMaker = new FreePageMaker();
 		freePageMaker.setFreecri(freecri);
-		int countPage=freeservice.countPageNum();
+		int countPage=freeservice.countPageNum(freecri);
 		freePageMaker.setTotalBoard(countPage);
 		model.addAttribute("freePageMaker",freePageMaker);
 		

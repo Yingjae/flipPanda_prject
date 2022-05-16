@@ -28,7 +28,7 @@
 		</div> 
 		<div class="row">
 			<div class="col-md-4">
-				<a href="/freeBoard/freeBoardList" class="btn btn-success">post list</a> <br/>
+				<a href="/freeBoard/freeBoardList?pageNum=${param.pageNum == null ? 1 : param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}" class="btn btn-success">post list</a> <br/>
 			</div>
 			<div class="col-md-4">
 				<form action="/freeBoard/freeBoardUpdateForm" method="post">
