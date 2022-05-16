@@ -10,7 +10,7 @@
 </head>
 <body>
  	<!-- my collection, 유저 닉네임 클릭시 해당 유저의 my Collection으로 이동하도록 수정 -->
-	<h1><!-- 유저 닉네임을 어떻게 표현하지 -->${userNick }User's Collection</h1>
+	<h1><!-- 유저 닉네임을 어떻게 표현하지 -->User's Collection</h1>
 	
 	<div>
 	<table border="1" class="table table">
