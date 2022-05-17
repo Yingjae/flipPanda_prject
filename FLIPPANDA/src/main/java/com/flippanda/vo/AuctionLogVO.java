@@ -2,14 +2,21 @@ package com.flippanda.vo;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@ToString
-public class AuctionLogVO {
-	private int auctionLogNum;
-	private int auctionNum;
-	private Date auctionDate;
-	private int auctionPrice;	
-}
+@Data
+public class auctionLogVO {
+		
+		private int auction_log_num; 
+		
+		private Long auction_num;
+		
+		private int user_num;
+		
+		private Date auction_log_date;
+		
+		private int auction_bid_log; 
+		
+	}
+
+

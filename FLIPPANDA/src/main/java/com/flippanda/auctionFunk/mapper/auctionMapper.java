@@ -2,7 +2,7 @@ package com.flippanda.auctionFunk.mapper;
 
 import java.util.List;
 
-import com.flippanda.auctionFunk.auctionVO;
+import com.flippanda.vo.auctionVO;
 
 public interface auctionMapper {
 	

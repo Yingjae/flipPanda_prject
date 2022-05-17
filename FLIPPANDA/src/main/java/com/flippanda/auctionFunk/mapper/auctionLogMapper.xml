@@ -8,12 +8,12 @@
 	</resultMap>
 	
 	<!-- GET BID LOG -->
-	<select id="getBidLog" resultType="com.flippanda.auctionFunk.auctionLogVO">
+	<select id="getBidLog" resultType="com.flippanda.vo.auctionLogVO">
 			SELECT * FROM auction_log_tbl WHERE auction_num = #{auction_num}
 	</select>
 	
 	<!-- BID FUNCTION -->
-	<insert id="bid" parameterType="com.flippanda.auctionFunk.auctionVO">
+	<insert id="bid" parameterType="com.flippanda.vo.auctionVO">
 		INSERT INTO auction_log_tbl 
             		(auction_log_num, 
             		auction_num, 

@@ -21,7 +21,7 @@
 		<security:form-login login-page="/customLogin" authentication-success-handler-ref="CustomLoginSuccess"/>
 		<security:access-denied-handler ref="CustomAccessDenied"/>
 		<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me,JSESSIONID"/>
-		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+		<security:remember-me data-source-ref="dataSource" token-validity-seconds="6048000"/>
 	</security:http>
 	
 	<security:authentication-manager>

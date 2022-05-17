@@ -36,7 +36,7 @@
 	</sql>
 	
 	<!-- AUCTION LISTUP -->
-	<select id="getAuctionList" resultType="com.flippanda.auctionFunk.auctionVO">
+	<select id="getAuctionList" resultType="com.flippanda.vo.auctionVO">
 		<![CDATA[
 			SELECT * FROM
 				(SELECT /*+ INDEX_DESC auction_tbl_test */
@@ -48,17 +48,17 @@
 		]]>
 	</select>
 	
-	<select id="getAuctionListTest" resultType="com.flippanda.auctionFunk.auctionVO">
+	<select id="getAuctionListTest" resultType="com.flippanda.vo.auctionVO">
 		SELECT * FROM auction_tbl ORDER BY auction_num DESC
 	</select>
 	
-	<select id="getPendingList" resultType="com.flippanda.auctionFunk.auctionVO">
+	<select id="getPendingList" resultType="com.flippanda.vo.auctionVO">
 		SELECT * FROM auction_tbl WHERE launched_auction = '0' ORDER BY auction_num DESC
 	</select>
 	
 	
 	<!-- AUCTION DETAIL -->
-	<select id="getAuction" resultType="com.flippanda.auctionFunk.auctionVO">
+	<select id="getAuction" resultType="com.flippanda.vo.auctionVO">
 		SELECT * FROM auction_tbl WHERE auction_num = #{auction_num}
 	</select>
 	
@@ -79,12 +79,12 @@
 	</update>
 	
 	<!-- RECORDING BID HISTORY -->
-	<update id="bidding" parameterType="com.flippanda.auctionFunk.bidVO">
+	<update id="bidding" parameterType="com.flippanda.vo.bidVO">
 		UPDATE auction_tbl SET bid_amount = #{bid_amount}
 		 WHERE auction_num = #{auction_num};
 	</update>
 	
-	<update id="countBid" parameterType="com.flippanda.auctionFunk.bidVO">
+	<update id="countBid" parameterType="com.flippanda.vo.bidVO">
 		UPDATE auction_tbl SET bid_count = bid_count + 1
 		 WHERE auction_num = #{auction_num};
 	</update>

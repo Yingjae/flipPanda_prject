@@ -8,6 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserAuthority {
-	private int userId;
+	private String userId;
 	private String auth;
 }

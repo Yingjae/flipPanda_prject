@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flippanda.auctionFunk.auctionLogVO;
-import com.flippanda.auctionFunk.auctionVO;
-import com.flippanda.auctionFunk.bidVO;
+import com.flippanda.vo.auctionLogVO;
+import com.flippanda.vo.auctionVO;
+import com.flippanda.vo.bidVO;
 import com.flippanda.auctionFunk.mapper.auctionLogMapper;
 import com.flippanda.auctionFunk.mapper.auctionMapper;
 

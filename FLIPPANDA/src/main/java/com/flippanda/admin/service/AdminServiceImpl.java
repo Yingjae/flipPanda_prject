@@ -1,4 +1,4 @@
-package com.filppanda.admin.service;
+package com.flippanda.admin.service;
 
 import java.util.List;
 
