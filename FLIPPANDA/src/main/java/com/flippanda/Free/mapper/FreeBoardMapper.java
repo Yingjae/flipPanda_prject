@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.flippanda.Free.domain.FreeCriteria;
-import com.flippanda.Free.domain.FreeSearchCriteria;
+import com.flippanda.vo.FreeCriteria;
+import com.flippanda.vo.FreeSearchCriteria;
 import com.flippanda.vo.FreeBoardVO;
 
 public interface FreeBoardMapper {

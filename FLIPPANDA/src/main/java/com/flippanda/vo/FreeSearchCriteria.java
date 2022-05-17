@@ -1,4 +1,4 @@
-package com.flippanda.Free.domain;
+package com.flippanda.vo;
 
 import lombok.Data;
 

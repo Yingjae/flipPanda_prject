@@ -103,8 +103,7 @@
 <c:forEach var="auctionList" items="${auctionList}">
 <article id="auctionDetail">
 <div class="row" style="margin:3%">
-<Strong class="tbd"> TBD: AJAX: HOT RECENTLY LIST</Strong>
-<h3 class="col-md-11">${auctionList.auction_title}</h3>
+	<h3 class="col-md-11">${auctionList.auction_title}</h3>
 <p id="writer" class="col-10">Launched at '${auctionList.launch_date}'</p>
 <hr/>
 </div>
@@ -117,25 +116,16 @@
 <!-- AJAX (below)-->
 <table class="table table-hover" style="font-size: 2vmin;">
 <tr>
-	<th>Current_Amount</th>
-	<td style="text-align:right;">₩ ${auctionList.current_amount}</td>
+    <th>Current_Amount</th>
+    <td style="text-align:right;">₩ ${auctionList.current_amount}</td>
     <!--<td style="text-align:right;">₩ <fmt:formatNumber value="${boarddetail.board_amount}" pattern="#,###"/></td>-->
 </tr>
 <tr>
-	<th>Bidding</th>
-	<td style="text-align:right; ">${auctionList.bid_count} hits</td>
+    <th>Bidding</th>
+    <td style="text-align:right; ">${auctionList.bid_count} hits</td>
     <!--<td style="text-align:right;">${boarddetail.board_cartegory}</td>-->
 </tr>
 </table>
-</div>
-<div id="navgate" class="container">
-
-<form id="detailMenu" class="col-md-11">
-    <a href="#">
-        <input type="button" class="btn" value="TBD">
-    </a>
-</form>
-
 </div>
 </article>
 </c:forEach>

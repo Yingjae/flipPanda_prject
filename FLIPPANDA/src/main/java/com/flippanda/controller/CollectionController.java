@@ -1,4 +1,4 @@
-package com.flippanda.collection.controller;
+package com.flippanda.controller;
 
 import java.util.List;
 
