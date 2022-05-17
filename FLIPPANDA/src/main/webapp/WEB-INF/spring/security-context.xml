@@ -13,7 +13,8 @@
 	
 	<security:http>
 	
-		<security:intercept-url pattern="/secu/authTest" access="hasRole('ROLE_USER')"/>
+<!-- 		<security:intercept-url pattern="/secu/authTest" access="hasRole('ROLE_USER')"/> -->
+<!-- 		<security:intercept-url pattern="/insertMyCollection" access="hasRole('ROLE_USER')"/> -->
 		
 		<security:intercept-url pattern="/freeBoard/freeBoardUpdateForm" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/freeBoard/freeBoardDelete" access="hasRole('ROLE_USER')"/>

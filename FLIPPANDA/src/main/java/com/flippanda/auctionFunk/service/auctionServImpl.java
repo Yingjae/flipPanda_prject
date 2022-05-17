@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flippanda.auctionFunk.auctionLogVO;
+
 import com.flippanda.auctionFunk.auctionVO;
-import com.flippanda.auctionFunk.bidVO;
 import com.flippanda.auctionFunk.mapper.auctionLogMapper;
 import com.flippanda.auctionFunk.mapper.auctionMapper;
 
@@ -46,7 +45,7 @@ public class auctionServImpl implements AuctionSevice{
 		auctionMapper.publishAuction(avo);
 	}
 	
-	@Transactional
+//	@Transactional
 	@Override
 	public void bidding(auctionVO avo) {
 		auctionMapper.bidding(avo);
@@ -73,7 +72,7 @@ public class auctionServImpl implements AuctionSevice{
 		auctionMapper.failedAuction(avo);
 	}
 	
-	@Transactional
+//	@Transactional
 	@Override
 	public void delete(Long auction_num) {
 		auctionMapper.delete(auction_num);

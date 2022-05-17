@@ -3,6 +3,7 @@ package com.flippanda.collection.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,12 +49,14 @@ public class CollectionController {
 	}
 	
 	// 컬렉션 글을 추가하는 로직
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/insertMyCollection")
 	public String insertMyCollection() {
 		return "insertMyCollection";
 	}
 	
 	// 글 추가 form의 post방식을 처리하는 메서드
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@PostMapping("/insertMyCollection")
 	public String insertMyCollection(MyCollectionVO cVO) {
 		//log.info("들어온 데이터 디버깅 : " + collection);
