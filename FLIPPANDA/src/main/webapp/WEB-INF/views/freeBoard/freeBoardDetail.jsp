@@ -33,12 +33,20 @@
 			<div class="col-md-4">
 				<form action="/freeBoard/freeBoardUpdateForm" method="post">
 					<input type="hidden" name="freeBoardNum" value="${freeboard.freeBoardNum }" />
+					<input type="hidden" name="pageNum" value="${param.pageNum }" />
+					<input type="hidden" name="searchType" value="${param.searchType}" />
+					<input type="hidden" name="keyword" value="${param.keyword}" />
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 					<input type="submit" value="modify" class="btn btn-warning">
 				</form>
 			</div>
 			<div class="col-md-4">
 				<form action = "/freeBoard/freeBoardDelete" method="post">
 					<input type="hidden" value="${freeboard.freeBoardNum }" name="freeBoardNum"/>
+					<input type="hidden" name="pageNum" value="${param.pageNum }" />
+					<input type="hidden" name="searchType" value="${param.searchType}" />
+					<input type="hidden" name="keyword" value="${param.keyword}" />
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 					<input type="submit" value="delete" class="btn btn-danger">
 				</form>
 			</div>

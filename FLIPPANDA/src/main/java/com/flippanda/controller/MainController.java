@@ -76,7 +76,7 @@ public class MainController {
 			}
 			return entity;
 		}
-	
+	/*
 	@GetMapping(value="/{auction_num}",
 	produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<List<auctionLogVO>> getbidLog
@@ -91,6 +91,7 @@ public class MainController {
 			}
 			return entity;
 		}
+		*/
 	
 	
 	//승인대기열 (ADMIN의 경우 승인버튼 노출)
@@ -220,7 +221,7 @@ public class MainController {
 		}
 		return entity;
 	}
-	
+	/*
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
 	value="/{auction_num}",
 	consumes="application/json",
@@ -259,7 +260,7 @@ public class MainController {
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return entity;
-	}
+	}*/
 	
 	
 

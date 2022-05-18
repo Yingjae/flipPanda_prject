@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Free Board</h1>
+		<a href="/freeBoard/freeBoardList"><h1>Free Board</h1></a>
 		<table border="1" class="table table">
 			<thead>
 				<tr>
@@ -24,7 +24,7 @@
 			<tbody>
 				<c:forEach var="freeBoard" items="${freeBoardList }">
 					<tr>
-					  	<td><a href="/freeBoard/usersFreeBoardList/${freeBoard.userNum}">${freeBoard.freeBoardNick }</td>  	
+					  	<td>${freeBoard.freeBoardNick }</td>  	
 						<td><a href="/freeBoard/freeBoardDetail/${freeBoard.freeBoardNum }?pageNum=${freePageMaker.freecri.pageNum}&searchType=${freePageMaker.freecri.searchType }&keyword=${freePageMaker.freecri.keyword}">${freeBoard.freeBoardTitle }</a></td>
 						<td>${freeBoard.regDate }</td>
 						<td>${freeBoard.updateDate }</td>
