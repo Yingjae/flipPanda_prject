@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri ="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -159,22 +160,25 @@
 
  <div class="tab-content">
   <!-- ------------------------------------------------------------------------------------------------------------------ -->
+ 	<sec:authorize access="isAnonymous()">
  	<div class="tab-pane fade show active" id="login" style="padding-top:20%;">
  	<div class="login_signup">
 	<form action="/login" method="post" data-form-type="login">
 	    <img class="mb-4" src="resources/img/sq_minimal.png" width="50">
 	
-	      <input type="text" class="form-control" id="loginFormId" placeholder="Your ID" data-form-type="userId">
-	      <input type="password" class="form-control" id="loginFormPw" placeholder="Your Password" data-form-type="userPw">
-	
+	      <input type="text" class="form-control" id="loginFormId" placeholder="Your ID" data-form-type="userId" name="username">
+	      <input type="password" class="form-control" id="loginFormPw" placeholder="Your Password" data-form-type="userPw" name="password">
 	    <div class="mb-4"></div>
+	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 	    <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
 	    data-dashlane-label="true" data-form-type="login">Sign in</button>
 	    <p class="mt-5 mb-3 text-muted"></p>
 	  </form>
 	  </div>
 	</div>
+	</sec:authorize>
 	 <!-- ------------------------------------------------------------------------------------------------------------------ -->
+	<sec:authorize access="isAuthenticated()">
 	<div class="tab-pane fade" id="user" style="padding-top:15%;">
     <div class="user_profile">
     	<img class="mb-4 rounded-circle" src="resources/img/profile.png" width="100" style="border:5px solid #34B475">
@@ -186,8 +190,12 @@
     	
         <Strong class="tbd"> TBD: User_infomation / Post Btn </Strong>
     	<hr/>
+    	<form action="/customLogout" method="get">
+			<input type="submit" value="로그아웃">
+		</form>
     </div>  
-  	</div> 
+  	</div>
+  	</sec:authorize>
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="post1" style="padding-top:20%;">
   	<div class="posting">
