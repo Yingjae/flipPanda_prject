@@ -190,8 +190,9 @@
     	
         <Strong class="tbd"> TBD: User_infomation / Post Btn </Strong>
     	<hr/>
-    	<form action="/customLogout" method="get">
+    	<form action="/customLogout" method="post">
 			<input type="submit" value="로그아웃">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 		</form>
     </div>  
   	</div>
