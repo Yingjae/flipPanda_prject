@@ -43,5 +43,5 @@ public class UserController {
 		service.userUpdate(userData);
 		return "updateTest";
 	}
-
+	
 }
