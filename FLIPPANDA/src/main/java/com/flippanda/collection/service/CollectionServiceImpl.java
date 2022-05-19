@@ -22,7 +22,7 @@ public class CollectionServiceImpl implements CollectionService {
 
 	@Override
 	public List<MyCollectionVO> usersCollectionList(long userNum) {
-		return usersCollectionList(userNum);
+		return collectionMapper.usersCollectionList(userNum);
 	}
 
 	@Override
