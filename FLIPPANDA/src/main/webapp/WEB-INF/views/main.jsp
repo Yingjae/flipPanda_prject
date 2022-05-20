@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri ="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +15,13 @@
 <link href="${cpath}/resources/css/style_combine.css" rel="stylesheet"/> 	
 
 <title>FLIPPANDA_main</title>
+
+<!-- JS -->
 <script src="${cpath}/resources/js/main.js"></script>
-<!-- AM CHARTS -->
+<script src="${cpath}/resources/jsjquery-3.4.1.min.js"></script>
+<script src="${cpath}/resources/jquery.mousewheel.min.js"></script>
+
+<!-- AM CHARTS(TBD) -->
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
@@ -45,9 +51,35 @@
 	<article id="auctionDetail">
 		<!-- frontView AJAX -->
 		<div id="auctionListAjax"></div>
-		<div id="auctionListAjax2"></div>
+		
+		<div id="auctionDetailAjax" style="display: none;">
+		<div class="row" style="margin:3%">
+			<h3 class="col-md-11">${auctionList.auction_title}</h3>
+			<p id="writer" class="col-10">Launched at '${auctionList.launch_date}'</p>
+			<hr/>
+			</div>
+			<div id="contents" class="row" style="margin:3%">
+			<img src="resources/img/dummy1.jpeg" style="align-content: center; width:99%"/>
+			<p class="text-left">${auctionList.auction_description}</p>
+			</div>
+			<div id="productamount" class="row" style="margin-left:3%; margin-right:3%;">
+			
+			<!-- AJAX (below)-->
+			<table class="table table-hover" style="font-size: 2vmin;">
+			<tr>
+			    <th>Current_Amount</th>
+			    <td style="text-align:right;">₩ ${auctionList.current_amount}</td>
+			    <!--<td style="text-align:right;">₩ <fmt:formatNumber value="${boarddetail.board_amount}" pattern="#,###"/></td>-->
+			</tr>
+			<tr>
+			    <th>Bidding</th>
+			    <td style="text-align:right; ">${auctionList.bid_count} hits</td>
+			    <!--<td style="text-align:right;">${boarddetail.board_cartegory}</td>-->
+			</tr>
+			</table>
+		</div>
+		</div>
 		<div id="auctionPostAjax" style="display: none;"></div>
-	
 		<!-- chartVeiw AJAX -->
 		<div id="chartdiv"></div>
 	</article>
@@ -66,47 +98,38 @@
 	 </ul>
  <div class="tab-content">
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
+ 	<sec:authorize access="isAnonymous()">
  	<div class="tab-pane fade show active" id="login" style="padding-top:20%;">
  	<div class="login_signup">
 	<form action="/login" method="post">
 	    <img class="mb-4" src="resources/img/sq_minimal.png" width="50">
 	
-	      <input type="text" class="form-control" id="lusername" placeholder="Your ID">
-	      <input type="password" class="form-control" id="password" placeholder="Your Password">
-		  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-		
-	    <div class="mb-4"></div>
+	      <input type="text" class="form-control" id="loginFormId" placeholder="Your ID" data-form-type="userId" name="username">
+	      <input type="password" class="form-control" id="loginFormPw" placeholder="Your Password" data-form-type="userPw" name="password">
+		  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
+	      <div class="mb-4"></div>
 	    <button id="login_submit" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
 	    data-dashlane-label="true">Sign in</button>
 	  </form>
 	  </div>
 	</div>
+	</sec:authorize>
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
+	<sec:authorize access="isAuthenticated()">
 	<div class="tab-pane fade" id="user" style="padding-top:15%;">
     <div class="user_profile">
     	<img class="mb-4 rounded-circle" src="resources/img/profile.png" width="100" style="border:5px solid #34B475">
-    	<h4>theflip9uy90</h4>
-    	<div class="mb-4"></div>
-    	<Strong>My Auction</Strong>
-    	<div class="mb-2"></div>
+    	<Strong class="tbd"> TBD: User_infomation / Post Btn </Strong>
     	<hr/>
+    	<form action="/customLogout" method="get">
+			<input type="submit" value="로그아웃">
+		</form>
+    </div>  
     	<button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" 
 	    data-dashlane-label="true">New Auction</button>
     	<hr/>
     </div>  
-  	</div> 
-  	<script>
-		
-  	//포스팅 버튼 클릭시 포스팅창 등장하게
-  		$("postBtn").on("click", function(){ 
-			
-			$("#auctionListAjax").hide();
-			document.getElementById('auctionPostAjax').style.display = '';
-			$("#auctionPostAjax").show();
-			
-		});
-		
-  	</script>
+  	</sec:authorize>
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	  	<div class="tab-pane fade" id="post1" style="padding-top:20%;">
   	<div class="posting">
