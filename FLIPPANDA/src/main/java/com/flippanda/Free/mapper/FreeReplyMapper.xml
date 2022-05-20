@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.flippanda.Free.mapper.FreeReplyMapper">
+
+	<resultMap type="com.flippanda.vo.FreeBoardReplyVO" id="freeReplySelectRM">
+		<result property="freeBoardNum" column="freeboard_num"/>
+		<result property="userNum" column="user_num"/>
+		<result property="freeBoardReplyNum" column="freeboard_reply_num"/>
+		<result property="freeBoardReplyContent" column="freeboard_reply_content"/>
+		<result property="freeBoardReplyer" column="freeboard_reply_replyer"/>
+		<result property="freeBoardReplyReplyDate" column="freeboard_reply_replyDate"/>
+		<result property="freeBoardReplyUpdateDate" column="freeboard_reply_updateDate"/>
+		<result property="freeBoardReplyNick" column="user_nick" />
+	</resultMap> 
+
+	<select id="getList" resultType="com.flippanda.vo.FreeBoardReplyVO" resultMap="freeReplySelectRM">
+		SELECT * FROM freeboard_reply_tbl
+			WHERE freeboard_num = #{freeBoardNum}
+		ORDER BY freeboard_reply_num DESC
+	</select>
+	
+	<insert id="create">
+		INSERT INTO freeboard_reply_tbl
+			(freeboard_reply_num, freeboard_num, freeboard_reply_content, freeboard_reply_replyer)
+				VALUES
+			(freeboard_reply_num.nextval, #{freeBoardNum}, #{freeBoardReplyContent}, #{freeBoardReplyer})
+	</insert>
+	
+	<update id="update">
+		UPDATE freeboard_reply_tbl
+			SET
+		freeboard_reply_content = #{freeBoardReplyContent}, freeboard_reply_updateDate = SYSDATE
+			WHERE freeboard_reply_num = #{freeBoardReplyNum}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM freeboard_reply_tbl
+			WHERE freeboard_reply_num = #{freeBoardReplyNum}
+	</delete>
+
+</mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.flippanda.Free.domain.FreeCriteria;
 import com.flippanda.Free.domain.FreePageMaker;
@@ -74,7 +75,11 @@ public class FreeBoardController {
 	}
 	
 	@PostMapping("/freeBoardDelete")
-	public String freeBoardDelete(long freeBoardNum) {
+	public String freeBoardDelete(long freeBoardNum, FreeSearchCriteria freecri, RedirectAttributes rttr) {
+		rttr.addAttribute("pageNum", freecri.getPageNum());
+		rttr.addAttribute("searchType", freecri.getSearchType());
+		rttr.addAttribute("keyword", freecri.getKeyword());
+		
 		freeservice.delete(freeBoardNum);
 		return "redirect:/freeBoard/freeBoardList";
 	}
@@ -88,21 +93,21 @@ public class FreeBoardController {
 	}
 	
 	@PostMapping("/freeBoardUpdate")			
-	public String boardUpdate(FreeBoardVO freeboard) {
+	public String boardUpdate(FreeBoardVO freeboard, FreeSearchCriteria freecri, RedirectAttributes rttr) {
 		// SearchCriteria가 제대로 받아오는지 체크
-		//log.info("수정로직 : "+ board);
-		//log.info("검색 키워드 : " + cri.getKeyword());
-		//log.info("검색 조건 : " + cri.getSearchType());
-		//log.info("검색 페이지번호 : " + cri.getPageNum());
+		log.info("수정로직 : "+ freeboard);
+		log.info("검색 키워드 : " + freecri.getKeyword());
+		log.info("검색 조건 : " + freecri.getSearchType());
+		log.info("검색 페이지번호 : " + freecri.getPageNum());
 		
 		// 리다이렉트시 주소창 뒤에 파라미터 쿼리스트링 형식으로 붙이기
 		// rttr.addAttribute("파라미터명", "전달자료");
 		// 는 호출되면 redirect 주소 뒤에 파라미터를 붙여줍니다.
 		// rttr.addFlashAttribute()는 넘거간 페이지에서 파라미터를
 		// 쓸 수 있도록 전달하는것으로 둘의 역할이 다르니 주의하세요.
-		//rttr.addAttribute("pageNum", cri.getPageNum());
-		//rttr.addAttribute("searchType", cri.getSearchType());
-		//rttr.addAttribute("keyword", cri.getKeyword());
+		rttr.addAttribute("pageNum", freecri.getPageNum());
+		rttr.addAttribute("searchType", freecri.getSearchType());
+		rttr.addAttribute("keyword", freecri.getKeyword());
 		
 		// update 호출
 		freeservice.update(freeboard);
