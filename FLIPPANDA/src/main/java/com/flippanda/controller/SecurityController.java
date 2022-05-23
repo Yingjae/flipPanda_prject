@@ -55,5 +55,11 @@ public class SecurityController {
 		log.info("글 삭제 ");
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/setAuth")
+	public void setAuth() {
+		
+	}
+	
 	
 }
