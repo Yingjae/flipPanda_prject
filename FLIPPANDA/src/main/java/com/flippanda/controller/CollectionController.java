@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.flippanda.collection.mapper.CollectionMapper;
 import com.flippanda.collection.service.CollectionService;
 import com.flippanda.vo.MyCollectionVO;
 
@@ -69,10 +68,11 @@ public class CollectionController {
 	// collectionNum을 받아서 해당 글 삭제
 	// 글 삭제 버튼은 페이지 하단에 userNum이나 userNick 일치하면 활성화
 	@PostMapping("/deleteMyCollection")
-	public String deleteMyCollection(long collectionNum) {
+	public String deleteMyCollection(long collectionNum, long userNum) {
 		service.deleteMyCollection(collectionNum);
+		List<MyCollectionVO> usersCollection = service.usersCollectionList(userNum);
 		// user security랑 연결하면 마이컬렉션으로 이동하도록 수정
-		return "redirect:/allCollectionList";
+		return "redirect:/usersCollectionList/" + userNum;
 	}
 	
 	// 글 수정하는 메서드
