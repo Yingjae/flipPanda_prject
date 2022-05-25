@@ -98,5 +98,11 @@
 			<button type="button" id="closeBtn">Close</button>
 		</div>
 	</div>
+	
+	<h2>ajax test</h2>
+	<ul id="allCollectionList">
+	
+	</ul>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>

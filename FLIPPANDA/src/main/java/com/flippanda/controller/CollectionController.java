@@ -95,6 +95,10 @@ public class CollectionController {
 	
 	// 좋아요 delete 메서드
 	
+	@GetMapping("/allCollectionList")
+	public void ajaxTest() {
+		
+	}
 	
 	
 }

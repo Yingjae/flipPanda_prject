@@ -11,10 +11,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Chakra+Petch:wght@500&family=Hahmlet:wght@200&family=Kanit:wght@300&family=Play:wght@400;700&family=Prompt:wght@300;400&display=swap" rel="stylesheet">
-<link href="${path}/resources/css/style_combine.css" rel="stylesheet"/> 	
+<link href="${cpath}/resources/css/style_combine.css" rel="stylesheet"/> 	
 
 <title>FLIPPANDA_main</title>
-<script src="${path}/resources/js/main.js"></script>
+<script src="${cpath}/resources/js/main.js"></script>
 <!-- AM CHARTS -->
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
@@ -36,124 +36,36 @@
 	  </header>
 	  
  <!-- ------------------------------------------------------------------------------------------------------------------ -->
-<script type="text/javascript">
-
-<!-- (SEARCH) ENTER FUNCTION -->
-<!-- POP-UP FUNCTIONS AND STYLE BLEOW -->
-
-	$(function(){
-		  var $header = $('header');
-		  var $fs = $('.front-start'); //MAIN CONTENT ST
-		  var $window = $(window);
-		  var fsOffsetTop = $fs.offset().top;
-		  
-		  $window.resize(function(){ 
-			  fsOffsetTop = $fs.offset().top;
-		  });
-		  
-		  $window.on('scroll', function(){
-		    var scroll = $window.scrollTop() >= fsOffsetTop;
-		    $header.toggleClass('down', scroll);
-		  });
-		});
-	
-<!-- SIDE PANEL ON/OFF -->
-
-<!-- DROPDOWN MENU START JS -->
-<!-- -------------------------- -->
-<!-- RECENTLY LISTING -->
-<!-- LISTING DONE -->
-
-<!-- NAV BOARD -->
-<!-- NAV BOARD DONE -->
-
-<!-- -------------------------- -->
-<!-- DROPDOWN DONE -->
-
-<!-- -------------------------- -->
-
-<!-- LOGIN START-->
-<!-- LOGIN DONE -->
-
-<!-- -------------------------- -->
-</script>
-
-<script type="text/javascript">
-
-<!-- (HOT) POPUP FUNCTION -->
-
-<!-- MIN AMOUNT BID FUNCTION -->
-
-<!-- STYLE AND SCROLL ANIMATIONS -->
-
-<!-- PROTOTYPE ONLY -->
-<!-- -------------------------- -->
-<!-- POST FUNTION -->
-
-<!-- PRICE INPUT SETUP -->
-
-</script>
-
 <section class="front-start">
 <div class="container-fluid pb-5">
 <div class="d-grid gap-5" style="grid-template-columns: 3fr 2fr; width: 95%; margin-left: 50px">
 <!-- ------------------------------------------------------------------------------------------------------------------ -->
-<!-- AUCTION LISTVIEW -->
-<div id="main" class="bg-light border rounded-3">
-<article id="auctionDetail">
-<div class="row" style="margin:3%">
-	<h3 class="col-md-11">${auctionList.auction_title}</h3>
-<p id="writer" class="col-10">Launched at '${auctionList.launch_date}'</p>
-<hr/>
-</div>
-<div id="contents" class="row" style="margin:3%">
-<img src="resources/img/dummy1.jpeg" style="align-content: center; width:99%"/>
-<p class="text-left">${auctionList.auction_description}</p>
-</div>
-<div id="productamount" class="row" style="margin-left:3%; margin-right:3%;">
-
-<!-- AJAX (below)-->
-<table class="table table-hover" style="font-size: 2vmin;">
-<tr>
-    <th>Current_Amount</th>
-    <td style="text-align:right;">₩ ${auctionList.current_amount}</td>
-    <!--<td style="text-align:right;">₩ <fmt:formatNumber value="${boarddetail.board_amount}" pattern="#,###"/></td>-->
-</tr>
-<tr>
-    <th>Bidding</th>
-    <td style="text-align:right; ">${auctionList.bid_count} hits</td>
-    <!--<td style="text-align:right;">${boarddetail.board_cartegory}</td>-->
-</tr>
-</table>
-</div>
-</article>
-
-<!--  GET AUCTION LISTVIEW (SCROLLABLE, UNLIMITED) -->
-
-<!--  INSET FOR EACH BELOW.. -->
-
-<!--  ADD MIN AMOUNT BID OPTIONS -->
-
-<!--  GET AUCTION LISTVIEW DONE-->
-</div>
-</div>
-
+	<!-- AUCTION LISTVIEW -->
+	<div id="main" class="bg-light border rounded-3">
+	<article id="auctionDetail">
+		<!-- frontView AJAX -->
+		<div id="auctionListAjax"></div>
+		<div id="auctionListAjax2"></div>
+		<div id="auctionPostAjax" style="display: none;"></div>
+	
+		<!-- chartVeiw AJAX -->
+		<div id="chartdiv"></div>
+	</article>
+	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------ -->
 <!-- USER INFO & SIDE FUNTION -->
 <div id="sidePanel" class="bg-light border rounded-3" style="margin-right:20%; width:80%; padding:10%; height:850px;">
- 
- <!-- CHECK FRONTEND (DELETE AFTER PJT DONE)-->
- <ul class="nav nav-tabs" style="font-size: 70%">
-  <li class="nav-item"><a class="nav-link active" href="#login" data-toggle="tab" data-load="true">login</a></li>
-  <li class="nav-item"><a class="nav-link" href="#user" data-toggle="tab" data-load="true">user</a></li>
-  <li class="nav-item"><a class="nav-link" href="#post1" data-toggle="tab" data-load="true">post</a></li>
-  <li class="nav-item"><a class="nav-link" href="#bid" data-toggle="tab" data-load="true">bid</a></li>
-  <li class="nav-item"><a class="nav-link" href="#fav" data-toggle="tab" data-load="true">fav</a></li>
-  <li class="nav-item"><a class="nav-link" href="#admin" data-toggle="tab" data-load="true">admin</a></li>
- </ul>
-
+	<!-- CHECK FRONTEND (DELETE AFTER PJT DONE)-->
+	 <ul class="nav nav-tabs" style="font-size: 70%; display: none;">
+	  <li class="nav-item"><a class="nav-link active" href="#login" data-toggle="tab" data-load="true">login</a></li>
+	  <li class="nav-item"><a class="nav-link" href="#user" data-toggle="tab" data-load="true">user</a></li>
+	  <li class="nav-item"><a class="nav-link" href="#post1" data-toggle="tab" data-load="true">post</a></li>
+	  <li class="nav-item"><a class="nav-link" href="#bid" data-toggle="tab" data-load="true">bid</a></li>
+	  <li class="nav-item"><a class="nav-link" href="#fav" data-toggle="tab" data-load="true">fav</a></li>
+	  <li class="nav-item"><a class="nav-link" href="#admin" data-toggle="tab" data-load="true">admin</a></li>
+	 </ul>
  <div class="tab-content">
-  <!-- ------------------------------------------------------------------------------------------------------------------ -->
+   <!-- ------------------------------------------------------------------------------------------------------------------ -->
  	<div class="tab-pane fade show active" id="login" style="padding-top:20%;">
  	<div class="login_signup">
 	<form action="/login" method="post">
@@ -169,7 +81,7 @@
 	  </form>
 	  </div>
 	</div>
-	 <!-- ------------------------------------------------------------------------------------------------------------------ -->
+   <!-- ------------------------------------------------------------------------------------------------------------------ -->
 	<div class="tab-pane fade" id="user" style="padding-top:15%;">
     <div class="user_profile">
     	<img class="mb-4 rounded-circle" src="resources/img/profile.png" width="100" style="border:5px solid #34B475">
@@ -178,21 +90,29 @@
     	<Strong>My Auction</Strong>
     	<div class="mb-2"></div>
     	<hr/>
-    	<button id="post" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" 
-	    data-dashlane-label="true">Post Auction</button>
+    	<button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" 
+	    data-dashlane-label="true">New Auction</button>
     	<hr/>
     </div>  
   	</div> 
-  	
   	<script>
+		
+  	//포스팅 버튼 클릭시 포스팅창 등장하게
+  		$("postBtn").on("click", function(){ 
+			
+			$("#auctionListAjax").hide();
+			document.getElementById('auctionPostAjax').style.display = '';
+			$("#auctionPostAjax").show();
+			
+		});
+		
   	</script>
-  	
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
-  	<div class="tab-pane fade" id="post1" style="padding-top:20%;">
+  	  	<div class="tab-pane fade" id="post1" style="padding-top:20%;">
   	<div class="posting">
   	<form data-form-type="post">
 		  <!-- CATEGRY ? -->
-	      <select name="auction_category" class="form-select" style="border:none; color: #959595" required>			  	
+	      <select name="auction_category" class="form-select" style="display: none; border:none; color: #959595" required>			  	
 				<option value="" class="dropdown-item">Select Category</option>
 				<option value="Electronics" class="dropdown-item">Electronics</option>
 				<option value="Collectable" class="dropdown-item">Treasure</option>
@@ -218,7 +138,7 @@
 	</form>
     </div>  
   	</div>
-  	 <!-- ------------------------------------------------------------------------------------------------------------------ -->
+   <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="bid" style="padding-top:15%;">
   	<div class="bidding">
   	<Strong>Bidding This</Strong>
@@ -245,12 +165,7 @@
       		<button id="my Balance" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Find Similar Deal</button>
     	</div>  
   	</div>
-  	
-  	<script type="text/javascript">
-  	
-  	</script>
-  	
-  	 <!-- ------------------------------------------------------------------------------------------------------------------ -->
+   <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="fav" style="padding-top:20%;">
   	<div class="favorite">
   	<Strong>My Save Auction</Strong>
@@ -262,7 +177,7 @@
     <div class="mb-4"></div>
     </div>  
   	</div>
-  	 <!-- ------------------------------------------------------------------------------------------------------------------ -->
+   <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="admin" style="padding-top:20%;">
   	<div class="admin_menu">
   	<jsp:include page="home.jsp"/>
@@ -271,8 +186,9 @@
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
   </div> 
   </div>
-</div>
 <!-- ------------------------------------------------------------------------------------------------------------------ -->
+</div>
+</div>
 </div>
 </section>
 </div>
