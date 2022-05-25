@@ -17,8 +17,7 @@
 		비밀번호 : <input type="text" name="password"><br/>
 		자동로그인 : <input type="checkbox" name="remember-me"><br/>
 		<input type="submit" value="로그인">
-		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-		
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 	</form>
 </body>
 </html>

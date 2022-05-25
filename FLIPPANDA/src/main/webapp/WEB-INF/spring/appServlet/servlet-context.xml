@@ -18,7 +18,7 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<annotation-driven/>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -29,13 +29,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.flippanda.controller" />
+	<context:component-scan base-package="com.flippanda.controller" use-default-filters="false">
+	
+	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+
+	</context:component-scan>
 	
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
-
-	<context:component-scan base-package="com.flippanda.collection.controller" />
 	
-	<context:component-scan base-package="com.flippanda.Free.controller" />
 	
 		
 </beans:beans>

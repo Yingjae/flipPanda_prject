@@ -62,7 +62,7 @@ $(document).ready(function(){
 	function loadAJAXList(){
 		 
 		$.ajax({
-			 url:"${cpath}/main",
+			 url:"main.ajax",
 			 type:"get",
 			 dataType:"json",
 			 success: auctionListAjax,

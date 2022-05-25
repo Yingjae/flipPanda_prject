@@ -45,12 +45,29 @@ public class MainController {
 	//비동기 처리중 //
 	
 	@GetMapping("/main")
-	public String frontView(Model model) {
-		
-		List<auctionVO> auctionList = auctionService.getAuctionListTest();
-		model.addAttribute("auctionList", auctionList);
-		log.info(auctionList);
-		return "main";
+	public String frontView() {
+		return "/main";
+	}
+	
+	@GetMapping("/main.ajax")
+	public @ResponseBody List<auctionVO> auctionListAjax(){
+		List<auctionVO> getAuctionList = auctionService.getAuctionListTest();
+		log.info(getAuctionList);
+		return getAuctionList;
+	}
+	
+	@GetMapping("/main.{auction_num}.ajax")
+	public @ResponseBody auctionVO auctionDetailAjax(@PathVariable long auction_num){
+		auctionVO getAuction = auctionService.getAuction(auction_num);
+		log.info(getAuction);
+		return getAuction;
+	}
+	
+	@GetMapping("/main.log={auction_num}.ajax")
+	public @ResponseBody List<auctionLogVO> auctionLogAjax(@PathVariable long auction_num){
+		List<auctionLogVO> auctionLog = auctionLogService.getbidLog(auction_num);
+		log.info(auctionLog);
+		return auctionLog;
 	}
 	
 	/*@GetMapping("/{auction_num}")
@@ -109,7 +126,7 @@ public class MainController {
 	//옥션 포스팅
 	@GetMapping("/post")
 	public String postAuctionForm() {
-		return "main/post";
+		return "post";
 	}
 	
 	@PostMapping("/post")
@@ -143,8 +160,11 @@ public class MainController {
 	
 	@PostMapping(value="", consumes="application/json",	produces={MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> bidNowAjax
-	(@RequestBody auctionVO avo, auctionLogVO alvo, bidVO bvo, Long auction_num){
+		
+		(@RequestBody auctionVO avo, auctionLogVO alvo, bidVO bvo, Long auction_num){
+		
 		ResponseEntity<String> entity = null;
+		
 		try {
 			
 			int current = (int) avo.getCurrent_amount(); 
@@ -156,7 +176,7 @@ public class MainController {
 			
 			if(current < bidAmount) {
 				auctionService.bidding(avo);
-				entity = new ResponseEntity<String>("Succeed Bid :)", HttpStatus.OK);
+				entity = new ResponseEntity<String>("Your Bid is Placed.", HttpStatus.OK);
 			}
 		}catch(Exception e) {
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -267,7 +287,4 @@ public class MainController {
 		}
 		return entity;
 	}*/
-	
-	
-
 }

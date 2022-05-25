@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri ="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,19 +10,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	#modDiv{
-		width: 300px;
-		height: 100px;
-		background-color: green;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		margin-top: -50px;
-		margin-left: -150px;
-		padding: 10px;
-		z-index: 1000;
-	}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 	<!-- 최종 작업
@@ -35,6 +26,10 @@
 		댓글 구현x -->		
 	<h1>MyCollection</h1>
 	<div id="contents">
+	<button id="btn">dd</button>
+	<div id="lists">
+
+	</div>
 	<table border="1" class="table table">
 		<thead>
 			<tr>
@@ -88,21 +83,31 @@
 	<sec:authorize access="isAuthenticated()">
 		<a href="/insertMyCollection" class="btn btn-success">글쓰기</a>
 	</sec:authorize>
-	<div id="modDiv" style="display:none;">
-		<div class="modal-title"></div>
-		<div>
-			<input type="text" id="replytext">
-		</div>
-		<div>
-			<button type="button" id="modBtn">Modify</button>
-			<button type="button" id="closeBtn">Close</button>
-		</div>
-	</div>
+
+	<script type="text/javascript">
+
+	function getAllList() {
+		$.getJSON("/allCollectionList", function(data){
+			let str = "";
+			
+			$(data).each(function(){
+				str += "<div>" + this.collectionNum + this.collectionContent
+					+  "</div>";
+			});
+			console.log(str);
+			$("#lists").html(str);
+			}
+		);
+	}
 	
-	<h2>ajax test</h2>
-	<ul id="allCollectionList">
+	getAllList();
 	
-	</ul>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+	
+			$("#btn").on("click", function(){
+				getAllList();
+			
+		});
+</script>
 </body>
 </html>

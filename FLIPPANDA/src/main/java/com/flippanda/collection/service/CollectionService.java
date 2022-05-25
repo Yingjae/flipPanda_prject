@@ -3,6 +3,7 @@ package com.flippanda.collection.service;
 import java.util.List;
 
 import com.flippanda.vo.MyCollectionVO;
+import com.flippanda.vo.clikeVO;
 
 public interface CollectionService {
 	
@@ -23,4 +24,6 @@ public interface CollectionService {
 		
 	// 글을 수정하는 서비스
 	public void updateMyCollection(MyCollectionVO cVO);
+	
+
 }

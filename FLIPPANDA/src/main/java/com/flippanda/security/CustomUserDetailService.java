@@ -19,7 +19,7 @@ public class CustomUserDetailService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		log.warn("유저 이름 확인: 유저 이름 확인: 유저 이름 확인: 유저 이름 확인: 유저 이름 확인: 유저 이름 확인: 유저 이름 확인: 유저 이름 확인: ");
+		
 		log.warn("유저 이름 확인: " + username);
 		UserVO vo = mapper.read(username);
 		log.info("확인된 유저이름으로 얻어온 정보 : "  + vo);
