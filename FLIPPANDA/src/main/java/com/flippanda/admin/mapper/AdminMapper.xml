@@ -6,16 +6,15 @@
 
 	<resultMap type="com.flippanda.vo.AdminVO" id="adminRM">
 		<result property="adminNum" column="admin_num"/>
-		<result property="adminId" column="admin_id"/>
-		<result property="adminPw" column="admin_pw"/>
+		<result property="userNum" column="user_num"/>
 		<result property="endAuction" column="admin_endAuction"/>
 		<result property="auctionInProgress" column="admin_In_progress"/>
 	</resultMap>
 	<!-- 회원가입  -->
 	<insert id="adminInsert">
-		INSERT INTO admin_tbl (admin_num, admin_id, admin_pw)
+		INSERT INTO admin_tbl (admin_num, user_num)
 			values
-		(admin_num.nextval, #{adminId}, #{adminPw})	
+		(admin_num.nextval, #{userNum})	
 	</insert>
 	
 	<!-- 회원정보 받아오기 -->

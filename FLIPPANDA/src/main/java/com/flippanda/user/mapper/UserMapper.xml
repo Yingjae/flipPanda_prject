@@ -22,10 +22,9 @@
 	</resultMap>
 	<!-- 회원가입  -->
 	<insert id="userInsert">
-		INSERT INTO user_tbl (user_num, user_name, user_address, user_id, user_pw, user_nick)
+		INSERT INTO user_tbl ( user_name, user_address, user_id, user_pw, user_nick)
 			values
-		(case count(*) when 0 then 1 else max(user_num) + 1 end, #{userName}, #{userAddress}, #{userId}, #{userPw}, #{userNick})
-		
+		(#{userName}, #{userAddress}, #{userId}, #{userPw}, #{userNick})	
 	</insert>
 		
 	<!-- 계정 생성시 자동으로 user권한 부여 -->
