@@ -47,5 +47,4 @@ public class CollectionServiceImpl implements CollectionService {
 		collectionMapper.updateMyCollection(cVO);
 	}
 
-
 }

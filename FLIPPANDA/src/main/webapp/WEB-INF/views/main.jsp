@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri ="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri ="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,7 +97,7 @@
 	  <li class="nav-item"><a class="nav-link" href="#admin" data-toggle="tab" data-load="true">admin</a></li>
 	 </ul>
  <div class="tab-content">
-   <!-- ------------------------------------------------------------------------------------------------------------------ -->
+  <!-- ------------------------------------------------------------------------------------------------------------------ -->
  	<sec:authorize access="isAnonymous()">
  	<div class="tab-pane fade show active" id="login" style="padding-top:20%;">
  	<div class="login_signup">
@@ -107,7 +107,7 @@
 	      <input type="text" class="form-control" id="loginFormId" placeholder="Your ID" data-form-type="userId" name="username">
 	      <input type="password" class="form-control" id="loginFormPw" placeholder="Your Password" data-form-type="userPw" name="password">
 		  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
-	      <div class="mb-4"></div>
+	    <div class="mb-4"></div>
 	    <button id="login_submit" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
 	    data-dashlane-label="true">Sign in</button>
 	  </form>
@@ -129,10 +129,14 @@
     	<button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" 
 	    data-dashlane-label="true">New Auction</button>
     	<hr/>
+    	<form action="/customLogout" method="post">
+			<input type="submit" value="로그아웃">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
+		</form>
     </div>  
   	</sec:authorize>
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
-  	  <div class="tab-pane fade" id="post1" style="padding-top:20%;">
+  	<div class="tab-pane fade" id="post1" style="padding-top:20%;">
   	<div class="posting">
   		<form data-form-type="post">
 		  <!-- CATEGRY ? -->
