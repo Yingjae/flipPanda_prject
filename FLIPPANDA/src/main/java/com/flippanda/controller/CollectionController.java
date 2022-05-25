@@ -1,14 +1,20 @@
 package com.flippanda.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.flippanda.collection.service.CollectionService;
 import com.flippanda.vo.MyCollectionVO;
@@ -33,6 +39,21 @@ public class CollectionController {
 		service.getAllCollectionList();
 		return "allCollectionList";
 	}
+	// 전체 글을 조회하는 로직(비동기)
+	@GetMapping(value="/allCollectionList",
+				produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
+		public ResponseEntity<List<MyCollectionVO>> list(){
+			ResponseEntity<List<MyCollectionVO>> entity = null;
+			
+			try {
+				entity = new ResponseEntity<>(
+						service.getAllCollectionList(), HttpStatus.OK);
+			} catch(Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			return entity;
+		}
 	
 	// 특정 유저의 글을 조회하는 로직
 	@GetMapping("/usersCollectionList/{userNum}")
@@ -46,6 +67,13 @@ public class CollectionController {
 		cModel.addAttribute("userNum", userNum);*/
 		return "usersCollectionList";
 	}
+	
+	// 특정 유저의 글을 조회하는 로직(비동기)
+	/*@GetMapping(value="/usersCollectionList"
+			    produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
+		public ResponseEntity<List<MyCollectionVO>> usersCollection(){
+			ResponseEntity<List<MyCollectionVO>> entity = null;
+	}*/
 	
 	// 컬렉션 글을 추가하는 로직
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -90,10 +118,6 @@ public class CollectionController {
 		return "redirect:/usersCollectionList/" + cVO.getUserNum(); 
 	}
 	
-	// 좋아요 insert 메서드
-	
-	
-	// 좋아요 delete 메서드
 	
 	
 	

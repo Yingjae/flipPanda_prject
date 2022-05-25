@@ -52,9 +52,13 @@
 	<!-- 글 추가하기 -->
 	<insert id="insertMyCollection">
 		INSERT INTO my_collection_tbl 
-			   (collection_num, user_num, collection_title, collection_content)
+			   (user_num, 
+			    collection_title, 
+			    collection_content)
 	    VALUES	
-			   (collection_num.nextval, #{userNum}, #{collectionTitle}, #{collectionContent})
+			   (#{userNum}, 
+			    #{collectionTitle}, 
+			    #{collectionContent})
 	</insert>
 	
 	<!-- 글 삭제하기 -->
@@ -78,7 +82,11 @@
 		UPDATE my_collection_tbl
 		   SET collection_title=#{collectionTitle}
 		     , collection_content=#{collectionContent}
-		     , collection_updatedate=SYSDATE
+		     , collection_updatedate=NOW()
 		 WHERE collection_num=#{collectionNum}	 	
 	</update>
+	
+
+	
+	
 </mapper>	
