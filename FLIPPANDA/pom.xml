@@ -222,9 +222,13 @@
             <version>1.9.0</version>
             <!-- <scope>runtime</scope> -->
         </dependency>
+    
 
     	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<<<<<<< HEAD
 
+=======
+>>>>>>> 004408452b9b8408bd78d89e1efd6607d2a70954
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

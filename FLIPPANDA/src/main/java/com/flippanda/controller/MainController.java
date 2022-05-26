@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.flippanda.vo.auctionLogVO;
-import com.flippanda.vo.auctionVO;
-import com.flippanda.vo.bidVO;
+import com.flippanda.auctionFunk.auctionLogVO;
+import com.flippanda.auctionFunk.auctionVO;
+import com.flippanda.auctionFunk.bidVO;
 import com.flippanda.auctionFunk.service.AuctionSevice;
 import com.flippanda.auctionFunk.service.auctionLogSevice;
 
