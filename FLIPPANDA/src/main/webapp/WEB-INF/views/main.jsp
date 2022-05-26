@@ -98,7 +98,7 @@
 	 </ul>
  <div class="tab-content">
   <!-- ------------------------------------------------------------------------------------------------------------------ -->
- 	<sec:authorize access="isAnonymous()">
+	<sec:authorize access="isAnonymous()">
  	<div class="tab-pane fade show active" id="login" style="padding-top:20%;">
  	<div class="login_signup">
 	<form action="/login" method="post">
@@ -106,30 +106,18 @@
 	
 	      <input type="text" class="form-control" id="loginFormId" placeholder="Your ID" data-form-type="userId" name="username">
 	      <input type="password" class="form-control" id="loginFormPw" placeholder="Your Password" data-form-type="userPw" name="password">
-<<<<<<< HEAD
-		  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
-	    <div class="mb-4"></div>
-	    <button id="login_submit" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
-	    data-dashlane-label="true">Sign in</button>
-=======
 
 	    <div class="mb-4"></div>
     
 	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 	    <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
 	    data-dashlane-label="true" data-form-type="login">Sign in</button>
-	    <p class="mt-5 mb-3 text-muted"></p>z
->>>>>>> 004408452b9b8408bd78d89e1efd6607d2a70954
+	    <p class="mt-5 mb-3 text-muted"></p>
 	  </form>
 	  </div>
 	</div>
 	</sec:authorize>
-<<<<<<< HEAD
-   <!-- ------------------------------------------------------------------------------------------------------------------ -->
-=======
-	 <!-- ------------------------------------------------------------------------------------------------------------------ -->
-
->>>>>>> 004408452b9b8408bd78d89e1efd6607d2a70954
+<!-- ---------------------------------------------------------------------------------------------------------->
 	<sec:authorize access="isAuthenticated()">
 	<div class="tab-pane fade" id="user" style="padding-top:15%;">
     <div class="user_profile">
@@ -149,13 +137,8 @@
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 		</form>
     </div>  
-<<<<<<< HEAD
-  	</sec:authorize>
-=======
   	</div>
   	</sec:authorize>
-
->>>>>>> 004408452b9b8408bd78d89e1efd6607d2a70954
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="post1" style="padding-top:20%;">
   	<div class="posting">

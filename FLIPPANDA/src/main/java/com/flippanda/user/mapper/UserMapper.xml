@@ -24,16 +24,7 @@
 	<insert id="userInsert">
 		INSERT INTO user_tbl ( user_name, user_address, user_id, user_pw, user_nick)
 			values
-<<<<<<< HEAD
-<<<<<<< HEAD
-		(case count(*) when 0 then 1 else max(user_num) + 1 end, #{userName}, #{userAddress}, #{userId}, #{userPw}, #{userNick})
-		
-=======
 		(#{userName}, #{userAddress}, #{userId}, #{userPw}, #{userNick})	
->>>>>>> acad0feedb182e1ad3934053d48e7b36d94de309
-=======
-		(#{userName}, #{userAddress}, #{userId}, #{userPw}, #{userNick})	
->>>>>>> 004408452b9b8408bd78d89e1efd6607d2a70954
 	</insert>
 		
 	<!-- 계정 생성시 자동으로 user권한 부여 -->
