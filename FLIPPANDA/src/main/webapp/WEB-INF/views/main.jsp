@@ -98,7 +98,7 @@
 	 </ul>
  <div class="tab-content">
   <!-- ------------------------------------------------------------------------------------------------------------------ -->
- 	<sec:authorize access="isAnonymous()">
+	<sec:authorize access="isAnonymous()">
  	<div class="tab-pane fade show active" id="login" style="padding-top:20%;">
  	<div class="login_signup">
 	<form action="/login" method="post">
@@ -112,13 +112,12 @@
 	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 	    <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
 	    data-dashlane-label="true" data-form-type="login">Sign in</button>
-	    <p class="mt-5 mb-3 text-muted"></p>z
+	    <p class="mt-5 mb-3 text-muted"></p>
 	  </form>
 	  </div>
 	</div>
 	</sec:authorize>
-	 <!-- ------------------------------------------------------------------------------------------------------------------ -->
-
+<!-- ---------------------------------------------------------------------------------------------------------->
 	<sec:authorize access="isAuthenticated()">
 	<div class="tab-pane fade" id="user" style="padding-top:15%;">
     <div class="user_profile">
@@ -140,9 +139,8 @@
     </div>  
   	</div>
   	</sec:authorize>
-
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
-  	  <div class="tab-pane fade" id="post1" style="padding-top:20%;">
+  	<div class="tab-pane fade" id="post1" style="padding-top:20%;">
   	<div class="posting">
   		<form data-form-type="post">
 		  <!-- CATEGRY ? -->
