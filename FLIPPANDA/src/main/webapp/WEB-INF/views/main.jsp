@@ -28,7 +28,6 @@
 </head>
 <body>
 <div id="wrapper">
-	<!-- NOT LOGIN -->
 	<header class="py-4 mb-2" style="border-bottom: 1px;">
 	    <div class="container d-flex flex-wrap">
 	      <a href="/main" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
@@ -36,7 +35,7 @@
          	<img src="resources/img/flippanda_main.png" width="150px"/>
 	      </a>
 	      <form class="col-12 col-lg-auto mb-3 mb-lg-0" data-form-type="" style="width:430px;">
-	        <input type="search" class="form-control" placeholder="Find Auction" aria-label="Search" data-form-type="">
+	        <input type="search" class="form-control" placeholder="Find Auction" aria-label="Search">
 	      </form>
 	    </div>
 	  </header>
@@ -51,37 +50,19 @@
 	<article id="auctionDetail">
 		<!-- frontView AJAX -->
 		<div id="auctionListAjax"></div>
-		
-		<div id="auctionDetailAjax" style="display: none;">
-		<div class="row" style="margin:3%">
-			<h3 class="col-md-11">${auctionList.auction_title}</h3>
-			<p id="writer" class="col-10">Launched at '${auctionList.launch_date}'</p>
-			<hr/>
-			</div>
-			<div id="contents" class="row" style="margin:3%">
-			<img src="resources/img/dummy1.jpeg" style="align-content: center; width:99%"/>
-			<p class="text-left">${auctionList.auction_description}</p>
-			</div>
-			<div id="productamount" class="row" style="margin-left:3%; margin-right:3%;">
-			
-			<!-- AJAX (below)-->
-			<table class="table table-hover" style="font-size: 2vmin;">
-			<tr>
-			    <th>Current_Amount</th>
-			    <td style="text-align:right;">₩ ${auctionList.current_amount}</td>
-			    <!--<td style="text-align:right;">₩ <fmt:formatNumber value="${boarddetail.board_amount}" pattern="#,###"/></td>-->
-			</tr>
-			<tr>
-			    <th>Bidding</th>
-			    <td style="text-align:right; ">${auctionList.bid_count} hits</td>
-			    <!--<td style="text-align:right;">${boarddetail.board_cartegory}</td>-->
-			</tr>
-			</table>
-		</div>
-		</div>
+		<div id="auctionDetailAjax" style="display: none;"></div>
 		<div id="auctionPostAjax" style="display: none;"></div>
+		
 		<!-- chartVeiw AJAX -->
 		<div id="chartdiv"></div>
+		
+		<!-- infinity scroll loading effect -->
+	    <div class="loading">
+	        <div class="ball"></div>
+	        <div class="ball"></div>
+	        <div class="ball"></div>
+	    </div>
+	    
 	</article>
 	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------ -->
@@ -131,9 +112,9 @@
     </div>  
   	</sec:authorize>
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
-  	  	<div class="tab-pane fade" id="post1" style="padding-top:20%;">
+  	  <div class="tab-pane fade" id="post1" style="padding-top:20%;">
   	<div class="posting">
-  	<form data-form-type="post">
+  		<form data-form-type="post">
 		  <!-- CATEGRY ? -->
 	      <select name="auction_category" class="form-select" style="display: none; border:none; color: #959595" required>			  	
 				<option value="" class="dropdown-item">Select Category</option>
@@ -172,8 +153,10 @@
       		style="width: 90%; border:none; color: #959595; float:left;" required/>
       		<img src="resources/img/fliped.png" width="20px" style="margin-top: 8px"/>
       		<input type="hidden"/>
+      		
       		<button id="bid_btn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Bid Now</button>
      </form>	
+     
      		<button id="buy_btn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Buy Now</button>
      	<div id="recentBidHistory" class="py-2 mb-4"></div>
      		<table class="table table-hover" style="font-size: xx-small; text-align: left;">
@@ -184,6 +167,7 @@
 			<th>Date</th>
 			</tr>
 			</table>
+			<div id="recentBidHistory"></div>
 			<div style="width: 100%; height: 300px; overflow: auto;">
       		<button id="my Balance" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Find Similar Deal</button>
     	</div>  
