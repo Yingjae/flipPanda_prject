@@ -24,7 +24,7 @@
 	<insert id="userInsert">
 		INSERT INTO user_tbl ( user_name, user_address, user_id, user_pw, user_nick)
 			values
-		(#{userName}, #{userAddress}, #{userId}, #{userPw}, #{userNick})	
+		(#{userName},#{userAddress},#{userId},#{userPw},#{userNick})	
 	</insert>
 		
 	<!-- 계정 생성시 자동으로 user권한 부여 -->

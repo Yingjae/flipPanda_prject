@@ -4,28 +4,38 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.flippanda.user.service.UserService;
+import com.flippanda.vo.UserVO;
 
 import lombok.extern.log4j.Log4j;
 
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class tes {
-	private final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	private final String URL = 
-			"jdbc:mysql://127.0.0.1:3306/mysql?useSSL=false&serverTimezone=UTC";
-	private final String USER = "root";
-	private final String PW = "mysql";
+	
+	@Autowired
+	private UserService userService;
 	
 	@Test
-	public void testConnection() throws Exception{
-		Class.forName(DRIVER);
+	public void testConnection() {
 		
-		try(Connection con = DriverManager.getConnection(URL, USER, PW)) {
+		UserVO userData =  new UserVO();
+		
+		userData.setUserName("11");
+		userData.setUserId("11");
+		userData.setUserNick("11");
+		userData.setUserPw("11");
+		userData.setUserAddress("11");
 			
-			log.info(con);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		userService.userInsert(userData);
+		
 	}
 	
 }

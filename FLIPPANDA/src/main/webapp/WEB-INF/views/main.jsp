@@ -89,12 +89,18 @@
 <div id="sidePanel" class="bg-light border rounded-3" style="margin-right:20%; width:80%; padding:10%; height:850px;">
 	<!-- CHECK FRONTEND (DELETE AFTER PJT DONE)-->
 	 <ul class="nav nav-tabs" style="font-size: 70%;">
+	 <sec:authorize access="isAnonymous()">
 	  <li class="nav-item"><a class="nav-link active" href="#login" data-toggle="tab" data-load="true">login</a></li>
-	  <li class="nav-item"><a class="nav-link" href="#user" data-toggle="tab" data-load="true">user</a></li>
+	 </sec:authorize>
+	 <sec:authorize access="isAuthenticated()">
+	  <li class="nav-item"><a class="nav-link active" href="#user" data-toggle="tab" data-load="true">user</a></li>
 	  <li class="nav-item"><a class="nav-link" href="#post1" data-toggle="tab" data-load="true">post</a></li>
 	  <li class="nav-item"><a class="nav-link" href="#bid" data-toggle="tab" data-load="true">bid</a></li>
 	  <li class="nav-item"><a class="nav-link" href="#fav" data-toggle="tab" data-load="true">fav</a></li>
-	  <li class="nav-item"><a class="nav-link" href="#admin" data-toggle="tab" data-load="true">admin</a></li>
+	  <sec:authorize access="hasRole('ROLE_ADMIN')">
+		  <li class="nav-item"><a class="nav-link" href="#admin" data-toggle="tab" data-load="true">admin</a></li>
+	  </sec:authorize>
+	 </sec:authorize>
 	 </ul>
  <div class="tab-content">
   <!-- ------------------------------------------------------------------------------------------------------------------ -->
@@ -112,6 +118,7 @@
 	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 	    <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
 	    data-dashlane-label="true" data-form-type="login">Sign in</button>
+	    <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black"><a href ="/secu/join" style="color:#fff; text-decoration:none">Join us</a></button>
 	    <p class="mt-5 mb-3 text-muted"></p>
 	  </form>
 	  </div>
@@ -119,23 +126,20 @@
 	</sec:authorize>
 <!-- ---------------------------------------------------------------------------------------------------------->
 	<sec:authorize access="isAuthenticated()">
-	<div class="tab-pane fade" id="user" style="padding-top:15%;">
+	<div class="tab-pane fade show active" id="user" style="padding-top:15%;">
     <div class="user_profile">
     	<img class="mb-4 rounded-circle" src="resources/img/profile.png" width="100" style="border:5px solid #34B475">
     	<Strong class="tbd"> TBD: User_infomation / Post Btn </Strong>
     	<hr/>
     	<form action="/customLogout" method="post">
-			<input type="submit" value="로그아웃">
+			<button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
+	   		 data-dashlane-label="true" data-form-type="login">LogOut</button>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 		</form>
     </div>  
     	<button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" 
 	    data-dashlane-label="true">New Auction</button>
     	<hr/>
-    	<form action="/customLogout" method="post">
-			<input type="submit" value="로그아웃">
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
-		</form>
     </div>  
   	</div>
   	</sec:authorize>
@@ -172,30 +176,31 @@
   	</div>
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="bid" style="padding-top:15%;">
-  	<div class="bidding">
-  	<Strong>Bidding This</Strong>
-  	<div class="mb-4"></div>
-  	 <form data-form-type="bid">
-    	 <input id="priceinsert" type="text" onkeyup="inputNumberFormat(this)" class="py-2 mb-2" name="start_amount" placeholder="  Place Your Bid"
-      		oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" 
-      		style="width: 90%; border:none; color: #959595; float:left;" required/>
-      		<img src="resources/img/fliped.png" width="20px" style="margin-top: 8px"/>
-      		<input type="hidden"/>
-      		<button id="bid_btn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Bid Now</button>
-     </form>	
-     		<button id="buy_btn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Buy Now</button>
-     	<div id="recentBidHistory" class="py-2 mb-4"></div>
-     		<table class="table table-hover" style="font-size: xx-small; text-align: left;">
-			<tr>
-			<th class="col-2">Flip</th>
-			<th class="col-3">Flipper</th>
-			<th>Amount</th>
-			<th>Date</th>
-			</tr>
-			</table>
-			<div style="width: 100%; height: 300px; overflow: auto;">
-      		<button id="my Balance" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Find Similar Deal</button>
-    	</div>  
+	  	<div class="bidding">
+	  	<Strong>Bidding This</Strong>
+	  	<div class="mb-4"></div>
+	  	 <form data-form-type="bid">
+	    	 <input id="priceinsert" type="text" onkeyup="inputNumberFormat(this)" class="py-2 mb-2" name="start_amount" placeholder="  Place Your Bid"
+	      		oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" 
+	      		style="width: 90%; border:none; color: #959595; float:left;" required/>
+	      		<img src="resources/img/fliped.png" width="20px" style="margin-top: 8px"/>
+	      		<input type="hidden"/>
+	      		<button id="bid_btn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Bid Now</button>
+	     </form>	
+	     		<button id="buy_btn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Buy Now</button>
+	     	<div id="recentBidHistory" class="py-2 mb-4"></div>
+	     		<table class="table table-hover" style="font-size: xx-small; text-align: left;">
+				<tr>
+				<th class="col-2">Flip</th>
+				<th class="col-3">Flipper</th>
+				<th>Amount</th>
+				<th>Date</th>
+				</tr>
+				</table>
+				<div style="width: 100%; height: 300px; overflow: auto;">
+	      		<button id="my Balance" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Find Similar Deal</button>
+	    	</div>  
+	  	</div>
   	</div>
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="fav" style="padding-top:20%;">
