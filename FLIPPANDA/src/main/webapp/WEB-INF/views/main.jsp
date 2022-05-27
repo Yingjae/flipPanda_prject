@@ -16,11 +16,6 @@
 
 <title>FLIPPANDA_main</title>
 
-<!-- JS -->
-<script src="${cpath}/resources/js/main.js"></script>
-<script src="${cpath}/resources/jsjquery-3.4.1.min.js"></script>
-<script src="${cpath}/resources/jquery.mousewheel.min.js"></script>
-
 <!-- AM CHARTS(TBD) -->
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
@@ -48,13 +43,42 @@
 	<!-- AUCTION LISTVIEW -->
 	<div id="main" class="bg-light border rounded-3">
 	<article id="auctionDetail">
+	
+		<!-- infinity scroll loading effect -->
+	    <div class="loadingTop">
+	        <div class="ball"></div>
+	        <div class="ball"></div>
+	        <div class="ball"></div>
+	    </div>
+	    
+	    <!-- ------------------------------------------------------------------------------------------------------------------ -->
 		<!-- frontView AJAX -->
 		<div id="auctionListAjax"></div>
 		<div id="auctionDetailAjax" style="display: none;"></div>
-		<div id="auctionPostAjax" style="display: none;"></div>
+		<!-- ------------------------------------------------------------------------------------------------------------------ -->
+		
+		<!-- ONCLICK => ON/OFF -->
+		<div id="auctionPostAjax" style="display: none;">
+			<!-- LEGACY FORM -->
+			<form action="${cpath}/postAuctionForm" method="post" enctype="multipart/form-data">
+				<table class="table">
+					<tr>	
+						<th colspan="3" style=""><textarea class="titlearea" name="auction_title" placeholder="title" required/></textarea></th>
+					</tr>
+					<tr>
+						<th colspan="3" style="font-size:80%">
+						<textarea class="contentarea" name="auction_description" placeholder="Description here" required/></textarea><br/>
+					</tr>
+			    	 <tr>
+			    	 	<th colspan="3" style="font-size:80%">
+							<input type="image" name="auction_photo" multiple><br/></th>
+					 </tr>
+			   		 </table>
+			   	<div id="post"><input type="submit" value="Post" class="btn"></div>
+			</form>
+		</div>
 		
 		<!-- chartVeiw AJAX -->
-		<div id="chartdiv"></div>
 		
 		<!-- infinity scroll loading effect -->
 	    <div class="loading">
@@ -202,5 +226,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- JS -->
+	<script src="${cpath}/resources/js/main.js"></script>
+	<script src="${cpath}/resources/js/ListingList.js"></script>
+	<script src="${cpath}/resources/js/ListingDetail.js"></script>
+	<script src="${cpath}/resources/js/bid.js"></script>
+	<script src="${cpath}/resources/jsjquery-3.4.1.min.js"></script>
+	<script src="${cpath}/resources/jquery.mousewheel.min.js"></script>
 </body>
 </html>
