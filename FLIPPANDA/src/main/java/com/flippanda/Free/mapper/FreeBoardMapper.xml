@@ -102,9 +102,9 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO freeboard_tbl (freeboard_title, freeboard_content)
+		INSERT INTO freeboard_tbl (user_num, freeboard_title, freeboard_content)
 			VALUES
-		(#{freeBoardTitle}, #{freeBoardContent})
+		(#{userNum}, #{freeBoardTitle}, #{freeBoardContent})
 			
 	
 	</insert>
