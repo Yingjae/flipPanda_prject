@@ -31,6 +31,8 @@ public List<FreeBoardVO> usersGetList(long userNum);
 	
 	public FreeBoardVO getNick(String freeBoardNick);
 	
+	public void Updateviews(int freeBoardViews);
+	
 	
 
 

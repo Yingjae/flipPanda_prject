@@ -23,15 +23,15 @@
 	
 	<insert id="create">
 		INSERT INTO freeboard_reply_tbl
-			(freeboard_reply_num, freeboard_num, freeboard_reply_content, freeboard_reply_replyer)
+			(freeboard_num, freeboard_reply_content, freeboard_reply_replyer)
 				VALUES
-			(freeboard_reply_num.nextval, #{freeBoardNum}, #{freeBoardReplyContent}, #{freeBoardReplyer})
+			(#{freeBoardNum}, #{freeBoardReplyContent}, #{freeBoardReplyer})
 	</insert>
 	
 	<update id="update">
 		UPDATE freeboard_reply_tbl
 			SET
-		freeboard_reply_content = #{freeBoardReplyContent}, freeboard_reply_updateDate = SYSDATE
+		freeboard_reply_content = #{freeBoardReplyContent}, freeboard_reply_updateDate = now()
 			WHERE freeboard_reply_num = #{freeBoardReplyNum}
 	</update>
 	

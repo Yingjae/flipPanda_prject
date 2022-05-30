@@ -59,6 +59,12 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return freeBoardMapper.usersGetList(userNum);
 	}
 
+	//@Override
+	//public void Updateviews(FreeBoardVO vo) {
+	//	return freeBoardMapper.Updateviews(vo);
+		
+//}
+
 
 	
 	

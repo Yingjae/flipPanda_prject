@@ -35,7 +35,7 @@
 		</table>
 		<a href="/freeBoard/freeBoardInsert" class="btn btn-success">writing</a> <br/>
 		
-		<!-- 페이지처리 버튼 -->
+		<!-- 페이지처리 버튼 
 		<ul class="pagination justify-content-center">
 		    <c:if test="${freePageMaker.prev }">
 		    	<li class="page-item">
@@ -61,6 +61,7 @@
 		    	</li>
 		    </c:if>
  		 </ul>
+ 		 -->
  		 
  		 <!-- 검색창 부분 -->
  		 <div class="row">

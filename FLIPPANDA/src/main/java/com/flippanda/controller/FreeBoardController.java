@@ -79,7 +79,8 @@ public class FreeBoardController {
 		rttr.addAttribute("pageNum", freecri.getPageNum());
 		rttr.addAttribute("searchType", freecri.getSearchType());
 		rttr.addAttribute("keyword", freecri.getKeyword());
-		
+	
+	
 		freeservice.delete(freeBoardNum);
 		return "redirect:/freeBoard/freeBoardList";
 	}
