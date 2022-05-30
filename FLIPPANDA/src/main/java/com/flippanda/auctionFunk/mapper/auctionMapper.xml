@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flippanda.auctionFunk.mapper.auctionMapper">
+
+	<sql id="searchAuction">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				(auction_title like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'c'.toString()">
+				(description like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'w'.toString()">
+				(user like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				((auction_title like '%'||#{keyword}||'%')
+				OR
+				(description like '%'||#{keyword}||'%')) AND
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				((description like '%'||#{keyword}||'%')
+				OR
+				(user like '%'||#{keyword}||'%')) AND
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				((auction_title like '%'||#{keyword}||'%')
+				OR
+				(description like '%'||#{keyword}||'%')
+				OR
+				(user like '%'||#{keyword}||'%')) AND
+			</if>
+		</if>
+	</sql>
+	
+	<!-- AUCTION LISTUP -->
+	<select id="getAuctionList" resultType="com.flippanda.vo.auctionVO">
+		<![CDATA[
+			SELECT * FROM
+				(SELECT /*+ INDEX_DESC auction_tbl */
+				rownum auction_num, auction_tbl.* FROM auction_tbl WHERE 
+		]]>	
+		<include refid="searchAuction" />
+		<![CDATA[				
+			auction_num > 0 limit #{pageEnd}) WHERE rn > #{pageStart}
+		]]>
+	</select>
+	
+	<select id="getAuctionListTest" resultType="com.flippanda.vo.auctionVO">
+		SELECT * FROM auction_tbl ORDER BY auction_num DESC
+	</select>
+	
+	<select id="getPendingList" resultType="com.flippanda.vo.auctionVO">
+		SELECT * FROM auction_tbl WHERE launch_auction = '0' ORDER BY auction_num DESC
+	</select>
+	
+	
+	<!-- AUCTION DETAIL -->
+	<select id="getAuction" resultType="com.flippanda.vo.auctionVO">
+		SELECT * FROM auction_tbl WHERE auction_num = #{auction_num}
+	</select>
+	
+	<!-- INSERT AUCTION -->
+	<insert id="postAuction">
+		INSERT INTO auction_tbl 
+		(auction_title, product_name, product_category,
+			 auction_description, user_num, start_amount, current_amount, bid_available, RTB_price)
+		VALUES
+		 #{auction_title}, #{product_name}, #{product_category}, 
+								 #{auction_description}, #{user_num}, #{start_amount}, #{start_amount}, 1, #{RTB_price})
+	</insert>
+	
+	<!-- (ADMIN) PUBLISH -->
+	<update id="publishAuction">
+		UPDATE auction_tbl SET launch_auction = 1 
+		WHERE auction_num = #{auction_num}
+	</update>
+	
+	<!-- RECORDING BID HISTORY -->
+	<update id="bidding" parameterType="com.flippanda.vo.bidVO">
+		UPDATE auction_tbl SET bid_amount = #{bid_amount}, current_amount = current_amount + #{bid_amount}, bid_count = bid_count + 1
+		 WHERE auction_num = #{auction_num}
+	</update>
+	
+	<!-- EDIT AUCTION DETAIL -->
+	<update id="update">
+		UPDATE auction_tbl SET 
+		auction_title = #{auction_title}, auction_description = #{auction_description}, update_date = now() 
+		WHERE auction_num = #{auction_num}
+	</update>
+	
+	<!-- (ADMIN) CLOSE AUCTION -->
+	<update id="closeAuction">
+		UPDATE auction_tbl SET close_amount = current_amount, bid_available = 0 
+		WHERE auction_num = #{auction_num}
+	</update>
+	
+	<update id="soldAuction">
+		UPDATE auction_tbl SET bid_available = 0, soldout = 1 
+		WHERE auction_num = #{auction_num}
+	</update>
+	
+	<!-- DECIDE RE-BID or go RTS -->
+	<update id="failedAuction">
+		UPDATE auction_tbl SET failed_auction = 1, bid_available = 0
+		WHERE auction_num = #{auction_num}
+	</update>
+	
+	<!-- (ADMIN) DELETE AUCTION -->
+	<delete id="delete">
+		DELETE FROM auction_tbl WHERE auction_num = #{auction_num}
+	</delete>
+	
+</mapper>
