@@ -97,7 +97,7 @@
 	  <li class="nav-item"><a class="nav-link" href="#post1" data-toggle="tab" data-load="true">post</a></li>
 	  <li class="nav-item"><a class="nav-link" href="#bid" data-toggle="tab" data-load="true">bid</a></li>
 	  <li class="nav-item"><a class="nav-link" href="#fav" data-toggle="tab" data-load="true">fav</a></li>
-	  <sec:authorize access="hasRole('ROLE_ADMIN')">
+	  <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MASTER')">
 		  <li class="nav-item"><a class="nav-link" href="#admin" data-toggle="tab" data-load="true">admin</a></li>
 	  </sec:authorize>
 	 </sec:authorize>
@@ -113,8 +113,11 @@
 	      <input type="text" class="form-control" id="loginFormId" placeholder="Your ID" data-form-type="userId" name="username">
 	      <input type="password" class="form-control" id="loginFormPw" placeholder="Your Password" data-form-type="userPw" name="password">
 
+		<input class="form-check-input" type="checkbox" name="remember-me" id="flexCheckDefault">
+		  <label class="form-check-label" for="flexCheckDefault">
+		  	remember me
+		  </label>    
 	    <div class="mb-4"></div>
-    
 	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 	    <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
 	    data-dashlane-label="true" data-form-type="login">Sign in</button>

@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.clear:after{clear: both; display:block; content:"";}
+	#authListItem {list-style:none; float:left; width: 30%}
+</style>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
@@ -15,27 +19,33 @@
 	<table class="table">
   <thead>
     <tr>
-      <th scope="col">사용자</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col-3">사용자</th>
+      <th scope="col-3">권한</th>
+      <th scope="col-3">현재 권한</th>
+      <th scope="col-3">현재 권한</th>
     </tr>
   </thead>
   <tbody>
-    <c:forEach var="collection" items="${userList }">				
-		<tr>
-			<td>${userList.userNick }</a></td>
-			<form action="addAuth" method="post">
-				<input type="hidden" name="user_num" value="${userList.userNum }">
-				<select name="auth">
-				<!-- 검색조건을 option태그를 이용해 만듭니다. --> <!-- 닉네임 옵션태그??? -->
-					<option value="ROLE_USER">-</option>
-					<option value="ROLE_MANAGER"></option>
-					<option value="ROLE_MANAGER"></option>
-				</select>
-				
-			</form>
-		</tr>
+    <c:forEach var="userData" items="${userDataList }">
+    	<c:if test="${userData.authList[0].auth ne 'ROLE_MASTER' }">	
+			<tr>
+				<form action="addAuth" method="post">
+				<td>${userData.userNick }</td>
+				<td>
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+					<input type="hidden" name="userNum" value="${userData.userNum }">
+					<input type="text" name="userId" value="${userData.userId }">
+					<select name="auth">
+						<option value="ROLE_USER" id="auth">ROLE_USER</option>
+						<option value="ROLE_ADMIN" id="auth">ROLE_ADMIN</option>
+						<option value="ROLE_BANNED" id="auth">ROLE_BANNED</option>
+					</select>
+				</td>
+				<td>${userData.authList[0].auth }</td>
+				<td><input class="btn btn-primary" type="submit" value="Submit"></td>
+				</form>
+			</tr>
+		</c:if>		
 	</c:forEach>
   </tbody>
 </table>
