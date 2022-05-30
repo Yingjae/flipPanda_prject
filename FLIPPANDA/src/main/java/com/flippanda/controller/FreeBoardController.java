@@ -55,6 +55,7 @@ public class FreeBoardController {
 	
 	@GetMapping("/freeBoardDetail/{freeBoardNum}") 
 	public String freeBoardDetail(@PathVariable long freeBoardNum, Model model) {
+		freeservice.updateviews(freeBoardNum);
 		FreeBoardVO freeboard = freeservice.select(freeBoardNum);
 		model.addAttribute("freeboard",freeboard);
 		return "freeBoard/freeBoardDetail";
