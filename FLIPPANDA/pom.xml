@@ -224,13 +224,6 @@
 		    <version>5.0.7.RELEASE</version>
 		</dependency>
 		
-<<<<<<< HEAD
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.28</version>
-=======
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -244,7 +237,7 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.9.0</version>
             <!-- <scope>runtime</scope> -->
->>>>>>> origin/AJY2
+
         </dependency>
     
     	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->

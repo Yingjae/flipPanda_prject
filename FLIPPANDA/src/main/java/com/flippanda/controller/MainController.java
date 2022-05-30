@@ -98,7 +98,7 @@ public class MainController {
 		}
 <<<<<<< HEAD
 	/*
-=======
+
 	
 	
 >>>>>>> origin/AJY2
@@ -116,12 +116,12 @@ public class MainController {
 			}
 			return entity;
 		}
-<<<<<<< HEAD
+
 		*/
 	
-=======
-	*/
->>>>>>> origin/AJY2
+
+	//*/
+
 	
 	//승인대기열 (ADMIN의 경우 승인버튼 노출)
 	@GetMapping("/pending")
@@ -296,11 +296,11 @@ public class MainController {
 		}
 		return entity;
 	}*/
-<<<<<<< HEAD
+
 	
 	
 
 }
-=======
-}
->>>>>>> origin/AJY2
+
+
+
