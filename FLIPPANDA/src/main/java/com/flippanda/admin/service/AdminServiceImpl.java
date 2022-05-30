@@ -1,4 +1,4 @@
-package com.filppanda.admin.service;
+package com.flippanda.admin.service;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ public class AdminServiceImpl implements AdminService{
 	private AdminMapper mapper;
 	
 	@Override
-	public void adminInsert(AdminVO adminData){
-		mapper.adminInsert(adminData);
+	public void adminInsert(int userNum){
+		mapper.adminInsert(userNum);
 	};
 	@Override
 	public AdminVO getAdminData(int adminNum){

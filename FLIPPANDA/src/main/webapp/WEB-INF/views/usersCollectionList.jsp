@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib uri ="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,25 +22,43 @@
 				<th>내용</th>
 				<th>작성일</th>
 				<th>좋아요</th>
+				<th>U,D</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="collection" items="${usersCollection }">
+ 			<c:forEach var="collection" items="${usersCollection }">
 				<tr>
 					<td>${collection.collectionNick }</td>
 					<td>${collection.collectionTitle }</td>
 					<td>${collection.collectionContent }</td>
-					<td>${collection.collectionUpdateDate }</td>
+					<td>
+						<c:choose>
+							<c:when test="${collection.collectionDate ne collection.collectionUpdateDate}">${collection.collectionUpdateDate } </c:when>
+							<c:otherwise>${collection.collectionDate }</c:otherwise>
+						</c:choose>
+					</td>
 					<td>${collection.collectionLike }</td>
 					<td>
+					<!-- 사용자userNum과 작성자userNum이 같으면 수정 삭제 가시화 -->
+					<!-- 로그인 한 user의 userNum을 받아서 sUserNum에 저장 -->
+					<sec:authorize access="isAuthenticated()">
+						<sec:authentication property="principal.member.userNum" var="sUserNum"/>
+					</sec:authorize>
+					<!-- sUserNum(사용자)와 userNum(작성자)가 일치하면 수정 삭제 버튼 구현 -->
+					<c:if test="${sUserNum eq userNum}">
 					<form action="/updateMyCollectionForm" method="post">
+						<input type="hidden" name="userNum" value="<sec:authentication property="principal.member.userNum"/>">
 						<input type="hidden" value="${collection.collectionNum}" name="collectionNum" />
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 						<input type="submit" value="수정" class="btn btn-warning">
 					</form>
 					<form action="/deleteMyCollection" method="post">
+						<input type="hidden" name="userNum" value="<sec:authentication property="principal.member.userNum"/>">
 						<input type="hidden" value="${collection.collectionNum}" name="collectionNum" />
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 						<input type="submit" value="삭제" class="btn btn-danger">
 					</form>
+					</c:if>
 					</td>
 				</tr>
 			</c:forEach>

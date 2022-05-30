@@ -1,15 +1,21 @@
-package com.flippanda.collection.controller;
+package com.flippanda.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.flippanda.collection.mapper.CollectionMapper;
 import com.flippanda.collection.service.CollectionService;
 import com.flippanda.vo.MyCollectionVO;
 
@@ -33,6 +39,21 @@ public class CollectionController {
 		service.getAllCollectionList();
 		return "allCollectionList";
 	}
+	// 전체 글을 조회하는 로직(비동기)
+	@GetMapping(value="/allCollectionList",
+				produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
+		public ResponseEntity<List<MyCollectionVO>> list(){
+			ResponseEntity<List<MyCollectionVO>> entity = null;
+			
+			try {
+				entity = new ResponseEntity<>(
+						service.getAllCollectionList(), HttpStatus.OK);
+			} catch(Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			return entity;
+		}
 	
 	// 특정 유저의 글을 조회하는 로직
 	@GetMapping("/usersCollectionList/{userNum}")
@@ -47,13 +68,22 @@ public class CollectionController {
 		return "usersCollectionList";
 	}
 	
+	// 특정 유저의 글을 조회하는 로직(비동기)
+	/*@GetMapping(value="/usersCollectionList"
+			    produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
+		public ResponseEntity<List<MyCollectionVO>> usersCollection(){
+			ResponseEntity<List<MyCollectionVO>> entity = null;
+	}*/
+	
 	// 컬렉션 글을 추가하는 로직
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/insertMyCollection")
 	public String insertMyCollection() {
 		return "insertMyCollection";
 	}
 	
 	// 글 추가 form의 post방식을 처리하는 메서드
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@PostMapping("/insertMyCollection")
 	public String insertMyCollection(MyCollectionVO cVO) {
 		//log.info("들어온 데이터 디버깅 : " + collection);
@@ -66,10 +96,11 @@ public class CollectionController {
 	// collectionNum을 받아서 해당 글 삭제
 	// 글 삭제 버튼은 페이지 하단에 userNum이나 userNick 일치하면 활성화
 	@PostMapping("/deleteMyCollection")
-	public String deleteMyCollection(long collectionNum) {
+	public String deleteMyCollection(long collectionNum, long userNum) {
 		service.deleteMyCollection(collectionNum);
+		List<MyCollectionVO> usersCollection = service.usersCollectionList(userNum);
 		// user security랑 연결하면 마이컬렉션으로 이동하도록 수정
-		return "redirect:/allCollectionList";
+		return "redirect:/usersCollectionList/" + userNum;
 	}
 	
 	// 글 수정하는 메서드
@@ -87,10 +118,6 @@ public class CollectionController {
 		return "redirect:/usersCollectionList/" + cVO.getUserNum(); 
 	}
 	
-	// 좋아요 insert 메서드
-	
-	
-	// 좋아요 delete 메서드
 	
 	
 	

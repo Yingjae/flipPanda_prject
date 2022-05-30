@@ -1,4 +1,4 @@
-package com.flippanda.auctionFunk;
+package com.flippanda.vo;
 
 import java.sql.Date;
 

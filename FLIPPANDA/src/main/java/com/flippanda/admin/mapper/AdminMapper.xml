@@ -6,31 +6,30 @@
 
 	<resultMap type="com.flippanda.vo.AdminVO" id="adminRM">
 		<result property="adminNum" column="admin_num"/>
-		<result property="adminId" column="admin_id"/>
-		<result property="adminPw" column="admin_pw"/>
+		<result property="userNum" column="user_num"/>
 		<result property="endAuction" column="admin_endAuction"/>
 		<result property="auctionInProgress" column="admin_In_progress"/>
 	</resultMap>
-	<!-- 회원가입  -->
+	<!-- 어드민 정보추가  -->
 	<insert id="adminInsert">
-		INSERT INTO admin_tbl (admin_num, admin_id, admin_pw)
+		INSERT INTO admin_tbl (user_num)
 			values
-		(admin_num.nextval, #{adminId}, #{adminPw})	
+		(#{userNum})	
 	</insert>
 	
-	<!-- 회원정보 받아오기 -->
+	<!-- 특정 어드민정보 받아오기 -->
 	<select id="getAdminData" resultType="com.flippanda.vo.AdminVO" resultMap="adminRM">
 		SELECT * FROM admin_tbl WHERE admin_num = #{adminNum}
 	</select>	
 	
-	<!-- 회원정보 받아오기 -->
+	<!-- 어드민정보 전부 받아오기 -->
 	<select id="getAdminAllData" resultType="com.flippanda.vo.AdminVO" resultMap="adminRM">
 		SELECT * FROM admin_tbl
 	</select>
 	
-	<!-- 회원 탈퇴 -->
-	<delete id="adminDelete">
-		DELETE FROM admin_tbl WHERE admin_num = #{adminNum}
+	<!-- 어드민 박탈 -->
+	<delete id="adminDelete" >
+		DELETE FROM admin_tbl WHERE user_num = #{userNum}
 	</delete>
 	
 	<!-- 회원 정보 수정 -->
@@ -39,4 +38,5 @@
 			admin_name = #{adminName}, admin_pw = #{adminPw}
 		WHERE admin_num = #{adminNum}
 	</update>
+	
 </mapper>

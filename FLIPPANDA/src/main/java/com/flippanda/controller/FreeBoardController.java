@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.flippanda.Free.domain.FreeCriteria;
-import com.flippanda.Free.domain.FreePageMaker;
-import com.flippanda.Free.domain.FreeSearchCriteria;
+import com.flippanda.vo.FreeCriteria;
+import com.flippanda.vo.FreePageMaker;
+import com.flippanda.vo.FreeSearchCriteria;
 import com.flippanda.Free.mapper.FreeBoardMapper;
 import com.flippanda.Free.service.FreeBoardService;
 import com.flippanda.vo.FreeBoardVO;

@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.flippanda.collection.mapper.CollectionMapper;
 import com.flippanda.vo.MyCollectionVO;
+import com.flippanda.vo.clikeVO;
 
 @Service
+
 public class CollectionServiceImpl implements CollectionService {
 
 	// DAO호출을 위한 선언과 의존성 주입
@@ -22,7 +24,7 @@ public class CollectionServiceImpl implements CollectionService {
 
 	@Override
 	public List<MyCollectionVO> usersCollectionList(long userNum) {
-		return usersCollectionList(userNum);
+		return collectionMapper.usersCollectionList(userNum);
 	}
 
 	@Override
@@ -44,5 +46,5 @@ public class CollectionServiceImpl implements CollectionService {
 	public void updateMyCollection(MyCollectionVO cVO) {
 		collectionMapper.updateMyCollection(cVO);
 	}
-	
+
 }

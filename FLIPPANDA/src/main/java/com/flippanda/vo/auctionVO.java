@@ -1,7 +1,9 @@
-package com.flippanda.auctionFunk;
+package com.flippanda.vo;
 
 import java.sql.Date;
 import java.util.List;
+
+import com.flippanda.vo.bidVO;
 
 import lombok.Data;
 
@@ -24,6 +26,10 @@ public class auctionVO {
 
 		// Bidding information of user in active auction //
 		private List<bidVO> bid_info;
+		
+		private Double bid_amount;
+		private int bid_count;
+		private Date bid_time;
 		
 		// "1" = true / "0" = false
 		private String launch_auction;

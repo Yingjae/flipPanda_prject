@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flippanda.auctionFunk.auctionLogVO;
-import com.flippanda.auctionFunk.auctionVO;
-import com.flippanda.auctionFunk.bidVO;
+import com.flippanda.vo.auctionLogVO;
+import com.flippanda.vo.auctionVO;
+import com.flippanda.vo.bidVO;
+
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
+
 import com.flippanda.auctionFunk.mapper.auctionLogMapper;
 import com.flippanda.auctionFunk.mapper.auctionMapper;
 
+@Log4j
 @Service
 public class auctionServImpl implements AuctionSevice{
 	
@@ -23,6 +28,7 @@ public class auctionServImpl implements AuctionSevice{
 
 	@Override
 	public List<auctionVO> getAuctionListTest() {
+		log.info("테스트중" + auctionMapper.getAuctionListTest());
 		return auctionMapper.getAuctionListTest();
 	}
 

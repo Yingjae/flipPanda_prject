@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.flippanda.auctionFunk.auctionLogVO;
-import com.flippanda.auctionFunk.auctionVO;
-import com.flippanda.auctionFunk.bidVO;
+import com.flippanda.vo.auctionLogVO;
+import com.flippanda.vo.auctionVO;
+import com.flippanda.vo.bidVO;
 import com.flippanda.auctionFunk.service.AuctionSevice;
 import com.flippanda.auctionFunk.service.auctionLogSevice;
 
@@ -26,7 +27,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Controller
-@RequestMapping("/main")
+//@RequestMapping(value="/main")
 public class MainController {
 	
 	@Autowired
@@ -43,12 +44,30 @@ public class MainController {
 	
 	//비동기 처리중 //
 	
-	@GetMapping("/*")
-	public String frontVew(Model model) {
-		
-		List<auctionVO> auctionList = auctionService.getAuctionListTest();
-		model.addAttribute("auctionList", auctionList);
+	@GetMapping("/main")
+	public String frontView() {
 		return "/main";
+	}
+	
+	@GetMapping("/main.ajax")
+	public @ResponseBody List<auctionVO> auctionListAjax(){
+		List<auctionVO> getAuctionList = auctionService.getAuctionListTest();
+		log.info(getAuctionList);
+		return getAuctionList;
+	}
+	
+	@GetMapping("/main.{auction_num}.ajax")
+	public @ResponseBody auctionVO auctionDetailAjax(@PathVariable long auction_num){
+		auctionVO getAuction = auctionService.getAuction(auction_num);
+		log.info(getAuction);
+		return getAuction;
+	}
+	
+	@GetMapping("/main.log={auction_num}.ajax")
+	public @ResponseBody List<auctionLogVO> auctionLogAjax(@PathVariable long auction_num){
+		List<auctionLogVO> auctionLog = auctionLogService.getbidLog(auction_num);
+		log.info(auctionLog);
+		return auctionLog;
 	}
 	
 	/*@GetMapping("/{auction_num}")
@@ -62,6 +81,7 @@ public class MainController {
 		return "/main";
 	}*/
 	
+	/*
 	@GetMapping(value="/{auction_num}",
 	produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<auctionVO> getAuction
@@ -76,7 +96,12 @@ public class MainController {
 			}
 			return entity;
 		}
+<<<<<<< HEAD
 	/*
+=======
+	
+	
+>>>>>>> origin/AJY2
 	@GetMapping(value="/{auction_num}",
 	produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<List<auctionLogVO>> getbidLog
@@ -91,8 +116,12 @@ public class MainController {
 			}
 			return entity;
 		}
+<<<<<<< HEAD
 		*/
 	
+=======
+	*/
+>>>>>>> origin/AJY2
 	
 	//승인대기열 (ADMIN의 경우 승인버튼 노출)
 	@GetMapping("/pending")
@@ -106,7 +135,7 @@ public class MainController {
 	//옥션 포스팅
 	@GetMapping("/post")
 	public String postAuctionForm() {
-		return "main/post";
+		return "post";
 	}
 	
 	@PostMapping("/post")
@@ -140,8 +169,11 @@ public class MainController {
 	
 	@PostMapping(value="", consumes="application/json",	produces={MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> bidNowAjax
-	(@RequestBody auctionVO avo, auctionLogVO alvo, bidVO bvo, Long auction_num){
+		
+		(@RequestBody auctionVO avo, auctionLogVO alvo, bidVO bvo, Long auction_num){
+		
 		ResponseEntity<String> entity = null;
+		
 		try {
 			
 			int current = (int) avo.getCurrent_amount(); 
@@ -153,7 +185,7 @@ public class MainController {
 			
 			if(current < bidAmount) {
 				auctionService.bidding(avo);
-				entity = new ResponseEntity<String>("Succeed Bid :)", HttpStatus.OK);
+				entity = new ResponseEntity<String>("Your Bid is Placed.", HttpStatus.OK);
 			}
 		}catch(Exception e) {
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -206,6 +238,7 @@ public class MainController {
 	value="/{auction_num}",
 	consumes="application/json",
 	produces= {MediaType.TEXT_PLAIN_VALUE})
+	@ResponseBody
 	public ResponseEntity<String> closeAuction
 	(@PathVariable("auction_num") Long auction_num, @RequestBody auctionVO avo){
 	
@@ -226,6 +259,7 @@ public class MainController {
 	value="/{auction_num}",
 	consumes="application/json",
 	produces= {MediaType.TEXT_PLAIN_VALUE})
+	@ResponseBody
 	public ResponseEntity<String> faildAuction
 	(@PathVariable("auction_num") Long auction_num, @RequestBody auctionVO avo){
 	
@@ -240,12 +274,13 @@ public class MainController {
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return entity;
-	}
-	
+	}*/
+	/*
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
 	value="/{auction_num}",
 	consumes="application/json",
 	produces= {MediaType.TEXT_PLAIN_VALUE})
+	@ResponseBody
 	public ResponseEntity<String> soldAuction
 	(@PathVariable("auction_num") Long auction_num, @RequestBody auctionVO avo){
 	
@@ -261,7 +296,11 @@ public class MainController {
 		}
 		return entity;
 	}*/
+<<<<<<< HEAD
 	
 	
 
 }
+=======
+}
+>>>>>>> origin/AJY2

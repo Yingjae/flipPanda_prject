@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.flippanda.vo.MyCollectionVO;
 import com.flippanda.vo.UserVO;
+import com.flippanda.vo.clikeVO;
 
 public interface CollectionMapper {
 
@@ -25,5 +26,5 @@ public interface CollectionMapper {
 	// 글을 수정하는 메서드
 	public void updateMyCollection(MyCollectionVO cVO);
 	
-	
+
 }

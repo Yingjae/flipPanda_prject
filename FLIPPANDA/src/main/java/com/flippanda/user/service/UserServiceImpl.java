@@ -2,8 +2,10 @@ package com.flippanda.user.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.flippanda.user.mapper.UserMapper;
 import com.flippanda.vo.UserAuthority;
@@ -45,5 +47,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void autoSetUserAuth(UserVO userData) {
 		mapper.autoSetUserAuth(userData);
+	}
+	@Override
+	public void SetUserAuth( @Param("auth")String auth,@Param("userId")String userId) {
+		System.out.println(" 유저 아이디 "+userId + " : " + "권한 : " + auth );
+		mapper.SetUserAuth(userId, auth);
 	};
 }
