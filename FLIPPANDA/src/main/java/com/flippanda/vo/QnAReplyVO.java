@@ -1,17 +1,26 @@
 package com.flippanda.vo;
 
-import java.sql.Date; 
+import java.sql.Date;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class QnAReplyVO {
-	private int qnareplyNum;
-	private int qnaNum;
-	private int adminNum;
-	private Date qnareplyDate;
-	private Date qnareplyUpdateDate;
-	private String qnareplyContent;	
-	private String qnareplyer;
+	private int QnAReplyNum;
+	private int QnANum;
+	private int AdminNum;
+	private Date QnAReplyDate;
+	private Date QnAReplyUpdateDate;
+	private String QnAReplyContent;
+	
+	public void setQnAReplyUpdateDate(Date qnAReplyUpdateDate) {
+		QnAReplyUpdateDate = qnAReplyUpdateDate;
+	}
+	public void setQnAReplyContent(String qnAReplyContent) {
+		QnAReplyContent = qnAReplyContent;
+	}
+	
 	
 }
