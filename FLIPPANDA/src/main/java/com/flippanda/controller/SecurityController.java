@@ -1,5 +1,7 @@
 package com.flippanda.controller;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -36,6 +38,7 @@ public class SecurityController {
 		UserService.userInsert(vo);
 		UserService.autoSetUserAuth(vo);
 	}
+	
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/authTest")

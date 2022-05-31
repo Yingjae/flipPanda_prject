@@ -59,6 +59,13 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return freeBoardMapper.usersGetList(userNum);
 	}
 
+	public void updateviews(long freeBoard_num) {
+		freeBoardMapper.updateviews(freeBoard_num);
+		
+	}
+
+
+
 
 	
 	

@@ -88,10 +88,12 @@
 	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------ -->
 <!-- USER INFO & SIDE FUNTION -->
+
 <div id="sidePanel" class="bg-light border rounded-3" style="margin-right:20%; width:80%; padding:10%; height:800px;">
-	
+
  <div class="tab-content">
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
+
 
 <sec:authorize access="isAnonymous()">
      <div class="tab-pane fade show active" id="login" style="padding-top:20%;">
@@ -109,6 +111,7 @@
       </div>
     </div>
     </sec:authorize>
+
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
     <sec:authorize access="isAuthenticated()">
     <div class="tab-pane fade" id="user" style="padding-top:15%;">
@@ -154,6 +157,7 @@
          <button id="post_btn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Post</button>
 	</form>
     </div>  
+
     <div class="bidding" style="display:none;">
   	<Strong>Bidding This</Strong>
   	<div class="mb-4"></div>
@@ -190,6 +194,7 @@
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="bid" style="padding-top:15%;">
   	
+
   	</div>
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="fav" style="padding-top:20%;">

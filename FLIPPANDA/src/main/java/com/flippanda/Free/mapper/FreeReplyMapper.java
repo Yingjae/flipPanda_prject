@@ -3,10 +3,11 @@ package com.flippanda.Free.mapper;
 import java.util.List;
 
 import com.flippanda.vo.FreeBoardReplyVO;
+import com.flippanda.vo.FreeBoardVO;
 
 public interface FreeReplyMapper {
 
-public List<FreeBoardReplyVO> getList(Long freeBoard_num);
+	public List<FreeBoardReplyVO> getList(Long freeBoard_num); // 특정 게시판 num번 글의 댓글 목록 가져오기
 	
 	public void create(FreeBoardReplyVO vo);
 	
@@ -17,4 +18,6 @@ public List<FreeBoardReplyVO> getList(Long freeBoard_num);
 	
 	// 댓글번호를 통해 글번호 유추하기.
 	public Long getFreeBoardNum(Long freeBoardReplyNum);
+	
+	public FreeBoardReplyVO getNick(String freeBoardNick);
 }
