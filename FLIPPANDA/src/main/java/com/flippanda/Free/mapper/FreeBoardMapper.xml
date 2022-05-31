@@ -19,7 +19,7 @@
 <sql id ="search">
 
 		<if test="searchType != null">
-					<if test="searchType == 't'.toString()">
+				<if test="searchType == 't'.toString()">
 						(freeboard_title like '%'||#{keyword}||'%') AND
 					</if>
 					<if test="searchType == 'c'.toString()">
@@ -64,21 +64,21 @@
 	<select id ="getList" resultType="com.flippanda.vo.FreeBoardVO" resultMap="freeboardSelectRM">
 
 		<![CDATA[
-			SELECT * FROM
-				(SELECT /*+ INDEX_DESC(freeboard_tbl pk_freeboard) */
-				rownum rn, freeboard_tbl.* FROM
-                (SELECT a.*, b.user_nick FROM freeboard_tbl a, user_tbl b
-                WHERE a.user_num=b.user_num)
-                freeboard_tbl WHERE 
+			SELECT a.*
+				 , b.user_nick
+			  FROM freeboard_tbl a
+			  	 , user_tbl b
+			 WHERE a.user_num = b.user_num
+		  ORDER BY freeboard_num DESC 
         ]]>        
         
-        	<include refid="search"></include>
+       <!--  	<include refid="search"></include>
         
         
         <![CDATA[        
                 rownum <= #{pageEnd})
 					WHERE rn > #{pageStart}
-		]]>		
+		]]> --> 		
 
 	</select>
 		
@@ -102,9 +102,9 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO freeboard_tbl (freeboard_num, freeboard_title, freeboard_content)
+		INSERT INTO freeboard_tbl (user_num, freeboard_title, freeboard_content)
 			VALUES
-		(freeBoard_Num.nextval, #{freeBoardTitle}, #{freeBoardContent})
+		(#{userNum}, #{freeBoardTitle}, #{freeBoardContent})
 			
 	
 	</insert>
@@ -121,14 +121,14 @@
 	<update id="update">
 		UPDATE freeboard_tbl
 			SET
-		freeboard_title=#{freeBoardTitle}, freeboard_content=#{freeBoardContent}, freeboard_updatedate=SYSDATE
+		freeboard_title=#{freeBoardTitle}, freeboard_content=#{freeBoardContent}, freeboard_updatedate=now()
 			WHERE
 		freeboard_num=#{freeBoardNum}
 	</update>
 	<update id="update2">
 		UPDATE freeboard_tbl
 			SET
-		freeboard_title=#{freeBoardTitle}, freeboard_content=#{freeBoardContent}, freeboard_updatedate=SYSDATE
+		freeboard_title=#{freeBoardTitle}, freeboard_content=#{freeBoardContent}, freeboard_updatedate=now()
 			WHERE
 		 freeboard_num=#{freeBoardNum}
 	</update>
@@ -144,6 +144,10 @@
 		]]>	
 		
 	</select>
+	
+	<update id ="updateviews">
+		update freeboard_tbl set freeboard_views = freeboard_views + 1 where freeboard_num=#{freeBoardNum}
+	</update>
 
 
 </mapper>

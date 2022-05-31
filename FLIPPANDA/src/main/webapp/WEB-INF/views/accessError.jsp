@@ -13,7 +13,8 @@
 	<h1>접근 실패!!</h1>
 	
 	<h2><c:out value="${SPRING_SECURITY_403_EXCEPTION.getMessage() }"/></h2>
-	
 	<h2><c:out value="${errorMessage }"/></h2>
+	
+	<a href="/main" style="color:#000; text-weight:bold;"><h1>메인페이지로 돌아가기</h1></a>
 </body>
 </html>

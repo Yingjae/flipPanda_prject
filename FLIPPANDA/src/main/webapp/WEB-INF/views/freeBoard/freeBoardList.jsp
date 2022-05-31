@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Free Board</h1>
+		<a href="/freeBoard/freeBoardList"><h1>Free Board</h1></a>
 		<table border="1" class="table table">
 			<thead>
 				<tr>
@@ -24,7 +24,7 @@
 			<tbody>
 				<c:forEach var="freeBoard" items="${freeBoardList }">
 					<tr>
-					  	<td><a href="/freeBoard/usersFreeBoardList/${freeBoard.userNum}">${freeBoard.freeBoardNick }</td>  	
+					  	<td>${freeBoard.freeBoardNick }</td>  	
 						<td><a href="/freeBoard/freeBoardDetail/${freeBoard.freeBoardNum }?pageNum=${freePageMaker.freecri.pageNum}&searchType=${freePageMaker.freecri.searchType }&keyword=${freePageMaker.freecri.keyword}">${freeBoard.freeBoardTitle }</a></td>
 						<td>${freeBoard.regDate }</td>
 						<td>${freeBoard.updateDate }</td>
@@ -35,7 +35,7 @@
 		</table>
 		<a href="/freeBoard/freeBoardInsert" class="btn btn-success">writing</a> <br/>
 		
-		<!-- 페이지처리 버튼 -->
+		<!-- 페이지처리 버튼 
 		<ul class="pagination justify-content-center">
 		    <c:if test="${freePageMaker.prev }">
 		    	<li class="page-item">
@@ -61,6 +61,7 @@
 		    	</li>
 		    </c:if>
  		 </ul>
+ 		 -->
  		 
  		 <!-- 검색창 부분 -->
  		 <div class="row">

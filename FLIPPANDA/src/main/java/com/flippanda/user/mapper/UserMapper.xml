@@ -24,7 +24,7 @@
 	<insert id="userInsert">
 		INSERT INTO user_tbl ( user_name, user_address, user_id, user_pw, user_nick)
 			values
-		(#{userName}, #{userAddress}, #{userId}, #{userPw}, #{userNick})	
+		(#{userName},#{userAddress},#{userId},#{userPw},#{userNick})	
 	</insert>
 		
 	<!-- 계정 생성시 자동으로 user권한 부여 -->
@@ -32,7 +32,10 @@
 		INSERT INTO user_authority (user_id, authority) values (#{userId}, 'ROLE_USER')
 		
 	</insert>
-	
+	<!-- 사용자 권한 수정 -->
+	<update id="SetUserAuth">
+		UPDATE user_authority SET authority = #{auth} where user_id = #{userId}
+	</update>
 	<!-- 회원정보 받아오기 -->
 	<select id="getUserData"  resultMap="userRM">
 <!-- 		SELECT * FROM user_tbl WHERE user_num = #{userNum} -->
@@ -42,12 +45,12 @@
 
 	</select>	
 	<select id="getUserAuth"  resultMap="userRM">
-		SELECT u.user_num, a.authority FROM user_tbl u LEFT OUTER JOIN user_authority a on u.user_num = a.user_num WHERE u.user_num = #{userNum} 
+		SELECT u.user_num, a.authority FROM user_tbl u LEFT OUTER JOIN user_authority a on a.user_id = u.user_id WHERE u.user_id = #{userId}
 	</select>
 	
 	<!-- 회원정보 받아오기 -->
 	<select id="getUserAllData" resultMap="userRM">
-		SELECT * FROM user_tbl
+		SELECT * FROM user_tbl u LEFT OUTER JOIN user_authority a on a.user_id = u.user_id
 	</select>
 	
 	<!-- 회원 탈퇴 -->

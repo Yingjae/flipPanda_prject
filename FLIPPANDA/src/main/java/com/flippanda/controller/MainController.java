@@ -96,8 +96,12 @@ public class MainController {
 			}
 			return entity;
 		}
+<<<<<<< HEAD
+	/*
+
 	
 	
+>>>>>>> origin/AJY2
 	@GetMapping(value="/{auction_num}",
 	produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<List<auctionLogVO>> getbidLog
@@ -112,7 +116,12 @@ public class MainController {
 			}
 			return entity;
 		}
-	*/
+
+		*/
+	
+
+	//*/
+
 	
 	//승인대기열 (ADMIN의 경우 승인버튼 노출)
 	@GetMapping("/pending")
@@ -287,4 +296,11 @@ public class MainController {
 		}
 		return entity;
 	}*/
+
+	
+	
+
 }
+
+
+
