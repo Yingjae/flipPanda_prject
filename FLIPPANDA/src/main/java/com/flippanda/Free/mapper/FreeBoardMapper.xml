@@ -2,96 +2,152 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="com.ict.mapper.FreeBoardMapper">
+<mapper namespace="com.flippanda.Free.mapper.FreeBoardMapper">
+	
+	<!-- 이렇게 맞춰 놓으면 밑에서 AS 안 써도 됨 -->
+	<resultMap type="com.flippanda.vo.FreeBoardVO" id="freeboardSelectRM">
+		<result property="freeBoardNum" column="freeboard_num"/>
+		<result property="userNum" column="user_num"/>
+		<result property="freeBoardTitle" column="freeboard_title"/>
+		<result property="freeBoardContent" column="freeboard_content"/>
+		<result property="regDate" column="freeboard_regdate"/>
+		<result property="updateDate" column="freeboard_updatedate"/>
+		<result property="freeBoardViews" column="freeboard_views"/>
+		<result property="freeBoardNick" column="user_nick" />
+	</resultMap> 
+	
 <sql id ="search">
 
 		<if test="searchType != null">
-					<if test="searchType == 't'.toString()">
-						(freeBoardTitle like '%'||#{keyword}||'%') AND
+				<if test="searchType == 't'.toString()">
+						(freeboard_title like '%'||#{keyword}||'%') AND
 					</if>
 					<if test="searchType == 'c'.toString()">
-						(freeBoardContent like '%'||#{keyword}||'%') AND
+						(freeboard_content like '%'||#{keyword}||'%') AND
 					</if>
 					<if test="searchType == 'w'.toString()">
-						(userNum like '%'||#{keyword}||'%') AND
+						(user_nick like '%'||#{keyword}||'%') AND
 					</if>
 					<if test="searchType == 'tc'.toString()">
-						((freeBoardTitle like '%'||#{keyword}||'%')
+						((freeboard_title like '%'||#{keyword}||'%')
 							OR
-						 (freeBoardContent like '%'||#{keyword}||'%')) AND
+						 (freeboard_content like '%'||#{keyword}||'%')) AND
 					</if>
 					<if test="searchType == 'cw'.toString()">
-						((freeBoardContent like '%'||#{keyword}||'%')
+						((freeboard_content like '%'||#{keyword}||'%')
 							OR
-						 (userNum like '%'||#{keyword}||'%')) AND
+						 (user_nick like '%'||#{keyword}||'%')) AND
 					</if>
 					<if test="searchType == 'tcw'.toString()">
-						((freeBoardTitle like '%'||#{keyword}||'%')
+						((freeboard_title like '%'||#{keyword}||'%')
 							OR
-						 (freeboardContent like '%'||#{keyword}||'%')
+						 (freeboard_content like '%'||#{keyword}||'%')
 						 	OR
-						 (userNum like '%'||#{keyword}||'%')) AND
+						 (user_nick like '%'||#{keyword}||'%')) AND
 					</if>
 				</if>
 </sql>
 	
+	<select id="getNick" resultType="com.flippanda.vo.FreeBoardVO" resultMap="freeboardSelectRM">
 	
-	<select id ="getList" resultType="com.ict.domain.FreeBoardVO">
+	<![CDATA[
+		SELECT a.*
+                 , b.user_nick
+              FROM freeboard_tbl a
+                   , user_tbl b
+             WHERE a.user_num = b.user_num
+          ORDER BY freeboard_num DESC
+	]]>	
+	
+	</select>
+	
+	<select id ="getList" resultType="com.flippanda.vo.FreeBoardVO" resultMap="freeboardSelectRM">
 
 		<![CDATA[
-			SELECT * FROM 
-				(SELECT /*+ INDEX_DESC(board_tbl pk_board) */
-				rownum rn, freeboard_tbl.* from freeboard_tbl WHERE	
-		]]>	
-	
-				<include refid="search"></include>
-				
-		<![CDATA[	
-				rownum <= #{pageEnd})
+			SELECT a.*
+				 , b.user_nick
+			  FROM freeboard_tbl a
+			  	 , user_tbl b
+			 WHERE a.user_num = b.user_num
+		  ORDER BY freeboard_num DESC 
+        ]]>        
+        
+       <!--  	<include refid="search"></include>
+        
+        
+        <![CDATA[        
+                rownum <= #{pageEnd})
 					WHERE rn > #{pageStart}
+		]]> --> 		
+
+	</select>
+		
+	<select id="usersGetList"  resultType="com.flippanda.vo.FreeBoardVO" resultMap="freeboardSelectRM">
+		<![CDATA[	
+				SELECT a.*
+				  	 , b.user_nick
+				  FROM freeboard_tbl a
+				  JOIN user_tbl b
+				    ON a.user_num = b.user_num
+				 WHERE a.user_num = #{userNum}
+				 
 		]]>
+			<!-- 쿼리문해석
+				a.*와 b.user_nick 얻어오기
+				my_collection_tbl 을 a
+				user_tbl을 b로 선언후 JOIN
+				a.user_num과 b.user_num이 같으면
+				#{userNum } 에 입력된 값과 같은 a.user_num의 닉네임을 얻어온다 -->
+	
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO freeboard_tbl (freeboard_num, freeboard_title, freeboard_content, user_num)
+		INSERT INTO freeboard_tbl (user_num, freeboard_title, freeboard_content)
 			VALUES
-		(freeboard_num.nextval, #{freeboard_title}, #{freeboard_content}, #{user_num})
+		(#{userNum}, #{freeBoardTitle}, #{freeBoardContent})
+			
 	
 	</insert>
 	
-	<select id="select" resultType="com.ict.domain.FreeboardVO">
-		SELECT * FROM freeboard_tbl WHERE freeboard_num=#{freeboard_num}
+	<select id="select" resultType="com.flippanda.vo.FreeBoardVO" resultMap="freeboardSelectRM"> 
+		SELECT * FROM 
+         freeboard_tbl WHERE freeboard_num=#{freeBoardNum}
 	</select>
 	
 	<delete id="delete">
-		DELETE FROM freeboard_tbl WHERE freeboard_num=#{freeboard_num}
+		DELETE FROM freeboard_tbl WHERE freeboard_num=#{freeBoardNum}
 	</delete>
 	
 	<update id="update">
 		UPDATE freeboard_tbl
 			SET
-		freeboard_title=#{freeboard_title}, freeboard_content=#{freeboard_content}, freeboard_updatedate=SYSDATE
+		freeboard_title=#{freeBoardTitle}, freeboard_content=#{freeBoardContent}, freeboard_updatedate=now()
 			WHERE
-		freeboard_num=#{freeboard_num}
+		freeboard_num=#{freeBoardNum}
 	</update>
 	<update id="update2">
 		UPDATE freeboard_tbl
 			SET
-		freeboard_title=#{freeboard_title}, freeboard_content=#{freeboard_content}, freeboard_updatedate=SYSDATE
+		freeboard_title=#{freeBoardTitle}, freeboard_content=#{freeBoardContent}, freeboard_updatedate=now()
 			WHERE
-		freeboard_num=#{freeboard_num}
+		 freeboard_num=#{freeBoardNum}
 	</update>
 	
 	<select id="countPageNum" resultType="int">
 		<![CDATA[
-		SELECT COUNT(*) FROM board_tbl WHERE
-		]]>
+		SELECT COUNT(*) FROM freeboard_tbl a, user_tbl b WHERE
 		
-				<include refid="search"></include>
-		<![CDATA[		
-		freeboard_num > 0
 		]]>
+			<include refid="search"></include>
+		<![CDATA[        
+                a.user_num=b.user_num
+		]]>	
+		
 	</select>
+	
+	<update id ="updateviews">
+		update freeboard_tbl set freeboard_views = freeboard_views + 1 where freeboard_num=#{freeBoardNum}
+	</update>
 
 
 </mapper>

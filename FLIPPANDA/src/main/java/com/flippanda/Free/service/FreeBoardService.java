@@ -2,21 +2,27 @@ package com.flippanda.Free.service;
 
 import java.util.List;
 
-import com.flippanda.Free.domain.Criteria;
-import com.flippanda.Free.domain.SearchCriteria;
+import com.flippanda.vo.FreeCriteria;
+import com.flippanda.vo.FreeSearchCriteria;
 import com.flippanda.vo.FreeBoardVO;
 
 public interface FreeBoardService {
 
-	public List<FreeBoardVO> getList(SearchCriteria cri);
+	public List<FreeBoardVO> getList(FreeSearchCriteria freecri);
 	
-	public int countPageNum(SearchCriteria cri);
+	public List<FreeBoardVO> usersGetList(long userNum);
 	
-	public FreeBoardVO select(long freeboard_num);
+	public int countPageNum(FreeSearchCriteria freecri);
+	
+	public FreeBoardVO select(long freeBoard_num);
 	
 	public void insert(FreeBoardVO vo);
 	
-	public void delete(long freeboard_num);
+	public void delete(long freeBoard_num);
 	
 	public void update(FreeBoardVO vo);
+	
+	public FreeBoardVO getNick(String freeBoardNick);
+	
+	public void updateviews(long freeBoard_num);
 }

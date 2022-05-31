@@ -1,9 +1,9 @@
-package com.flippanda.Free.domain;
+package com.flippanda.vo;
 
 import lombok.Data;
 
 @Data
-public class Criteria {
+public class FreeCriteria {
 
 	private int pageNum=1;
 	private int number=10;

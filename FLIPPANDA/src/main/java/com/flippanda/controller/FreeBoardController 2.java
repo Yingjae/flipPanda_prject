@@ -1,3 +1,4 @@
+/*
 package com.flippanda.Free.controller;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.flippanda.Free.domain.PageMaker;
 import com.flippanda.Free.domain.SearchCriteria;
 import com.flippanda.Free.service.FreeBoardService;
+
 import com.flippanda.vo.FreeBoardVO;
 
 import lombok.extern.log4j.Log4j;
@@ -112,4 +114,5 @@ public class FreeBoardController {
 		// redirect:주소&글번=getter
 		return "redirect:/FreeBoard/FreeBoardDetail/" + FreeBoard.getFreeBoardNum();
 	}
-}
+}*/
+
