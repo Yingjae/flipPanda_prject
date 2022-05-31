@@ -2,6 +2,7 @@ package com.flippanda.collection.service;
 
 import java.util.List;
 
+import com.flippanda.vo.CollectionAttachVO;
 import com.flippanda.vo.MyCollectionVO;
 import com.flippanda.vo.clikeVO;
 
@@ -25,5 +26,7 @@ public interface CollectionService {
 	// 글을 수정하는 서비스
 	public void updateMyCollection(MyCollectionVO cVO);
 	
+	// 글 조회시 해당 글에 첨부된 이미지 정보를 가져오는 서비스
+	public List<CollectionAttachVO> getAttachList(long collectionNum);
 
 }

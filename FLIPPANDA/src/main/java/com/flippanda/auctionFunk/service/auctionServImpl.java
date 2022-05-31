@@ -6,18 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flippanda.vo.auctionLogVO;
 import com.flippanda.vo.auctionVO;
-import com.flippanda.vo.bidVO;
 
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j;
 
 import com.flippanda.auctionFunk.mapper.auctionLogMapper;
 import com.flippanda.auctionFunk.mapper.auctionMapper;
 
 @Log4j
-@Service
+@Service 
 public class auctionServImpl implements AuctionSevice{
 	
 	@Autowired
@@ -25,7 +22,7 @@ public class auctionServImpl implements AuctionSevice{
 	
 	@Autowired
 	public auctionLogMapper auctionLogMapper;
-
+	
 	@Override
 	public List<auctionVO> getAuctionListTest() {
 		log.info("테스트중" + auctionMapper.getAuctionListTest());
@@ -34,11 +31,13 @@ public class auctionServImpl implements AuctionSevice{
 
 	@Override
 	public List<auctionVO> getPendingList() {
+		log.info("testing WIP:" + auctionMapper.getPendingList());
 		return auctionMapper.getPendingList();
 	}
 	
 	@Override
-	public auctionVO getAuction(Long auction_num) {
+	public auctionVO getAuction(long auction_num) {
+		log.info("testing WIP:" + auctionMapper.getAuction(auction_num));
 		return auctionMapper.getAuction(auction_num);
 	}
 
@@ -81,9 +80,9 @@ public class auctionServImpl implements AuctionSevice{
 	
 	@Transactional
 	@Override
-	public void delete(Long auction_num) {
+	public void delete(long auction_num) {
 		auctionMapper.delete(auction_num);
-		auctionLogMapper.delete(auction_num);
+		auctionLogMapper.delete_bidLog(auction_num);
 	}
 
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flippanda.collection.mapper.CollectionAttachMapper">
+	
+	<insert id="insert">
+		INSERT INTO colimage (uuid, uploadpath, filename, filetype, collection_num)
+		VALUES (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{collectionNum})
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM colimage WHERE uuid = #{uuid}
+	</delete>
+	
+	<select id="findByCollectionNum" resultType="com.flippanda.vo.CollectionAttachVO">
+		SELECT *
+		  FROM colimage
+		 WHERE collection_num = #{collectionNum}
+	</select>
+
+</mapper>	

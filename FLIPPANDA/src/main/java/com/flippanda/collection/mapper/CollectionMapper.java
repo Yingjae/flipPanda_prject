@@ -3,8 +3,6 @@ package com.flippanda.collection.mapper;
 import java.util.List;
 
 import com.flippanda.vo.MyCollectionVO;
-import com.flippanda.vo.UserVO;
-import com.flippanda.vo.clikeVO;
 
 public interface CollectionMapper {
 

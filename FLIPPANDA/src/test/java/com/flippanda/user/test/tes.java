@@ -23,7 +23,13 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class tes {
-	
+
+	private final String DRIVER = "net.sf.log4jdbc.sql.jdbcapi.DriverSpy";
+	private final String URL = 
+			"jdbc:log4jdbc:mysql://localhost:3306/flippanda?serverTimezone=UTC";
+	private final String USER = "root";
+	private final String PW = "mysql";
+
 	@Autowired
 	private UserService userService;
 	@Autowired

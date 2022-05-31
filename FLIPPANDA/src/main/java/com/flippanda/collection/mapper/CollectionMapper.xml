@@ -13,18 +13,17 @@
 		<result property="collectionDate" column="collection_date" />
 		<result property="collectionUpdateDate" column="collection_updatedate" />
 		<result property="collectionLike" column="collection_like" />
+		<result property="collectionFname" column="fileName" />
 	</resultMap> 
 	
 	<!-- 글 가져오기 -->
 	<select id="getAllCollectionList" resultType="com.flippanda.vo.MyCollectionVO" resultMap="myCollectionRM">
-		<![CDATA[
 			SELECT a.*
 				 , b.user_nick
 			  FROM my_collection_tbl a
 			  	 , user_tbl b
 			 WHERE a.user_num = b.user_num
 		  ORDER BY collection_num DESC
-		]]>
 	<!-- 쿼리문 해석
 		 a.* 와 b.user_nick 얻어오기
 		 my_collection_tbl 을 a
@@ -51,6 +50,7 @@
 		
 	<!-- 글 추가하기 -->
 	<insert id="insertMyCollection">
+		
 		INSERT INTO my_collection_tbl 
 			   (user_num, 
 			    collection_title, 
@@ -59,6 +59,11 @@
 			   (#{userNum}, 
 			    #{collectionTitle}, 
 			    #{collectionContent})
+		
+		<selectKey keyProperty="collectionNum" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() 
+		</selectKey>
+			    
 	</insert>
 	
 	<!-- 글 삭제하기 -->
