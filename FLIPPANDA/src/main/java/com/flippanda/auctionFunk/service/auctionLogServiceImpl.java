@@ -3,6 +3,7 @@ package com.flippanda.auctionFunk.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,13 +20,13 @@ public class auctionLogServiceImpl implements auctionLogSevice{
 	public auctionLogMapper auctionLogMapper;
 	
 	@Override
-	public List<auctionLogVO> getbidLog(Long auction_num) {
-		return auctionLogMapper.getbidLog(auction_num);
+	public List<auctionLogVO> getbidLog(long auction_num) {
+		return auctionLogMapper.getBidLog(auction_num);
 		
 	}
 	@Override
-	public void deleteLog(Long auction_num) {
-		auctionLogMapper.delete(auction_num);
+	public void delete_bidLog(long auction_num) {
+		auctionLogMapper.delete_bidLog(auction_num);
 	}
 
 }

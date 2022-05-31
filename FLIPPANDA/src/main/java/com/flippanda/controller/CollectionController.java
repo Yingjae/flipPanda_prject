@@ -1,5 +1,8 @@
 package com.flippanda.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.flippanda.collection.service.CollectionService;
+import com.flippanda.vo.CollectionAttachVO;
 import com.flippanda.vo.MyCollectionVO;
 
 import lombok.extern.log4j.Log4j;
@@ -40,6 +45,7 @@ public class CollectionController {
 		return "allCollectionList";
 	}
 	// 전체 글을 조회하는 로직(비동기)
+	/*
 	@GetMapping(value="/allCollectionList",
 				produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
 		public ResponseEntity<List<MyCollectionVO>> list(){
@@ -54,7 +60,7 @@ public class CollectionController {
 			}
 			return entity;
 		}
-	
+	*/
 	// 특정 유저의 글을 조회하는 로직
 	@GetMapping("/usersCollectionList/{userNum}")
 	public String selectUsers(@PathVariable long userNum, Model collectionModel) {
@@ -79,16 +85,53 @@ public class CollectionController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/insertMyCollection")
 	public String insertMyCollection() {
+		
+		log.info("upload form");
 		return "insertMyCollection";
 	}
 	
 	// 글 추가 form의 post방식을 처리하는 메서드
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@PostMapping("/insertMyCollection")
-	public String insertMyCollection(MyCollectionVO cVO) {
-		//log.info("들어온 데이터 디버깅 : " + collection);
+	public String insertMyCollection(MyCollectionVO cVO, MultipartFile[] uploadFile, Model model) {
+		log.info("들어온 데이터 디버깅 : " + insertMyCollection());
+		
+		String uploadFolder = "C:\\upload_data\\temp";
+		
+		for(MultipartFile multipartFile : uploadFile) {
+			log.info("upload File Name: " + multipartFile.getOriginalFilename());
+			log.info("Upload File Size: " + multipartFile.getSize());
+			
+			File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
+			
+			try {
+				multipartFile.transferTo(saveFile);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		} // end for
+		
 		service.insertMyCollection(cVO);
 		return "redirect:/allCollectionList";
+	}
+	
+	// upload파일이 이미지 파일인지 아닌지 확인하는 메서드
+	private boolean checkImageType(File file) {
+		try {
+			String contentType = Files.probeContentType(file.toPath());
+			
+			return contentType.startsWith("image");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	// 이미지 정보를 rest 방식으로 출력하는 메서드
+	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<CollectionAttachVO>> getAttachList(long collectionNum){
+		return new ResponseEntity<>(service.getAttachList(collectionNum), HttpStatus.OK);
 	}
 	
 	// 글 삭제 메서드

@@ -9,24 +9,22 @@
 	
 	<!-- GET BID LOG -->
 	<select id="getBidLog" resultType="com.flippanda.vo.auctionLogVO">
-			SELECT * FROM auction_log_tbl WHERE auction_num = #{auction_num}
+			SELECT * FROM auction_log_tbl WHERE auction_num = #{auction_num} ORDER BY auction_num DESC
 	</select>
 	
 	<!-- BID FUNCTION -->
-	<insert id="bid" parameterType="com.flippanda.vo.auctionVO">
+	<insert id="bid" parameterType="com.flippanda.vo.auctionLogVO">
 		INSERT INTO auction_log_tbl 
-            		(auction_log_num, 
-            		auction_num, 
+            		(auction_num, 
             		user_num,
             		auction_log_date, 
             		auction_bid_log)
-     		 VALUES (auction_log_num.nextval, 
-            		#{auction_num},
+     		 VALUES (#{auction_num},
             		#{user_num}, 
-            		SYSDATE, 
+            		now(), 
             		#{bid_amount})
 	</insert>
-	
+	 
 	<delete id="delete_bidLog">
 		DELETE FROM auction_log_tbl WHERE auction_num = #{auction_num}
 	</delete>

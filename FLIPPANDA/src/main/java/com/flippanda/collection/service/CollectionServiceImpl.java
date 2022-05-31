@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.flippanda.collection.mapper.CollectionAttachMapper;
 import com.flippanda.collection.mapper.CollectionMapper;
+import com.flippanda.vo.CollectionAttachVO;
 import com.flippanda.vo.MyCollectionVO;
 import com.flippanda.vo.clikeVO;
 
@@ -17,6 +20,9 @@ public class CollectionServiceImpl implements CollectionService {
 	@Autowired
 	private CollectionMapper collectionMapper;
 
+	@Autowired
+	private CollectionAttachMapper attachMapper;
+	
 	@Override
 	public List<MyCollectionVO> getAllCollectionList() {
 		return collectionMapper.getAllCollectionList();
@@ -27,9 +33,19 @@ public class CollectionServiceImpl implements CollectionService {
 		return collectionMapper.usersCollectionList(userNum);
 	}
 
+	@Transactional
 	@Override
 	public void insertMyCollection(MyCollectionVO cVO) {
 		collectionMapper.insertMyCollection(cVO);
+		
+		if(cVO.getAttachList() == null || cVO.getAttachList().size() <= 0) {
+			return;
+		}
+		
+		cVO.getAttachList().forEach(attach ->{
+			attach.setCollectionNum(cVO.getCollectionNum());
+			attachMapper.insert(attach);
+		});
 	}
 
 	@Override
@@ -47,4 +63,8 @@ public class CollectionServiceImpl implements CollectionService {
 		collectionMapper.updateMyCollection(cVO);
 	}
 
+	@Override
+	public List<CollectionAttachVO> getAttachList(long collectionNum){
+		return attachMapper.findByCollectionNum(collectionNum);
+	}
 }

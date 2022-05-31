@@ -12,7 +12,7 @@ public interface AuctionSevice {
 	
 	public List<auctionVO> getPendingList();
 	
-	public auctionVO getAuction(Long auction_num);
+	public auctionVO getAuction(long auction_num);
 	
 	public void postAuction(auctionVO avo);
 	
@@ -28,7 +28,7 @@ public interface AuctionSevice {
 	
 	public void failedAuction(auctionVO avo);
 	
-	public void delete(Long auction_num);
+	public void delete(long auction_num);
 
 
 }
