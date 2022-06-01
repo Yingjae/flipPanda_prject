@@ -30,13 +30,12 @@
 </head>
 <body>
 	
-		<h3>첨부파일 영역</h3>
-		<div class="uploadDiv">
-			<input type="file" name="uploadFile" multiple>
-		</div>
+	<h3>첨부파일 영역</h3>
+	<div class="uploadDiv">
+		<input type="file" name="uploadFile" multiple>
+	</div>
 		
-
-		<button id="uploadBtn">Upload</button>
+	<button id="uploadBtn">Upload</button>
 
 	<!-- 로그인이 되어 있다면 글을 추가하는 로직 -->
 	<form action="/insertMyCollection" method="post" enctype="multipart/form-data">
