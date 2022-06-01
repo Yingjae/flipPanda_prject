@@ -22,7 +22,7 @@
 	</resultMap>
 	<!-- 회원가입  -->
 	<insert id="userInsert">
-		INSERT INTO user_tbl ( user_name, user_address, user_id, user_pw, user_nick)
+		INSERT INTO user_tbl (user_name, user_address, user_id, user_pw, user_nick)
 			values
 		(#{userName},#{userAddress},#{userId},#{userPw},#{userNick})	
 	</insert>

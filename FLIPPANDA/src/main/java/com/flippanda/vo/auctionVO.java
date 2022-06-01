@@ -6,11 +6,15 @@ import java.util.List;
 import com.flippanda.vo.bidVO;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Setter
+@Getter
 public class auctionVO {
 	
-		private Long auction_num; 
+		private long auction_num; 
 		
 		//Auction details //
 		private String auction_title;

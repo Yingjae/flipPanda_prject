@@ -1,6 +1,7 @@
 package com.flippanda.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -14,4 +15,7 @@ public class MyCollectionVO {
 	private Date collectionDate;
 	private Date collectionUpdateDate;
 	private long collectionLike;
+	private String collectionFname;
+	
+	private List<CollectionAttachVO> attachList;
 }

@@ -8,9 +8,9 @@ import com.flippanda.vo.bidVO;
 
 public interface auctionLogMapper {
 	
-	public List<auctionLogVO> getbidLog(Long auction_num);
+	public List<auctionLogVO> getBidLog(long auction_num);
 	
-	public void delete(Long auction_num);
+	public void delete_bidLog(long auction_num);
 
 	public void bid(auctionVO avo);
 

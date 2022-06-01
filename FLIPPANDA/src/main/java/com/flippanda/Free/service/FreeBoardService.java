@@ -23,4 +23,6 @@ public interface FreeBoardService {
 	public void update(FreeBoardVO vo);
 	
 	public FreeBoardVO getNick(String freeBoardNick);
+	
+	public void updateviews(long freeBoard_num);
 }

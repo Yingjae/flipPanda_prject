@@ -30,7 +30,17 @@
 				<tr>
 					<td>${collection.collectionNick }</td>
 					<td>${collection.collectionTitle }</td>
-					<td>${collection.collectionContent }</td>
+					<td>
+						<div class="row">
+							<h3 class="text-primary"></h3>
+							<div id="uploadResult">
+								<ul>
+									<!-- 첨부파일 들어갈 위치 -->
+								</ul>
+							</div><!-- #uploadResult -->
+						</div><!-- row -->
+						${collection.collectionContent }
+					</td>
 					<td>
 						<c:choose>
 							<c:when test="${collection.collectionDate ne collection.collectionUpdateDate}">${collection.collectionUpdateDate } </c:when>
@@ -66,6 +76,45 @@
 	</table>
 		<a href="/allCollectionList" class="btn btn-success">All Collection List</a>
 	</div>
+	<script>
 	
+	var uploadResult = $(".uploadResult ul");
+			
+			function showUploadedFile(uploadResultArr){
+				var str = "";
+				
+				$(uploadResultArr).each(function(i, obj){
+					// BoardAttachVO내부에서 이미지여부를 fileType변수에 저장하므로 obj.image -> obj.fileType
+					if(!obj.fileType){
+						var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+						
+						str += "<li "
+							+ "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+							+ "' data-filename='" + obj.fileName + "' data-type='" + obj.fileType
+							+ "'><a href='/download?fileName=" + fileCallPath
+							+ "'>" + "<img src='/resources/attach.png'>"
+							+ obj.fileName + "</a>"
+							+ "<span data-file=\'" + fileCallPath + "\' data-type='file'> X </span>"
+							+ "</li>";
+						
+						
+					} else {
+						//str += "<li>" + obj.fileName + "</li>";
+						var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+						var fileCallPathOriginal = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+						
+						str += "<li "
+							+ "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+							+ "' data-filename='" + obj.fileName + "' data-type='" + obj.fileType
+							+ "'><a href='/download?fileName=" + fileCallPathOriginal
+							+ "'>" + "<img src='/display?fileName="+ fileCallPath + "'>"
+							+ obj.fileName + "</a>"
+							+ "<span data-file=\'" + fileCallPath + "\' data-type='image'> X </span>"
+							+ "</li>";
+					}
+				});
+				uploadResult.append(str);
+			}// showUploadedfile
+	</script>
 </body>
 </html>

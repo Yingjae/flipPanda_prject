@@ -1,24 +1,23 @@
 package com.flippanda.vo;
 
+import java.sql.Date;
+
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @ToString
 public class FreeBoardReplyVO {
-	private int freeBoardReplyNum;
-	private int userNum;
-	private int freeBoardNum;
-	private int freeBoardContent;
-	private int freeBoardReplyReplyDate;
-	private int freeBoardReplyUpdateDate;
-	
-	public void setFreeBoardContent(int freeBoardContent) {
-		this.freeBoardContent = freeBoardContent;
-	}
-	public void setFreeBoardReplyUpdateDate(int freeBoardReplyUpdateDate) {
-		this.freeBoardReplyUpdateDate = freeBoardReplyUpdateDate;
-	}
+	private long freeBoardReplyNum;
+	private long userNum;
+	private Long freeBoardNum;
+	private String freeBoardReplyContent;
+	private String freeBoardReplyer;
+	private Date freeBoardReplyReplyDate;
+	private Date freeBoardReplyUpdateDate;
+	private String freeBoardReplyNick;
 	
 	
 }

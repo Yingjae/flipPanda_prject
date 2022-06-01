@@ -6,12 +6,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+	.uploadResult {
+		width:100%;
+		background-color:gray;	
+	}
+	.uploadResult ul {
+		display:flex;
+		flex-flow:row;
+		justify-content:center;
+		align-items:center;
+	}
+	.uploadResult ul li {
+		list-style : none;
+		padding:10px;
+		align-content:center;
+		text-align:center;
+	}
+	.uploadResult ul li img {
+		width:100px;
+	}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 <body>
@@ -25,11 +43,13 @@
 		경매 낙찰된 물건 있는 경우 글쓰기 가능 버튼
 		댓글 구현x -->		
 	<h1>MyCollection</h1>
+	<!-- 
 	<div id="contents">
 	<button id="btn">dd</button>
 	<div id="lists">
+	 -->
 
-	</div>
+	<div>
 	<table border="1" class="table table">
 		<thead>
 			<tr>
@@ -42,11 +62,25 @@
 			</tr>
 		</thead>
 		<tbody>
+		
 			<c:forEach var="collection" items="${allCollectionList }">				
 				<tr>
 					<td><a href="/usersCollectionList/${collection.userNum}">${collection.collectionNick }</a></td>
 					<td>${collection.collectionTitle }</td>
-					<td>${collection.collectionContent }</td>
+					<td>
+						<div class="row">
+							<h3 class="text-primary"></h3>
+
+							<div id="uploadResult">
+								<ul>
+									<!-- 첨부파일 들어갈 위치 -->
+									
+								</ul>
+							</div><!-- #uploadResult -->
+						</div><!-- row -->
+						<img src='/display?fileName=${collection.collectionFname }'>
+						${collection.collectionContent }
+					</td>
 					<td>
 						<c:choose>
 							<c:when test="${collection.collectionDate ne collection.collectionUpdateDate}">${collection.collectionUpdateDate } </c:when>
@@ -83,7 +117,89 @@
 	<sec:authorize access="isAuthenticated()">
 		<a href="/insertMyCollection" class="btn btn-success">글쓰기</a>
 	</sec:authorize>
-
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+	<script>
+		let collectionNum = ${collection.collectionNum};
+		
+		(function(){
+			
+			$.getJSON("/getAttachList", {collectionNum:collectionNum}, function(arr){
+				console.log(arr); 
+				var str = "";
+				
+				$(arr).each(function(i,obj){
+					if(!obj.fileType){
+						var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+						
+						str += "<li "
+							+ "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+							+ "' data-filename='" + obj.fileName + "' data-type='" + obj.fileType
+							+ "'><a href='/download?fileName=" + fileCallPath
+							+ "'>" + "<img src='/resources/attach.png'>"
+							+ obj.fileName + "</a>"
+							+ "<span data-file=\'" + fileCallPath + "\' data-type='file'> X </span>"
+							+ "</li>";
+						
+						
+					} else {
+						//str += "<li>" + obj.fileName + "</li>";
+						var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+						var fileCallPathOriginal = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+						
+						str += "<li "
+							+ "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+							+ "' data-filename='" + obj.fileName + "' data-type='" + obj.fileType
+							+ "'><a href='/download?fileName=" + fileCallPathOriginal
+							+ "'>" + "<img src='/display?fileName="+ fileCallPath + "'>"
+							+ obj.fileName + "</a>"
+							+ "<span data-file=\'" + fileCallPath + "\' data-type='image'> X </span>"
+							+ "</li>";
+					}
+				});
+				$("#uploadResult ul").html(str);
+			});;
+		})();
+		var uploadResult = $(".uploadResult ul");
+		
+		function showUploadedFile(uploadResultArr){
+			var str = "";
+			
+			$(uploadResultArr).each(function(i, obj){
+				// BoardAttachVO내부에서 이미지여부를 fileType변수에 저장하므로 obj.image -> obj.fileType
+				if(!obj.fileType){
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+					
+					str += "<li "
+						+ "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+						+ "' data-filename='" + obj.fileName + "' data-type='" + obj.fileType
+						+ "'><a href='/download?fileName=" + fileCallPath
+						+ "'>" + "<img src='/resources/attach.png'>"
+						+ obj.fileName + "</a>"
+						+ "<span data-file=\'" + fileCallPath + "\' data-type='file'> X </span>"
+						+ "</li>";
+					
+					
+				} else {
+					//str += "<li>" + obj.fileName + "</li>";
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+					var fileCallPathOriginal = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+					
+					str += "<li "
+						+ "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+						+ "' data-filename='" + obj.fileName + "' data-type='" + obj.fileType
+						+ "'><a href='/download?fileName=" + fileCallPathOriginal
+						+ "'>" + "<img src='/display?fileName="+ fileCallPath + "'>"
+						+ obj.fileName + "</a>"
+						+ "<span data-file=\'" + fileCallPath + "\' data-type='image'> X </span>"
+						+ "</li>";
+				}
+			});
+			uploadResult.append(str);
+		}// showUploadedfile	
+	</script>
+	<!-- 
 	<script type="text/javascript">
 
 	function getAllList() {
@@ -99,15 +215,13 @@
 			}
 		);
 	}
-	
 	getAllList();
-	
-	
-	
-			$("#btn").on("click", function(){
-				getAllList();
-			
-		});
-</script>
+	 
+	</script>
+	 -->
+	<!-- 
+	</div>
+	</div>
+	 -->  
 </body>
 </html>
