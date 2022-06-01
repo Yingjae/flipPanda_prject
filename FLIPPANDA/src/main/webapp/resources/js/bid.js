@@ -1,19 +1,18 @@
 		
 	//AJAX POSTFORM
 	$("#postBtn").on("click", function(){
-			 
-			$("#auctionListAjax").hide(slow); 
-		  //$("#auctionListAjax").html("")
-			
+	
+	$('#auctionListAjax').fadeOut(100, function(){ $(this).remove();});
+	$('.user_profile').hide(0);
+	$('.posting').fadeIn(300, function(){ $(this).show();});
+	
 			$.ajax({
-				 url:"${cpath}/main/postAuction",
+				 url:"/main/postAuctionForm",
 				 type:"post",
 				 dataType:"json",
 				 contentType: "application/json",
 				 success: 
-					function(){
-					$("#auctionPostAjax").show(); 
-					},
+					function(){$("#auctionPostAjax").style.display = block;},
 				 error: 
 					function(){
 					alert:("error");
@@ -40,11 +39,10 @@
 				user_num: $("#user_num").val(),
 				start_amount:$("#start_amount").val(),
 				RTB_price: $("#RTB_price").val()
-				
 			}
 			
 			$.ajax({
-				 url:"${cpath}/main/postAuction",
+				 url:"/main/postAuction",
 				 type:"post",
 				 dataType:"json",
 				 data: PostParam,
@@ -52,7 +50,7 @@
 				 success: 
 					function(){	
 					$("#auctionPostAjax").hide();
-					loadAJAXDetail();
+					$('#auctionListAjax').fadeIn(100, function(){ $(this).show();});
 					},
 				 error: 
 					function(){
@@ -66,15 +64,20 @@
 		//AJAX BIDDING
 		$("#bidBtn").on("click", function(){
 			
-			var bid_amount =$("#bid_amount").val();
-			console.log(bid_amount);
+			var BidParam = {
+				
+			user_num: $("#user_num").val(),
+			bid_amount: $("#bid_amount").val(),
+			}
+			
+			console.log(BidParam);
 			
 			$.ajax({
-				url : '/mainBid.ajax',
+				url : '/main/bidNowAjax',
 				type : 'post',
 				headers : {"Content-Type" : "application/json", "X-HTTP-Method-Override" : "POST"},
-				dataType : 'number',
-				data : JSON.parse({bid_amount : bid_amount}),
+				dataType : "JSON",
+				data : BidParam,
 				success : 
 				function(bidResult){
 				  
@@ -87,7 +90,6 @@
 					                          = (getAuction.current_amount + bid_amount);
 					 //side에 입찰막기 시전해야함 */
 					 }
-				
 				},
 				error: function(){
 					alert:("error");
