@@ -119,35 +119,28 @@
 	</div>
 	</sec:authorize>
 <!-- ---------------------------------------------------------------------------------------------------------->
-	<sec:authorize access="isAuthenticated()">
-	<div class="tab-pane fade show active" id="user" style="padding-top:15%;">
+<sec:authorize access="isAuthenticated()">
+    <div class="tab-pane fade show active" id="user" style="padding-top:15%;">
     <div class="user_profile">
-    	<img class="mb-4 rounded-circle" src="resources/img/profile.png" width="100" style="border:5px solid #34B475">
-    	<h4>Tester</h4>
-    	<div class="mb-4"></div>
-    	<Strong class="tbd"><a href="secu/userUpdate"> User Information</a></Strong>
-    	<hr/>
-    	<form action="/customLogout" method="get">
-			<button id="logout" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Logout</button>
-    	<form action="/customLogout" method="post">
-			<button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
-	   		 data-dashlane-label="true" data-form-type="login">LogOut</button>
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
-		</form>
-		<hr/>
-		<button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button">New Auction</button>
-    </div>  
-    	<button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" 
-	    data-dashlane-label="true">New Auction</button>
-    	<hr/>
+        <img class="mb-4 rounded-circle" src="resources/img/profile.png" width="100" style="border:5px solid #34B475"><br/>
+        <Strong class="tbd"><a href="secu/userUpdate"> User Information</a></Strong>
+        <hr/>
+        <form action="/customLogout" method="post">
+            <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
+                data-dashlane-label="true" data-form-type="login">LogOut</button>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
+        </form>
+        <hr/>
+        <button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" 
+        data-dashlane-label="true">New Auction</button>
+    </div>
+    </div>
+    <a href="/freeBoard/freeBoardList">Free Board</a><br/>
+    <a href="/allCollectionList">Collection</a><br/>
+    <a href="/qna/qnaboardList">QnA</a>
+    </sec:authorize>
 
-    	<a href="/freeBoard/freeBoardList">Free Board</a><br/>
-    	<a href="/allCollectionList">Collection</a><br/>
-    	<a href="/qna/qnaboardList">QnA</a>
-
-    </div>  
-     </sec:authorize>
-
+    
     <div class="posting" style="display:none; margin-top:-28px">
   		<form data-form-type="post">
   		<input type="text" name="auction_title" class="form-control mt-4 mb-2" style="border:none; color: #959595"
