@@ -22,5 +22,3 @@ public class auctionLogVO {
 		private int auction_bid_log; 
 		
 	}
-
-

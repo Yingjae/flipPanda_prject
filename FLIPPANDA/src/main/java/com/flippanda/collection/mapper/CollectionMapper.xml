@@ -52,13 +52,9 @@
 	<insert id="insertMyCollection">
 		
 		INSERT INTO my_collection_tbl 
-			   (user_num, 
-			    collection_title, 
-			    collection_content)
-	    VALUES	
-			   (#{userNum}, 
-			    #{collectionTitle}, 
-			    #{collectionContent})
+			        (user_num, collection_title, collection_content)
+	         VALUES	
+			        (#{userNum}, #{collectionTitle}, #{collectionContent})
 		
 		<selectKey keyProperty="collectionNum" order="AFTER" resultType="long">
 			SELECT LAST_INSERT_ID() 

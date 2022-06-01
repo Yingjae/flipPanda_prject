@@ -83,7 +83,9 @@
 					</td>
 					<td>
 						<c:choose>
-							<c:when test="${collection.collectionDate ne collection.collectionUpdateDate}">${collection.collectionUpdateDate } </c:when>
+							<c:when test="${collection.collectionDate ne collection.collectionUpdateDate}">
+								${collection.collectionUpdateDate } 
+							</c:when>
 							<c:otherwise>${collection.collectionDate }</c:otherwise>
 						</c:choose>
 					</td>

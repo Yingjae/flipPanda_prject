@@ -52,11 +52,11 @@
 	
 	<![CDATA[
 		SELECT a.*
-                 , b.user_nick
-              FROM freeboard_tbl a
-                   , user_tbl b
-             WHERE a.user_num = b.user_num
-          ORDER BY freeboard_num DESC
+             , b.user_nick
+          FROM freeboard_tbl a
+             , user_tbl b
+         WHERE a.user_num = b.user_num
+      ORDER BY freeboard_num DESC
 	]]>	
 	
 	</select>
