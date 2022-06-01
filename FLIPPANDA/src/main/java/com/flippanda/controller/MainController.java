@@ -2,6 +2,8 @@ package com.flippanda.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,12 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.flippanda.vo.auctionLogVO;
 import com.flippanda.vo.auctionVO;
@@ -36,83 +40,55 @@ public class MainController {
 	@Autowired
 	private auctionLogSevice auctionLogService;
 	
-	/*@GetMapping("/main")
-	public String testFRONT() {
-		return "/main";
-		
-	}*/
-	
-	//비동기 처리중 //
-	
 	@GetMapping("/main")
 	public String frontView() {
-		return "main";
+		return "/main";
 	}
+	
 	
 	@GetMapping("/main.ajax")
 	public @ResponseBody List<auctionVO> auctionListAjax(){
 		List<auctionVO> getAuctionList = auctionService.getAuctionListTest();
-		log.info(getAuctionList);
 		return getAuctionList;
 	}
 	
-	@GetMapping("/main.{auction_num}.ajax")
+	
+	@GetMapping("/main/{auction_num}.ajax")
 	public @ResponseBody auctionVO auctionDetailAjax(@PathVariable long auction_num){
 		auctionVO getAuction = auctionService.getAuction(auction_num);
-		log.info(getAuction);
+		log.info("확인:"+getAuction);
 		return getAuction;
 	}
 	
-	@GetMapping("/main.log={auction_num}.ajax")
+	@GetMapping("/main/log/{auction_num}.ajax")
 	public @ResponseBody List<auctionLogVO> auctionLogAjax(@PathVariable long auction_num){
-		List<auctionLogVO> auctionLog = auctionLogService.getbidLog(auction_num);
+		List<auctionLogVO> auctionLog = auctionLogService.getBidLog(auction_num);
 		log.info(auctionLog);
 		return auctionLog;
 	}
 	
-	/*@GetMapping("/{auction_num}")
-	public String frontVewDetail(@PathVariable Long auction_num, Model model) {
+	@GetMapping("/main/auction")
+	public String auctionDetail(@ModelAttribute("avo") auctionVO avo, Model model, HttpServletRequest request)
+			throws Exception {
+		long auction_num = avo.getAuction_num();
 		auctionVO auctionDetail = auctionService.getAuction(auction_num);
-		List<auctionLogVO> auctionLog = auctionLogService.getbidLog(auction_num);
-		log.info("Detail data :" + auctionDetail);
-		log.info("line 2(bid):" + auctionLog);
-		model.addAttribute("auction_detail", auctionDetail);
-		model.addAttribute("auction_log", auctionLog);
-		return "/main";
-	}*/
-	
-	/*
-	@GetMapping(value="/{auction_num}",
-	produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<auctionVO> getAuction
-	(@PathVariable("auction_num") Long auction_num, Model model){
-		ResponseEntity<auctionVO> entity = null;
-		try {
-			entity = new ResponseEntity<>(
-					auctionService.getAuction(auction_num), HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
-			return entity;
-		}
+		model.addAttribute("auctionDetail", auctionDetail);
+
+		return "auctuonDetail";
+	}
 	
 	
-	@GetMapping(value="/{auction_num}",
-	produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<List<auctionLogVO>> getbidLog
-	(@PathVariable("auction_num") Long auction_num){
-		ResponseEntity<List<auctionLogVO>> entity = null;
-		try {
-			entity = new ResponseEntity<>(
-					auctionLogService.getbidLog(auction_num), HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
-			return entity;
-		}
-	*/
+	@GetMapping("/main/postAuctionForm")
+	public void postAuctionForm() {
+	}
+	
+	@PostMapping("/main/postAuction")
+	@ResponseBody
+	public List<auctionVO> postAuction1(@RequestBody auctionVO avo, MultipartFile[] multipartFile, Model model){
+		log.info("insert post data :" + avo);
+		auctionService.postAuction(avo);
+		return null;
+	} 
 	
 	//승인대기열 (ADMIN의 경우 승인버튼 노출)
 	@GetMapping("/pending")
@@ -123,50 +99,18 @@ public class MainController {
 		return "main/post";
 	}
 	
-	//옥션 포스팅
-	@GetMapping("/post")
-	public String postAuctionForm() {
-		return "post";
-	}
-	
-	@PostMapping("/post")
-	public String postAuction(auctionVO avo) {
-		log.info("insert post data :" + avo);
-		auctionService.postAuction(avo);
-		//포스팅 후 승인대기 리스트로 들어감
-		return "redirect:/main/pending";
-	}
-	
-	/*비딩
-	@Transactional
-	@GetMapping("/bidNow")
-	public String bidNow(auctionVO avo, auctionLogVO alvo, bidVO bvo, Long auction_num) {
-		
-		int current = (int) avo.getCurrent_amount(); 
-		
-		auctionLogService.bid(alvo);
-		
-		double bidAmount = (double) bvo.getBid_amount();
-		
-		log.info("current Amount :" + current);
-		log.info("bid Amount :" + bidAmount);
-		
-		//
-		if(current < bidAmount) {
-			auctionService.bidding(avo);
-		}
-		return "redirect:/main/" + avo.getAuction_num();
-	}*/
-	
-	@PostMapping(value="", consumes="application/json",	produces={MediaType.TEXT_PLAIN_VALUE})
+	@PostMapping(value="/main/bidNowAjax", consumes="application/json",	produces={MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> bidNowAjax
-	(@RequestBody auctionVO avo, auctionLogVO alvo, bidVO bvo, Long auction_num){
+		
+		(@RequestBody auctionVO avo, auctionLogVO alvo, Long auction_num){
+		
 		ResponseEntity<String> entity = null;
+		
 		try {
 			
-			int current = (int) avo.getCurrent_amount(); 
 			
-			double bidAmount = (double) bvo.getBid_amount();
+			int current = (int) avo.getCurrent_amount(); 
+			double bidAmount = (double) avo.getBid_amount();
 			
 			log.info("current Amount :" + current);
 			log.info("bid Amount :" + bidAmount);
@@ -181,9 +125,6 @@ public class MainController {
 		return entity;
 	}
 	
-	
-	
-	
 	//업데이트 (퍼블리시 안됫을때만)
 	@PostMapping("/updateAuctionForm")
 	public String updateAuctionForm(Long auction_num, Model model) {
@@ -195,7 +136,7 @@ public class MainController {
 	@PostMapping("/updateAuction")
 	public String updateAuction(auctionVO avo) {
 		auctionService.update(avo);
-	return "redirect:/main/" + avo.getAuction_num();
+	return "redirect:/main/";
 	
 	}
 	
@@ -211,19 +152,11 @@ public class MainController {
 	@PostMapping("/publish")
 	public String launchAuction(auctionVO avo) {
 		auctionService.publishAuction(avo);
-		return "redirect:/main/" + avo.getAuction_num();
+		return "redirect:/main/";
 	}
 	
-	/*옥션종료 MVC
-	@PostMapping("/close")
-	public String closeAuction(auctionVO avo) {
-		auctionService.closeAuction(avo);
-		return "redirect:/main/" + avo.getAuction_num();
-	}*/
-	
-	
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-	value="/{auction_num}",
+	value="/",
 	consumes="application/json",
 	produces= {MediaType.TEXT_PLAIN_VALUE})
 	@ResponseBody
@@ -242,49 +175,6 @@ public class MainController {
 		}
 		return entity;
 	}
-	/*
-	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-	value="/{auction_num}",
-	consumes="application/json",
-	produces= {MediaType.TEXT_PLAIN_VALUE})
-	@ResponseBody
-	public ResponseEntity<String> faildAuction
-	(@PathVariable("auction_num") Long auction_num, @RequestBody auctionVO avo){
-	
-		ResponseEntity<String> entity = null;
-		
-		try {
-			log.info("auction detail : " + avo);
-			auctionService.failedAuction(avo);
-			entity = new ResponseEntity<String>("Auction Failed", HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}*/
-	/*
-	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-	value="/{auction_num}",
-	consumes="application/json",
-	produces= {MediaType.TEXT_PLAIN_VALUE})
-	@ResponseBody
-	public ResponseEntity<String> soldAuction
-	(@PathVariable("auction_num") Long auction_num, @RequestBody auctionVO avo){
-	
-		ResponseEntity<String> entity = null;
-		
-		try {
-			log.info("auction detail : " + avo);
-			auctionService.soldAuction(avo);
-			entity = new ResponseEntity<String>("Soldout", HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}*/
-	
 	
 
 }
