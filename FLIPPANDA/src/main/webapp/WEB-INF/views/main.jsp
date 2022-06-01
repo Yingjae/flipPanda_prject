@@ -135,10 +135,11 @@
         data-dashlane-label="true">New Auction</button>
     </div>
     </div>
-     </sec:authorize>
-	<a href="/freeBoard/freeBoardList">Free Board</a><br/>
+    <a href="/freeBoard/freeBoardList">Free Board</a><br/>
     <a href="/allCollectionList">Collection</a><br/>
     <a href="/qna/qnaboardList">QnA</a>
+    </sec:authorize>
+
     
     <div class="posting" style="display:none; margin-top:-28px">
   		<form data-form-type="post">
