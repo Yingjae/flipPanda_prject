@@ -2,28 +2,20 @@ package com.flippanda.vo;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@ToString
+@Data
 public class QnAVO {
-	private int QnANum;
+	private int qnaNum;
 	private int userNum;
-	private String QnATitle;
-	private String QnAContent;
-	private Date QnAUpdateDate;
-	private Date QnAWriter;
-	
-	public void setQnATitle(String qnATitle) {
-		QnATitle = qnATitle;
-	}
-	public void setQnAContent(String qnAContent) {
-		QnAContent = qnAContent;
-	}
-	public void setQnAWriter(Date qnAWriter) {
-		QnAWriter = qnAWriter;
-	}
-	
-	
+	private String qnaTitle;
+	private String qnaContent;
+	private Date qnaDate;
+	private Date qnaUpdateDate;
+	private String qnaWriter;
+	private int qnareplyCount;
+	private String userNick;
+	private boolean qnaSecret;
 }
+
+

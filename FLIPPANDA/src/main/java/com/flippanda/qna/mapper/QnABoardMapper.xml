@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flippanda.qna.mapper.QnABoardMapper">
+		<resultMap type="com.flippanda.vo.QnAVO" id="QnARM">
+				<result property="qnaNum" column="qna_num"/>
+				<result property="userNum" column="user_num"/>
+				<result property="qnaTitle" column="qna_title"/> 
+				<result property="qnaContent" column="qna_title"/> 
+				<result property="qnaUpdateDate" column="qna_updateDate"/>
+				<result property="qnaDate" column="qna_date"/>
+				<result property="qnaWriter" column="qna_writer"/>
+				<result property="qnareplyCount" column="qna_replyCount"/>
+				<result property="qnaNick" column="user_nick" />
+				<result property="qnaSecret" column="qna_secret" />
+		</resultMap>
+	
+		<select id="getNick" resultType="com.flippanda.vo.QnAVO" resultMap="QnARM">
+		
+		<![CDATA[
+			SELECT a.*
+	                 , b.user_nick
+	              FROM qna_tbl a
+	                   , user_tbl b
+	             WHERE a.user_num = b.user_num
+	          ORDER BY qna_num DESC
+		]]>	
+		
+		</select>
+		
+         <select id="getList" resultType="com.flippanda.vo.QnAVO"  resultMap="QnARM">
+          select * from (
+              select * from qna_tbl order by qna_num desc) as fp 
+              <!-- limit (( ${pageNum} -1)* ${amount}), ${amount} -->
+              limit #{skip},#{amount};
+        </select>
+     
+        <insert id="insert">
+              INSERT INTO qna_tbl ( user_num, qna_title, qna_writer, qna_content, qna_secret)
+                   VALUES
+              ( #{userNum}, #{qnaTitle},#{qnaWriter}, #{qnaContent},#{qnaSecret})
+        </insert>
+        
+        <select id="select" resultType="com.flippanda.vo.QnAVO" resultMap="QnARM">
+        <![CDATA[
+             SELECT * FROM qna_tbl WHERE qna_num = #{qnaNum}
+        ]]>
+        </select>
+        
+        <delete id="delete">
+             DELETE FROM qna_tbl WHERE qna_num = #{qnaNum}
+        </delete>
+        
+        <update id="update">
+             UPDATE qna_tbl SET qna_title=#{qnaTitle}, qna_content=#{qnaContent}, qna_updateDate=NOW(), user_num=#{userNum} WHERE qna_num = #{qnaNum}
+        </update>
+        
+        <select id="countPageNum" resultType="int">
+	       	 SELECT count(*) FROM qna_tbl		
+     	</select>
+	    
+	    <update id="updateReplyCount">
+		   UPDATE qna_tbl
+			  SET
+		   qna_replyCount = qna_replyCount + #{amount} WHERE qna_num = #{qnaNum}
+	     </update>
+        
+</mapper>
