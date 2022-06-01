@@ -10,15 +10,13 @@ public interface auctionMapper {
 	
 	public List<auctionVO> getPendingList();
 	
-	public auctionVO getAuction(Long auction_num);
+	public auctionVO getAuction(long auction_num);
 	
 	public void postAuction(auctionVO avo);
 	
 	public void publishAuction(auctionVO avo);
 	
 	public void bidding(auctionVO avo);
-	
-	public void countBid(auctionVO avo);
 	
 	public void update(auctionVO avo);
 	
@@ -28,6 +26,6 @@ public interface auctionMapper {
 	
 	public void failedAuction(auctionVO avo);
 	
-	public void delete(Long auction_num);
+	public void delete(long auction_num);
 
 }

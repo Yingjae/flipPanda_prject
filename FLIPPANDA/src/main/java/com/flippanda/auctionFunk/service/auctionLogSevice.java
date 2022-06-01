@@ -8,8 +8,8 @@ import com.flippanda.vo.bidVO;
 
 public interface auctionLogSevice {
 	
-	public void deleteLog(Long auction_num);
+	public void delete_bidLog(long auction_num);
 
-	List<auctionLogVO> getbidLog(Long auction_num);
+	List<auctionLogVO> getbidLog(long auction_num);
 	
 }

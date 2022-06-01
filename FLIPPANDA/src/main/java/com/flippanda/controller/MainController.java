@@ -2,6 +2,8 @@ package com.flippanda.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,12 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.flippanda.vo.auctionLogVO;
 import com.flippanda.vo.auctionVO;
@@ -70,6 +74,29 @@ public class MainController {
 		return auctionLog;
 	}
 	
+	@GetMapping("/main/auction")
+	public String auctionDetail(@ModelAttribute("avo") auctionVO avo, Model model, HttpServletRequest request)
+			throws Exception {
+		long auction_num = avo.getAuction_num();
+		auctionVO auctionDetail = auctionService.getAuction(auction_num);
+		model.addAttribute("auctionDetail", auctionDetail);
+
+		return "auctuonDetail";
+	}
+	
+	
+	@GetMapping("/main/postAuctionForm")
+	public void postAuctionForm() {
+	}
+	
+	@PostMapping("/main/postAuction")
+	@ResponseBody
+	public List<auctionVO> postAuction1(@RequestBody auctionVO avo, MultipartFile[] multipartFile, Model model){
+		log.info("insert post data :" + avo);
+		auctionService.postAuction(avo);
+		return null;
+	}  
+	
 	/*@GetMapping("/{auction_num}")
 	public String frontVewDetail(@PathVariable Long auction_num, Model model) {
 		auctionVO auctionDetail = auctionService.getAuction(auction_num);
@@ -96,8 +123,8 @@ public class MainController {
 			}
 			return entity;
 		}
-	
-	
+
+	/*
 	@GetMapping(value="/{auction_num}",
 	produces= {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<List<auctionLogVO>> getbidLog
@@ -112,7 +139,12 @@ public class MainController {
 			}
 			return entity;
 		}
-	*/
+
+		*/
+	
+
+	//*/
+
 	
 	//승인대기열 (ADMIN의 경우 승인버튼 노출)
 	@GetMapping("/pending")
@@ -121,12 +153,6 @@ public class MainController {
 		log.info("pendingList data :" + pendingList);
 		model.addAttribute("pendingList", pendingList);
 		return "main/post";
-	}
-	
-	//옥션 포스팅
-	@GetMapping("/post")
-	public String postAuctionForm() {
-		return "post";
 	}
 	
 	@PostMapping("/post")
@@ -287,4 +313,5 @@ public class MainController {
 		}
 		return entity;
 	}*/
+  
 }

@@ -39,12 +39,12 @@
 	<select id="getAuctionList" resultType="com.flippanda.vo.auctionVO">
 		<![CDATA[
 			SELECT * FROM
-				(SELECT /*+ INDEX_DESC auction_tbl_test */
-				rownum auction_num, auction_tbl_test.* FROM auction_tbl_test WHERE 
+				(SELECT /*+ INDEX_DESC auction_tbl */
+				rownum auction_num, auction_tbl.* FROM auction_tbl WHERE 
 		]]>	
 		<include refid="searchAuction" />
 		<![CDATA[				
-			rownum <= #{pageEnd}) WHERE rn > #{pageStart}
+			auction_num > 0 limit #{pageEnd}) WHERE rn > #{pageStart}
 		]]>
 	</select>
 	
@@ -53,7 +53,7 @@
 	</select>
 	
 	<select id="getPendingList" resultType="com.flippanda.vo.auctionVO">
-		SELECT * FROM auction_tbl WHERE launched_auction = '0' ORDER BY auction_num DESC
+		SELECT * FROM auction_tbl WHERE launch_auction = '0' ORDER BY auction_num DESC
 	</select>
 	
 	
@@ -65,40 +65,35 @@
 	<!-- INSERT AUCTION -->
 	<insert id="postAuction">
 		INSERT INTO auction_tbl 
-		(auction_num, auction_title, product_name, product_category,
-			 auction_description, user_num, start_amount, bid_available, RTB_price)
+		(auction_title, product_name, product_category,
+			 auction_description, user_num, start_amount, current_amount, bid_available, RTB_price)
 		VALUES
-		(auction_num.nextval, #{auction_title}, #{product_name}, #{product_category}, 
-								 #{auction_description}, #{user_num}, #{start_amount}, '1', #{RTB_price})
+		 (#{auction_title}, #{product_name}, #{product_category}, 
+								 #{auction_description}, #{user_num}, #{start_amount}, #{start_amount}, 1, #{RTB_price})
 	</insert>
 	
 	<!-- (ADMIN) PUBLISH -->
 	<update id="publishAuction">
-		UPDATE auction_tbl SET launch_auction VALUES 1 
+		UPDATE auction_tbl SET launch_auction = 1 
 		WHERE auction_num = #{auction_num}
 	</update>
 	
 	<!-- RECORDING BID HISTORY -->
 	<update id="bidding" parameterType="com.flippanda.vo.bidVO">
-		UPDATE auction_tbl SET bid_amount = #{bid_amount}
-		 WHERE auction_num = #{auction_num};
-	</update>
-	
-	<update id="countBid" parameterType="com.flippanda.vo.bidVO">
-		UPDATE auction_tbl SET bid_count = bid_count + 1
+		UPDATE auction_tbl SET bid_amount = #{bid_amount}, current_amount = current_amount + #{bid_amount}, bid_count = bid_count + 1
 		 WHERE auction_num = #{auction_num};
 	</update>
 	
 	<!-- EDIT AUCTION DETAIL -->
 	<update id="update">
 		UPDATE auction_tbl SET 
-		auction_title = #{auction_title}, description = #{description}, update_date = SYSDATE 
+		auction_title = #{auction_title}, auction_description = #{auction_description}, update_date = now() 
 		WHERE auction_num = #{auction_num}
 	</update>
 	
 	<!-- (ADMIN) CLOSE AUCTION -->
 	<update id="closeAuction">
-		UPDATE auction_tbl SET close_amount = #{current_amount}, bid_available = 0 
+		UPDATE auction_tbl SET close_amount = current_amount, bid_available = 0 
 		WHERE auction_num = #{auction_num}
 	</update>
 	

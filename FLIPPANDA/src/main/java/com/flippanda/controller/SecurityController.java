@@ -1,5 +1,7 @@
 package com.flippanda.controller;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -31,11 +33,13 @@ public class SecurityController {
 	}
 	
 	@PostMapping("/join")
-	public void join(UserVO vo) {
+	public String join(UserVO vo) {
 		vo.setUserPw(pwen.encode(vo.getUserPw()));
 		UserService.userInsert(vo);
 		UserService.autoSetUserAuth(vo);
+		return "redirect:/main";
 	}
+	
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/authTest")
@@ -60,6 +64,17 @@ public class SecurityController {
 	public void setAuth() {
 		
 	}
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/userUpdate")
+	public void updateForm() {
+		log.info("유저 수정 창 접속");
+	}
 	
+	@PostMapping("/userUpdate")
+	public void updateUser(UserVO userData) {
+		userData.setUserPw(pwen.encode(userData.getUserPw()));
+		log.info(userData);
+		UserService.userUpdate(userData);
+	}
 	
 }

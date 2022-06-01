@@ -62,9 +62,6 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	public void updateviews(long freeBoard_num) {
 	freeBoardMapper.updateviews(freeBoard_num);
-		}
+	}
 
-
-	
-	
 }

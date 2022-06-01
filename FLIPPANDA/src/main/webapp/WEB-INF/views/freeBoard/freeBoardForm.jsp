@@ -10,6 +10,7 @@
 
 	<form action="/freeBoard/freeBoardInsert" method="post">
 		제목 : <input type="text" name="freeBoardTitle"><br/>
+		user : <input type="text" name="userNum"><br/>
 		닉네임 : <input type="text" name="writer" disabled><br/> 
 	 <!-- <input type="hidden" name="userNum" value="${userNum}"><br/> 	-->
  	    user :  <input type="text" name="userNum" value="25" readonly/> </br>	
