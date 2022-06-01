@@ -121,7 +121,7 @@
 	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 	    <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
 	    data-dashlane-label="true" data-form-type="login">Sign in</button>
-	    <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black"><a href ="/secu/join" style="color:#fff; text-decoration:none">Join us</a></button>
+	    <button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><a href ="/secu/join" style="color:#fff; text-decoration:none">Join us</a></button>
 	    <p class="mt-5 mb-3 text-muted"></p>
 	  </form>
 	  </div>
@@ -132,7 +132,7 @@
 	<div class="tab-pane fade show active" id="user" style="padding-top:15%;">
     <div class="user_profile">
     	<img class="mb-4 rounded-circle" src="resources/img/profile.png" width="100" style="border:5px solid #34B475">
-    	<Strong class="tbd"> TBD: User_infomation / Post Btn </Strong>
+    	<Strong class="tbd"><a href="secu/userUpdate"> TBD: User_infomation / Post Btn </a></Strong>
     	<hr/>
     	<form action="/customLogout" method="post">
 			<button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
