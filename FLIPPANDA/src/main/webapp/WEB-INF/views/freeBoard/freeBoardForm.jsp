@@ -12,6 +12,8 @@
 		제목 : <input type="text" name="freeBoardTitle"><br/>
 		user : <input type="text" name="userNum"><br/>
 		닉네임 : <input type="text" name="writer" disabled><br/> 
+	 <!-- <input type="hidden" name="userNum" value="${userNum}"><br/> 	-->
+ 	    user :  <input type="text" name="userNum" value="25" readonly/> </br>	
 		본문 : <textarea name="freeBoardContent" rows="20" cols="100"></textarea><br/>
 		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 		<input type="submit" value="writing"> <input type="reset" value="reset">

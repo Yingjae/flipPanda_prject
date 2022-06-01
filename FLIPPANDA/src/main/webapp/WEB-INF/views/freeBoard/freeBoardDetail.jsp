@@ -50,6 +50,10 @@
 				<a href="/freeBoard/freeBoardList?pageNum=${param.pageNum == null ? 1 : param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}" class="btn btn-success">post list</a> <br/>
 			</div>
 			<div class="col-md-4">
+			<sec:authorize access="isAuthenticated()">
+						<sec:authentication property="principal.member.userNum" var="sUserNum"/>
+			</sec:authorize>
+				<c:if test="${sUserNum eq freeboard.userNum}">
 				<form action="/freeBoard/freeBoardUpdateForm" method="post">
 					<input type="hidden" name="freeBoardNum" value="${freeboard.freeBoardNum }" />
 					<input type="hidden" name="pageNum" value="${param.pageNum }" />
@@ -68,6 +72,7 @@
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 					<input type="submit" value="delete" class="btn btn-danger">
 				</form>
+				</c:if>
 			</div>
 		</div>
 	

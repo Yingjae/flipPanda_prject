@@ -2,8 +2,8 @@ package com.flippanda.Free.service;
 
 import java.util.List;
 
-import com.flippanda.vo.FreeCriteria;
-import com.flippanda.vo.FreeSearchCriteria;
+import com.flippanda.Free.domain.FreeCriteria;
+import com.flippanda.Free.domain.FreeSearchCriteria;
 import com.flippanda.vo.FreeBoardVO;
 
 public interface FreeBoardService {
@@ -24,5 +24,6 @@ public interface FreeBoardService {
 	
 	public FreeBoardVO getNick(String freeBoardNick);
 	
-	public void updateviews(long freeBoard_num);
+  public void updateviews(long freeBoard_num);
+
 }
