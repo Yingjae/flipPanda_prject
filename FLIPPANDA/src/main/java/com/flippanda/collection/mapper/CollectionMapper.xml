@@ -23,7 +23,7 @@
 			  FROM my_collection_tbl a
 			  	 , user_tbl b
 			 WHERE a.user_num = b.user_num
-		  ORDER BY collection_num DESC
+		  ORDER BY collection_num ASC
 	<!-- 쿼리문 해석
 		 a.* 와 b.user_nick 얻어오기
 		 my_collection_tbl 을 a
