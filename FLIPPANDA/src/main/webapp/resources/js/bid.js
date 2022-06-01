@@ -12,7 +12,7 @@
 				 dataType:"json",
 				 contentType: "application/json",
 				 success: 
-					function(){$("#auctionPostAjax").style.display = 'block';},
+					function(){$("#auctionPostAjax").style.display = block;},
 				 error: 
 					function(){
 					alert:("error");
@@ -67,7 +67,7 @@
 			var BidParam = {
 				
 			user_num: $("#user_num").val(),
-			bid_amount = $("#bid_amount").val()
+			bid_amount: $("#bid_amount").val(),
 			}
 			
 			console.log(BidParam);
