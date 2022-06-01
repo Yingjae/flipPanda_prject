@@ -14,7 +14,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Chakra+Petch:wght@500&family=Hahmlet:wght@200&family=Kanit:wght@300&family=Play:wght@400;700&family=Prompt:wght@300;400&display=swap" rel="stylesheet">
 <link href="./resources/css/style_combine.css" rel="stylesheet"/> 	
 <script src="${cpath}/resources/js/main.js"></script>
-
 <title>FLIPPANDA_main</title>
 <!-- AM CHARTS(TBD) -->
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
@@ -48,7 +47,6 @@
 	  
 	    <!-- ------------------------------------------------------------------------------------------------------------------ -->
 		<!-- frontView AJAX -->
-
 		<div id="auctionListAjax" style="padding:15px;">
 		</div>
 		
@@ -71,9 +69,14 @@
 				></textarea>
 				<select name="auction_category" class="form-select" style="border:none; color: #959595" required>			  	
 				<option value="" class="dropdown-item">Upload Product Image</option>
+				<option value="Electronics" class="dropdown-item">Electronics</option>
+				<option value="Collectable" class="dropdown-item">Treasure</option>
+				<option value="Fashion" class="dropdown-item">Fashion</option>
+				<option value="Hobby" class="dropdown-item">Hobby</option>
+				<option value="Shoes" class="dropdown-item">Shoes</option>
 		  </select>
 			</div>
-		
+
 		</form>
 		</div>
 		<!-- infinity scroll loading effect -->
@@ -88,17 +91,19 @@
 <!-- ------------------------------------------------------------------------------------------------------------------ -->
 <!-- USER INFO & SIDE FUNTION -->
 <div id="sidePanel" class="bg-light border rounded-3" style="margin-right:20%; width:80%; padding:10%; height:800px;">
-	
+
  <div class="tab-content">
+   <!-- ------------------------------------------------------------------------------------------------------------------ -->
 <sec:authorize access="isAnonymous()">
  	<div class="tab-pane fade show active" id="login" style="padding-top:20%;">
  	<div class="login_signup">
 	<form action="/login" method="post">
 	    <img class="mb-4" src="resources/img/sq_minimal.png" width="50">
-	
+
 	      <input type="text" class="form-control" id="loginFormId" placeholder="Your ID" data-form-type="userId" name="username">
 	      <input type="password" class="form-control" id="loginFormPw" placeholder="Your Password" data-form-type="userPw" name="password">
 
+   <!-- ------------------------------------------------------------------------------------------------------------------ -->
 		<input class="form-check-input" type="checkbox" name="remember-me" id="flexCheckDefault">
 		  <label class="form-check-label" for="flexCheckDefault">
 		  	remember me
@@ -118,24 +123,31 @@
 	<div class="tab-pane fade show active" id="user" style="padding-top:15%;">
     <div class="user_profile">
     	<img class="mb-4 rounded-circle" src="resources/img/profile.png" width="100" style="border:5px solid #34B475">
+    	<h4>Tester</h4>
+    	<div class="mb-4"></div>
     	<Strong class="tbd"><a href="secu/userUpdate"> User Information</a></Strong>
     	<hr/>
+    	<form action="/customLogout" method="get">
+			<button id="logout" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Logout</button>
     	<form action="/customLogout" method="post">
 			<button class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit" 
 	   		 data-dashlane-label="true" data-form-type="login">LogOut</button>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
 		</form>
+		<hr/>
+		<button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button">New Auction</button>
     </div>  
     	<button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" 
 	    data-dashlane-label="true">New Auction</button>
     	<hr/>
+
     	<a href="/freeBoard/freeBoardList">Free Board</a><br/>
     	<a href="/allCollectionList">Collection</a><br/>
     	<a href="/qna/qnaboardList">QnA</a>
-    	
+
     </div>  
      </sec:authorize>
-    
+
     <div class="posting" style="display:none; margin-top:-28px">
   		<form data-form-type="post">
   		<input type="text" name="auction_title" class="form-control mt-4 mb-2" style="border:none; color: #959595"
@@ -169,16 +181,31 @@
     <div class="bidding" style="display:none;">
   	<Strong>Bidding This</Strong>
   	<div class="mb-4"></div>
+  	<sec:authorize access="isAnonymous()">
   	 <form data-form-type="bid">
+    	 <input id="priceinsert" type="text" onkeyup="inputNumberFormat(this)" class="py-2 mb-2" name="start_amount" placeholder="  Sign In First."
+      		oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 90%; border:none; color: #959595; float:left;" disabled/>
+      		<img src="resources/img/fliped.png" width="20px" style="margin-top: 8px"/>
+      		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
+      		<button id="bid_btn" class="w-50 btn btn-lg btn-primary fw-bold border-white bg-black" style="float:left;" type="submit" disabled="disabled">Bid Now</button>
+     		</form>	
+
+     		<button id="buy_btn" class="w-50 btn btn-lg btn-primary fw-bold border-white" style="float:left; align-content:center; background-color: #3CB377;" disabled="disabled">Buy Now</button>
+     		</sec:authorize>
+     		<sec:authorize access="isAuthenticated()">
+     		<form data-form-type="bid">
     	 <input id="priceinsert" type="text" onkeyup="inputNumberFormat(this)" class="py-2 mb-2" name="start_amount" placeholder="  Place Your Bid"
       		oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 90%; border:none; color: #959595; float:left;" required/>
       		<img src="resources/img/fliped.png" width="20px" style="margin-top: 8px"/>
       		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }">
       		<button id="bid_btn" class="w-50 btn btn-lg btn-primary fw-bold border-white bg-black" style="float:left;" type="submit">Bid Now</button>
      		</form>	
-     
+
      		<button id="buy_btn" class="w-50 btn btn-lg btn-primary fw-bold border-white" style="float:left; align-content:center; background-color: #3CB377;">Buy Now</button>
+     		</sec:authorize>
+
      		<div class="mb-4"><br/><br/></div>
+
      	<div id="recentBidHistory" class="py-2 mb-4"></div>
      		<table class="table table-hover" style="font-size: xx-small; text-align: center;">
 			<tr>
@@ -194,10 +221,28 @@
 			<div style="width: 100%; height: 300px; overflow: auto;">
       		<button id="my Balance" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" onclick="location.href='/main'">Find Similar Deal</button>
     	</div>  
-    
-   <!-- ------------------------------------------------------------------------------------------------------------------ -->
 
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
+  	  <div class="tab-pane fade" id="post1" style="padding-top:20%;">
+
+  	</div>
+   <!-- ------------------------------------------------------------------------------------------------------------------ -->
+  	<div class="tab-pane fade" id="bid" style="padding-top:15%;">
+
+  	</div>
+
+   <!-- ------------------------------------------------------------------------------------------------------------------ -->
+  	<div class="tab-pane fade" id="fav" style="padding-top:20%;">
+  	<div class="favorite">
+  	<Strong>My Save Auction</Strong>
+  	<div class="mb-4"></div>
+  	<hr/>
+    <button id="post_btn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Active List</button>
+    <div class="mb-2"></div>
+    <button id="post_btn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="submit">Delete All</button>
+    <div class="mb-4"></div>
+    </div>  
+  	</div>
 
    <!-- ------------------------------------------------------------------------------------------------------------------ -->
   	<div class="tab-pane fade" id="admin" style="padding-top:20%;">
