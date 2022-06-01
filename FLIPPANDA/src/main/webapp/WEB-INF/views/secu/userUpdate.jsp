@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri ="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,12 +19,10 @@
 <body>
 	<div class="join_form">
 
-	<h1>JOIN US</h1>
-	<form action="/secu/join" method="post">
-			<div class="input-group mb-3">
-			  <span class="input-group-text" id="basic-addon1">아이디</span>
-			  <input type="text" name="userId"class="form-control" placeholder="아이디"  aria-describedby="basic-addon1" required>
-			</div>
+	<h1>정보 수정</h1>
+	<hr>
+	<form action="/secu/userUpdate" method="post">
+			<input type="hidden" name="userNum" value="<sec:authentication property="principal.member.userNum"/>">
 			<div class="input-group mb-3">
 			  <span class="input-group-text" id="basic-addon1">비밀번호</span>
 			  <input type="password" name="userPw" class="form-control" placeholder="비밀번호"  aria-describedby="basic-addon1" required> 
@@ -40,7 +40,7 @@
 			  <input type="text" name="userAddress" class="form-control" placeholder="주소" aria-describedby="basic-addon1" required>
 			</div>
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-			<input class="btn btn-primary" type="submit" value="가입하기">
+			<input class="btn btn-primary" type="submit" value="수정하기">
 		</form>
 	</div>
 </body>
