@@ -129,6 +129,10 @@
     	<button id="postBtn" class="w-100 btn btn-lg btn-primary fw-bold border-white bg-black" type="button" 
 	    data-dashlane-label="true">New Auction</button>
     	<hr/>
+    	<a href="/freeBoard/freeBoardList">Free Board</a><br/>
+    	<a href="/allCollectionList">Collection</a><br/>
+    	<a href="/qna/qnaboardList">QnA</a>
+    	
     </div>  
      </sec:authorize>
     
