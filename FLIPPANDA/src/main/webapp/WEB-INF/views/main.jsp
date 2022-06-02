@@ -126,7 +126,7 @@
 	  </form>
 	  </div>
 	</div>
-	</sec:authorize>
+
 <!-- ---------------------------------------------------------------------------------------------------------->
 	<sec:authorize access="isAuthenticated()">
 	<div class="tab-pane fade show active" id="user" style="padding-top:15%;">

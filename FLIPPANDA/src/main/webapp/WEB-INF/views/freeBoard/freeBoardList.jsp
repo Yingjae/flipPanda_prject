@@ -33,7 +33,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<a href="/freeBoard/freeBoardInsert" class="btn btn-success">writing</a> <br/>
+		<a href="/freeBoard/freeBoardInsert/${freeBoard.freeBoardNick }" class="btn btn-success">writing</a> <br/>
 		
 		<!-- 페이지처리 버튼 
 		<ul class="pagination justify-content-center">
